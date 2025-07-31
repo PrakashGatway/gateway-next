@@ -1,179 +1,302 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import Image from "next/image"
-import { Calendar, User, ArrowRight } from "lucide-react"
+"use client"
+import { useCallback, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
+import PageServices from '@/services/PageServices';
+import { constant } from '@/constant/index.constant';
 
-export const metadata: Metadata = {
-  title: "Blogs - Gateway Abroad Education | Study Abroad Tips & Guides",
-  description:
-    "Read our latest blogs about study abroad tips, university guides, visa information, and test preparation strategies.",
-}
+const BlogCardSkeleton = () => (
+  <div className="col-md-6 col-lg-4">
+    <div className="blog-card">
+      <div className="blog-card-img-box" style={{ backgroundColor: '#6c757d91', height: '200px', borderRadius: '8px' }} />
+      <div className="blog-card-content mt-3">
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <div className="skeleton-line w-50 h-3 bg-secondary rounded" />
+          <div className="skeleton-line w-25 h-3 bg-secondary rounded" />
+        </div>
+        <div className="skeleton-line w-75 h-4 mb-2 bg-secondary rounded" />
+        <div className="skeleton-line w-100 h-3 mb-1 bg-secondary rounded" />
+        <div className="skeleton-line w-90 h-3 bg-secondary rounded" />
+      </div>
+    </div>
+  </div>
+);
 
-export default function BlogsPage() {
-  const blogs = [
-    {
-      id: 1,
-      title: "Complete Guide to IELTS Preparation: Tips and Strategies",
-      excerpt:
-        "Master the IELTS exam with our comprehensive guide covering all four sections: Reading, Writing, Listening, and Speaking.",
-      author: "Dr. Priya Sharma",
-      date: "2024-01-15",
-      category: "Test Preparation",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 2,
-      title: "Top 10 Universities in Canada for International Students",
-      excerpt:
-        "Discover the best Canadian universities offering world-class education and excellent opportunities for international students.",
-      author: "Rahul Gupta",
-      date: "2024-01-12",
-      category: "University Guide",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 3,
-      title: "Student Visa Application Process: A Step-by-Step Guide",
-      excerpt:
-        "Navigate the complex visa application process with our detailed guide covering documentation, interviews, and common mistakes to avoid.",
-      author: "Sneha Patel",
-      date: "2024-01-10",
-      category: "Visa Guide",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 4,
-      title: "Scholarship Opportunities for Indian Students Abroad",
-      excerpt:
-        "Explore various scholarship programs available for Indian students planning to study in USA, UK, Canada, and Australia.",
-      author: "Dr. Amit Kumar",
-      date: "2024-01-08",
-      category: "Scholarships",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 5,
-      title: "Cost of Living Guide: Studying in Australia",
-      excerpt:
-        "Plan your budget effectively with our comprehensive guide to living costs in major Australian cities for international students.",
-      author: "Meera Singh",
-      date: "2024-01-05",
-      category: "Country Guide",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 6,
-      title: "TOEFL vs IELTS: Which Test Should You Choose?",
-      excerpt:
-        "Compare TOEFL and IELTS exams to determine which English proficiency test is best suited for your study abroad goals.",
-      author: "Dr. Priya Sharma",
-      date: "2024-01-03",
-      category: "Test Preparation",
-      image: "/placeholder.svg?height=300&width=400",
-    },
-  ]
+const Blog = () => {
+  const router = ''
+  const { category: name, page: pageParam } = {};
+  const blogsPerPage = 12;
 
-  const categories = ["All", "Test Preparation", "University Guide", "Visa Guide", "Scholarships", "Country Guide"]
+  const [blogs, setBlogs] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    return pageParam ? parseInt(pageParam) : 1;
+  });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(name || 'All');
+  const [loading, setLoading] = useState(false);
+
+  const updateUrlParams = useCallback((page, category) => {
+    const query = {};
+    if (category && category !== 'All') query.category = category;
+    if (page > 1) query.page = page;
+    
+    router.push({
+      pathname: router.pathname,
+      query: query
+    }, undefined, { shallow: true });
+  }, [router]);
+
+  const fetchBlogs = useCallback(async (page, category, search) => {
+    try {
+      setLoading(true);
+      const res = await PageServices.getBlogData({ 
+        page, 
+        limit: blogsPerPage, 
+        category, 
+        search 
+      });
+      
+      setBlogs(res.data.blog || []);
+      setTotalPages(res.totalPages || 1);
+
+      if (res.data.blog?.length === 0 && page > 1) {
+        const newPage = 1;
+        setCurrentPage(newPage);
+        updateUrlParams(newPage, category);
+      }
+    } catch (err) {
+      console.error('Error fetching blogs:', err);
+    } finally {
+      setLoading(false);
+    }
+  }, [blogsPerPage, updateUrlParams]);
+
+  // Handle initial load and URL changes
+  useEffect(() => {
+    const page = pageParam ? parseInt(pageParam) : 1;
+    const category = name || 'All';
+    
+    if (page !== currentPage) {
+      setCurrentPage(page);
+    }
+    if (category !== selectedCategory) {
+      setSelectedCategory(category);
+    }
+    
+    fetchBlogs(page, category, debouncedSearchQuery);
+  }, [pageParam, name]); // Only run when URL params change
+
+  // Handle search debounce
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(handler);
+  }, [searchQuery]);
+
+  // Handle search changes
+  useEffect(() => {
+    if (debouncedSearchQuery !== '') {
+      fetchBlogs(currentPage, selectedCategory, debouncedSearchQuery);
+    } else {
+      fetchBlogs(currentPage, selectedCategory, '');
+    }
+  }, [debouncedSearchQuery, currentPage, selectedCategory, fetchBlogs]);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleCategoryChange = (e, category) => {
+    e.preventDefault();
+    setSelectedCategory(category);
+    updateUrlParams(currentPage, category);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    updateUrlParams(page, selectedCategory);
+  };
+
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+
+  const sanitizedData = (content) => ({
+    __html: content,
+  });
+
+  const renderPagination = () => {
+    const pages = [];
+    const visibleRange = 2;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - visibleRange && i <= currentPage + visibleRange)
+      ) {
+        pages.push(i);
+      } else if (
+        i === currentPage - visibleRange - 1 ||
+        i === currentPage + visibleRange + 1
+      ) {
+        pages.push('...');
+      }
+    }
+
+    return (
+      <ul className="pagination justify-content-center flex-wrap">
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button className="page-link p-0" onClick={() => handlePageChange(currentPage - 1)}>
+            &laquo;
+          </button>
+        </li>
+        {pages.map((page, i) =>
+          page === '...' ? (
+            <li key={i} className="page-item disabled">
+              <span className="page-link p-0">...</span>
+            </li>
+          ) : (
+            <li key={i} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+              <button className="page-link p-0" onClick={() => handlePageChange(page)}>
+                {page}
+              </button>
+            </li>
+          )
+        )}
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <button className="page-link p-0" onClick={() => handlePageChange(currentPage + 1)}>
+            &raquo;
+          </button>
+        </li>
+      </ul>
+    );
+  };
 
   return (
-    <div className="pt-16">
-      {/* Hero Section */}
-      <section className="hero-gradient section-padding">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Study Abroad <span className="text-gradient">Blogs</span>
-            </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
-              Stay updated with the latest tips, guides, and insights for your study abroad journey
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Categories */}
-      <section className="py-8 bg-white border-b">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
-              <button
-                key={index}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                  index === 0
-                    ? "bg-red-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-red-100 hover:text-red-600"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Grid */}
-      <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogs.map((blog) => (
-              <article
-                key={blog.id}
-                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="relative h-48">
-                  <Image src={blog.image || "/placeholder.svg"} alt={blog.title} fill className="object-cover" />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      {blog.category}
-                    </span>
-                  </div>
+    <>
+      <section className="hero-gradient banner-sec">
+        <div className="container">
+          <div className="row align-items-center lg:pt-12 pt-28">
+            <div className="col-md-6">
+              <div className="banner-content-sec">
+                <h1>Study Abroad <span>Blogs</span></h1>
+                <p>Abroad Insights: News and Tips for Students</p>
+                <div className="hero-search-field position-relative">
+                  <span><i className="fa fa-search" /></span>
+                  <input
+                    type="search"
+                    className="form-control"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                    placeholder="What are you looking for?"
+                  />
+                  <button className="site-btn-2 site-btn">Search</button>
                 </div>
+              </div>
+            </div>
+            <div className="col-md-6 text-center">
+              <Image 
+                src="/img/blog-banner-img.svg" 
+                alt="blog banner" 
+                width={500}
+                height={300}
+                layout="responsive"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
 
-                <div className="p-6">
-                  <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{blog.title}</h2>
+      <section className="blog-b-section py-4">
+        <div className="container">
+          <div className="mb-4">
+            <div className="blog-tab-scroll blog-tab d-flex flex-nowrap gap-2 overflow-auto">
+              {constant.COURSE_MENU.map((cat) => (
+                <button
+                  key={cat.name}
+                  className={`nav-link btn btn-outline-secondary flex-shrink-0 ${selectedCategory === cat.value ? 'active' : ''}`}
+                  onClick={(e) => handleCategoryChange(e, cat.value)}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+          </div>
 
-                  <p className="text-gray-600 mb-4 line-clamp-3">{blog.excerpt}</p>
-
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                    <div className="flex items-center space-x-2">
-                      <User className="h-4 w-4" />
-                      <span>{blog.author}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Calendar className="h-4 w-4" />
-                      <span>{new Date(blog.date).toLocaleDateString()}</span>
-                    </div>
-                  </div>
-
-                  <Link
-                    href={`/blogs/${blog.id}`}
-                    className="inline-flex items-center text-red-600 hover:text-red-700 font-medium"
+          <div className="blog-section-inner row gy-4">
+            {loading
+              ? Array.from({ length: 9 }).map((_, index) => <BlogCardSkeleton key={index} />)
+              : blogs.map((blog) => (
+                <div key={blog.Slug} className="col-md-6 col-lg-4">
+                  <div
+                    onClick={() => router.push(`/blog-description/${blog.Slug}`)}
+                    className="blog-card cursor-pointer"
                   >
-                    Read More
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                    <div className="blog-card-img-box">
+                      <Image
+                        src={`${constant.REACT_APP_URL}/uploads/${blog.image}`}
+                        alt={blog.image}
+                        width={400}
+                        height={250}
+                        layout="responsive"
+                      />
+                    </div>
+                    <div className="blog-card-content">
+                      <ul className="list-unstyled d-flex justify-content-between align-items-center">
+                        <li>
+                          <span>
+                            <Image 
+                              src="/img/date-icon.svg" 
+                              alt="calendar" 
+                              width={16}
+                              height={16}
+                            />
+                          </span>
+                          <span>{formatDate(blog.createdAt)}</span>
+                        </li>
+                      </ul>
+                      <h5>{blog.blogTitle}</h5>
+                      <p
+                        className="sub_text_blog"
+                        dangerouslySetInnerHTML={sanitizedData(blog.blogDescription)}
+                      />
+                    </div>
+                  </div>
                 </div>
-              </article>
-            ))}
+              ))}
           </div>
+
+          {totalPages > 1 && (
+            <nav className="mt-4">{renderPagination()}</nav>
+          )}
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="section-padding bg-gradient-to-r from-red-600 to-pink-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Subscribe to our newsletter for the latest study abroad tips and updates
-          </p>
-          <div className="max-w-md mx-auto flex gap-4">
-            <input type="email" placeholder="Enter your email" className="flex-1 px-4 py-3 rounded-lg text-gray-900" />
-            <button className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Subscribe
-            </button>
+      <section className="app-banner-section counselling-session-sec">
+        <div className="container">
+          <div className="row align-items-center app-banner-section-inner app-banner-section-inner-2 px-6">
+            <div className="app-banner-content-left col-lg-7">
+              <h2 className="mb-3">Avail A Complementary Counselling Session</h2>
+              <p className="mb-4">Join thousands of students and start your journey abroad!</p>
+              <button className="site-btn" onClick={() => router.push('/contact')}>Contact us</button>
+            </div>
+            <div className="col-lg-5 app-banner-content-right mx-auto">
+              <Image 
+                src="/img/counselling-session.svg" 
+                alt="counselling" 
+                width={360}
+                height={280}
+              />
+            </div>
           </div>
         </div>
       </section>
-    </div>
-  )
-}
+    </>
+  );
+};
+
+export default Blog;

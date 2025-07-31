@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+
+a{
+  text-decoration: none!important;
+}
+
+/* For bullet lists */
+.descp ul {
+  list-style: disc !important;
+}
+
+/* For numbered lists */
+.descp ol {
+  list-style: decimal !important;
+}
+
+/* Style each list item */
+.descp li {
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
 @media (min-width: 1200px) {
   .container,
   .container-lg,
@@ -446,7 +467,7 @@ html {
   }
 
   .hero-gradient {
-    min-height: 80vh;
+    min-height: 30vh;
   }
 }
 

@@ -1,76 +1,77 @@
-import type { Metadata } from "next"
-import { Briefcase, MapPin, Clock, DollarSign } from "lucide-react"
+"use client";
 
-export const metadata: Metadata = {
-  title: "Career Opportunities - Gateway Abroad Education | Join Our Team",
-  description:
-    "Explore career opportunities at Gateway Abroad Education. Join our team of education consultants and help students achieve their study abroad dreams.",
-}
+import React, { useRef, useEffect, useState } from "react";
+import PageServices from "@/services/PageServices";
+import useAsync from "@/hooks/useAsync";
+
+// Icons (replace with your icon library or import from Lucide, React Icons, etc.)
+import { Briefcase, MapPin, Clock, DollarSign } from "lucide-react";
 
 export default function CareerPage() {
-  const positions = [
-    {
-      title: "Education Counselor",
-      department: "Student Services",
-      location: "Jaipur, Rajasthan",
-      type: "Full-time",
-      experience: "2-4 years",
-      salary: "₹3-5 LPA",
-      description: "Guide students through their study abroad journey, from university selection to visa application.",
-      requirements: [
-        "Bachelor's degree in any field",
-        "2+ years experience in education counseling",
-        "Excellent communication skills",
-        "Knowledge of international education systems",
-      ],
-    },
-    {
-      title: "IELTS Trainer",
-      department: "Test Preparation",
-      location: "Jaipur, Rajasthan",
-      type: "Full-time",
-      experience: "3-5 years",
-      salary: "₹4-6 LPA",
-      description: "Conduct IELTS preparation classes and help students achieve their target scores.",
-      requirements: [
-        "IELTS score of 8.0 or above",
-        "Teaching certification preferred",
-        "3+ years of IELTS training experience",
-        "Strong presentation skills",
-      ],
-    },
-    {
-      title: "Marketing Executive",
-      department: "Marketing",
-      location: "Jaipur, Rajasthan",
-      type: "Full-time",
-      experience: "1-3 years",
-      salary: "₹2.5-4 LPA",
-      description: "Develop and execute marketing strategies to promote our services and attract new students.",
-      requirements: [
-        "Bachelor's degree in Marketing/Business",
-        "1+ years in digital marketing",
-        "Knowledge of social media platforms",
-        "Creative thinking and analytical skills",
-      ],
-    },
-    {
-      title: "Visa Processing Executive",
-      department: "Visa Services",
-      location: "Jaipur, Rajasthan",
-      type: "Full-time",
-      experience: "2-4 years",
-      salary: "₹3-4.5 LPA",
-      description: "Assist students with visa documentation and application processes for various countries.",
-      requirements: [
-        "Knowledge of visa processes for major countries",
-        "Attention to detail and accuracy",
-        "2+ years in visa processing",
-        "Good organizational skills",
-      ],
-    },
-  ]
+  const { data, loading, error, run } = useAsync(PageServices.getCareerPageById);
+  const { data: jobFormData, loading: jobFormLoading, error: jobFormError, run: runJobForm } = useAsync(PageServices.getJobData);
 
+  const [jobData, setJobData] = useState([]);
+  const [pageTitle, setPageTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [pageName, setPageName] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [file, setFile] = useState(null);
+  const [branch, setBranch] = useState("");
+
+  const section1Ref = useRef(null);
+
+
+  // Update state when API data loads
+  useEffect(() => {
+    if (data?.data?.page) {
+      setPageTitle(data.data.page.pageTitle || "");
+      setPageName(data.data.page.pageName || "");
+      setDescription(data.data.page.description || "");
+    }
+    if (jobFormData?.data?.jobs) {
+      setJobData(jobFormData.data.jobs);
+    }
+  }, [data, jobFormData]);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !phone || !file) {
+      alert("All fields are required");
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("mobileNo", phone);
+      formData.append("type", "resume");
+      formData.append("eduInterest", branch);
+      formData.append("file", file);
+
+      const createJob = await PageServices.createForme(formData);
+      if (createJob.status === "success") {
+        setName("");
+        setEmail("");
+        setPhone("");
+        setBranch("");
+        setFile(null);
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      alert("Submission failed. Please try again.");
+    }
+  };
+
+  // Benefits (static or from CMS)
   const benefits = [
     "Competitive salary and performance bonuses",
     "Health insurance coverage",
@@ -78,15 +79,16 @@ export default function CareerPage() {
     "Flexible working hours",
     "Friendly and supportive work environment",
     "Career growth opportunities",
-  ]
+  ];
 
   return (
-    <div className="pt-16">
-      {/* Hero Section */}
-      <section className="hero-gradient section-padding">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+    <div>
+
+      {/* ====== Hero Section (Tailwind UI) ====== */}
+      <section className="hero-gradient">
+        <div className="px-4 min-h-[50vh]">
+          <div className="text-center m-auto max-w-4xl pt-36 pb-8">
+            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
               Join Our <span className="text-gradient">Team</span>
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
@@ -97,151 +99,154 @@ export default function CareerPage() {
         </div>
       </section>
 
-      {/* Current Openings */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Current Openings</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover opportunities to grow your career while making a difference in students' lives
-            </p>
+      {/* ====== About Us Sections (Bootstrap Content + Images) ====== */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6">
+          {/* Culture of Success */}
+          <div className="row align-items-center mb-12">
+            <div className="col-md-5 mb-6 mb-md-0">
+              <img
+                src="img/career-img-new-1.jpeg"
+                alt="Culture of Success"
+                className="w-full rounded-2xl shadow-lg"
+              />
+            </div>
+            <div className="col-md-7">
+              <div className="about-us-right-new ps-1 career-content-box">
+                  <h2 className="heading">Culture of Success at <br />Gateway Abroad</h2>
+                  <p style={{textAlign:"left"}} className="descp">{pageTitle ? pageTitle : "We support the empowerment of everyone in our community. Join us if you enjoy exploring and want to learn more about schooling outside of India. We are seeking people who are ready to make a move to promote high-quality education. We are a group of driven and career-oriented people that are eager to develop by cooperating in a welcoming and goal- oriented environment. Gateway Abroad is spread across eight branches in India. Join us right away if you're seeking for a vibrant and welcoming environment that supports your growth."}</p>
+                </div>
+            </div>
           </div>
 
-          <div className="space-y-8">
-            {positions.map((position, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-8 hover:shadow-lg transition-shadow duration-300">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  <div className="lg:col-span-2">
-                    <div className="flex flex-wrap items-center gap-4 mb-4">
-                      <h3 className="text-2xl font-bold text-gray-900">{position.title}</h3>
-                      <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
-                        {position.department}
-                      </span>
-                    </div>
+          <hr className="my-12 border-gray-200" />
 
-                    <p className="text-gray-600 mb-6">{position.description}</p>
-
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-3">Requirements:</h4>
-                      <ul className="space-y-2">
-                        {position.requirements.map((req, idx) => (
-                          <li key={idx} className="flex items-start text-gray-600">
-                            <div className="w-2 h-2 bg-red-600 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                            {req}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="h-5 w-5 mr-2 text-red-600" />
-                      {position.location}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Clock className="h-5 w-5 mr-2 text-red-600" />
-                      {position.type}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <Briefcase className="h-5 w-5 mr-2 text-red-600" />
-                      {position.experience}
-                    </div>
-                    <div className="flex items-center text-gray-600">
-                      <DollarSign className="h-5 w-5 mr-2 text-red-600" />
-                      {position.salary}
-                    </div>
-
-                    <button className="w-full btn-primary mt-6">Apply Now</button>
-                  </div>
+          <div className="about-us-inner">
+            <div className="row align-items-center">
+              <div className="col-md-7">
+                <div className="about-us-right-new career-content-box pe-3">
+                  <h2 className="heading">Working with Gateway Abroad</h2>
+                  <p style={{textAlign:"left"}} className="descp mb-3">{description ? description : "In a relatively short period of time, Gateway Abroad has assembled such a strong team. Staff members that are committed and diligent have made this possible. We make an effort to encourage and reward personnel on a regular basis. After all, what good is labour without praise? We seek people who can contribute to our team with innovative ideas and effectively interact with clients."}</p>
+                  <p style={{textAlign:"left"}} className="descp">Join us immediately if you're looking for opportunities to improve your talents and have excellent communication skills.</p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Work With Us?</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We offer a comprehensive benefits package and a great work environment
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="flex items-center p-4 bg-white rounded-lg shadow-sm">
-                <div className="w-3 h-3 bg-red-600 rounded-full mr-4 flex-shrink-0"></div>
-                <span className="text-gray-700">{benefit}</span>
+              <div className="col-md-5">
+                <div className="career-img-box">
+                  <img src="img/career-img-new-2.jpeg" className="w-full rounded-2xl shadow-lg" />
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Application Process */}
-      <section className="section-padding bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Application Process</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">1</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Apply Online</h3>
-              <p className="text-gray-600">Submit your application through our online portal</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">2</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Initial Screening</h3>
-              <p className="text-gray-600">Our HR team will review your application</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">3</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Interview</h3>
-              <p className="text-gray-600">Face-to-face or virtual interview with our team</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">4</span>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Welcome Aboard</h3>
-              <p className="text-gray-600">Join our team and start making a difference</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-padding bg-gradient-to-r from-red-600 to-pink-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Join Our Team?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Take the next step in your career and help students achieve their dreams
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              View All Positions
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
-              Submit Resume
-            </button>
+      {/* ====== Vacancies Section (Tailwind UI + API Data) ====== */}
+      <section className="vacancy-section py-60 linear-bg">
+        <div className="container  max-w-3xl">
+          <h2 className="heading text-center d-block">Vacancies</h2>
+          <div className="vacancy-section-inner pt-4">
+            <div className="row gy-4 justify-content-center">
+              {jobData.map((job) => (
+                <div className="col-lg-4 col-md-6" key={job._id}>
+                  <div className="vacancy-card">
+                    <div className="vacancy-card-body">
+                      <h4 className="job-title">{job.jobTitle}</h4>
+                      <h6 className="vacancy-num">No. of Vacancy: {job.vacancy}</h6>
+                      <h6 className="vacancy-location">Location: {job.location}</h6>
+                      <div className="scroll-container">
+                        <div style={{textAlign:"left"}} className="descp" dangerouslySetInnerHTML={{ __html: job.jobShortDescription }} />
+                        <div style={{textAlign:"left"}} className="descp" dangerouslySetInnerHTML={{ __html: job.jobDescription }} />
+                      </div>
+                      <div>
+                        <div className="list-unstyled flex flex-row job-duration mt-3">
+                          <li>{job.jobType}</li>
+                          <li>{job.jobExp}. Year</li>
+                          <li>{job.jobLevel} Level</li>
+                        </div>
+                        <div className='text-center'>
+                          <button className="apply-btn" onClick={() => section1Ref.current.scrollIntoView({ behavior: 'smooth' })}>Apply Now <span><i className="fa fa-paper-plane ms-2" /></span></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="career-form-section py-60" ref={section1Ref}>
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-lg-7">
+              <div className="career-form-section-left">
+                <h2 className="heading">Boost Your Career! Find the Perfect <br />Role with Gateway Abroad</h2>
+                <div className="career-form-section-img">
+                  <img src="img/career-form-img.svg" />
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-5">
+              <div className="career-form-section-right">
+                <div className="career-form-inner students-info-right">
+                  <form>
+                    <div className="input-field">
+                      <input type="text" name="name" className="form-control" onChange={(e) => setName(e.target.value)} placeholder="Name" />
+                    </div>
+                    <div className="input-field">
+                      <input type="email" name="email" className="form-control" onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                    </div>
+                    <div className="input-field">
+                      <input type="text" name="phone" className="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="Phone" />
+                    </div>
+                    <div className="input-field">
+                      <select className="form-select"
+                        value={branch} // Set the selected value
+                        onChange={(e) => setBranch(e.target.value)}
+                        aria-label="Default select example">
+                        <option selected>Select Vacancies</option>
+                        {jobData.map((job) => (
+                          <option value={job.jobTitle}>{job.jobTitle}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="input-field type-file-field">
+                      <label className="filelabel"><img src="img/upload-img.svg" className="file_img mx-auto" />
+                        <span className="title">
+                          {file ? file.name : "Upload your CV here"}
+                        </span>
+                        <input className="FileUpload1 form-control py-3" onChange={(e) => { handleFileChange(e) }} id="FileInput" name="booking_attachment" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
+                      </label>
+                    </div>
+                    <button type="submit" onClick={(e) => { handleUpdate(e) }} >SUBMIT</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section className="app-banner-section counselling-session-sec">
+        <div className="container">
+          <div className="app-banner-section-inner counselling-session-sec-inner">
+            <div className="row align-items-center">
+              <div className="col-lg-6">
+                <div className="app-banner-content-left">
+                  <h2 className="mb-3">Avail A Complementary Counselling Session</h2>
+                  <p className="mb-4">Join thousand of instructors and earn money hassle free!</p>
+                  <a className="site-btn" href="/contact">Contact us</a>
+                </div>
+              </div>
+              <div className="col-lg-6">
+                <div className="app-banner-content-right text-center">
+                  <img src="img/counselling-session.svg" alt="partner" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }

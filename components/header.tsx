@@ -5,15 +5,9 @@ import Image from "next/image"
 import { ThemeToggle } from "./theme-toggle"
 import {
   ChevronDown,
-  ChevronRight,
   GraduationCap,
   FileText,
   Languages,
-  Wrench,
-  BookOpen,
-  Tag,
-  Calendar,
-  University,
   Award,
   User,
   Settings,
@@ -123,9 +117,9 @@ const Header = () => {
             <Image
               src="/images/logo.svg"
               alt="Company Logo"
-              width={280}
+              width={260}
               height={48}
-              className="transition-all duration-300 group-hover:scale-105"
+              className="transition-all duration-300 group-hover:scale-105 md:max-w-[200px]"
             />
           </Link>
           {/* Desktop Navigation */}
@@ -333,7 +327,7 @@ const Header = () => {
               </AnimatePresence>
             </div>
             <Link
-              href="/blog"
+              href="/blogs"
               className="flex items-center text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 group"
             >
               Blogs
@@ -345,7 +339,7 @@ const Header = () => {
               Career
             </Link>
             <Link
-              href="/contact-us"
+              href="/contact"
               className="flex items-center text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 group"
             >
               Contact Us

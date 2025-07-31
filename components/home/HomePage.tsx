@@ -13,6 +13,8 @@ import useAsync from '@/hooks/useAsync'; // Ensure path is correct
 import { constant } from '@/constant/index.constant.js'; // Ensure path is correct
 import Head from 'next/head'; // For managing head tags
 import HeroSection from '../hero-section';
+import AboutSection from '../about-section';
+import TestPreparation from '../TestPreparationSection';
 
 function Index() {
   const { data } = useAsync(PageServices.getAboutPageById);
@@ -22,9 +24,7 @@ function Index() {
   const { data: videoStudednt } = useAsync(PageServices.getYoutubeVideo);
   const { data: slider } = useAsync(PageServices.getStudentSlider);
   const { data: slider2 } = useAsync(PageServices.getStudentHome);
-  // Updated useRouter import and usage
   const router = useRouter(); // For App Router
-  // const router = useRouter(); // For Pages Router (same hook name, different import)
   const [aboutPageData, setAboutPageData] = useState({});
   const [CourseData, setCourseData] = useState([]);
   const [blogData, setBlogData] = useState([]);
@@ -103,11 +103,8 @@ function Index() {
         type: 'register'
       });
       if (createJob.status === 'success') {
-        // Reset the form fields to their default values
         resetRegisterForm();
-        // Navigate using Next.js router
         router.push('/thank-you'); // For App Router
-        // router.push('/thank-you'); // For Pages Router (same method)
       } else {
         alert('Something went wrong');
       }
@@ -211,68 +208,11 @@ function Index() {
 
       <HeroSection title={homePageDetails?.Title} description={homePageDetails?.Description} image={`${constant.REACT_APP_URL}/uploads/${homePageDetails.image}`} />
 
-      {/* <section className="hero-sec">
-        <div className="banner-sec">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-6">
-                <div className="banner-content-sec">
-                  <h1>
-                    {homePageDetails?.Title?.split(';')[0]} <br />
-                    <span>
-                      {homePageDetails?.Title?.split(';')?.slice(1, homePageDetails?.Title?.split(';')?.length)?.join(" ")}
-                    </span>
-                  </h1>
-                  <h2 className='vetting-subtittle mb-1'>
-                    {homePageDetails?.SubTitle ? homePageDetails.SubTitle : ''}
-                  </h2>
-                  <div dangerouslySetInnerHTML={sanitizedData()}></div>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="banner-img-sec text-center">
-                  <img
-                    loading='lazy'
-                    src={`${constant.REACT_APP_URL}/uploads/${homePageDetails.image}`}
-                    alt='hero banner'
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-
       <section className="about-us-sec py-70">
         <div className="container">
           <h2 className="heading bottom-divider">About us</h2>
           <div className="about-us-inner">
-            <div className="row ">
-              <div className="col-md-5">
-                <div className="about-us-left">
-                  <div className="about-us-img-box">
-                    {/* Ensure image path is correct for Next.js public directory */}
-                    <img
-                      loading='lazy'
-                      src={`${constant.REACT_APP_URL}/uploads/${aboutPageData?.image}`}
-                      alt='Gateway Abroad'
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-7">
-                <div className="about-us-right ps-3">
-                  <h3 className="sub-heading">Who Are We?</h3>
-                  <p className="descp">
-                    {aboutPageData.pageTitle
-                      ? aboutPageData.pageTitle
-                      : `Gateway Abroad is run by a team of British education consultants who have themselves been students in various UK universities for a number of years. We are connected to a large network of overseas students and staff currently studying or working in universities throughout the UK. Through this network and through our in-house experience, we are able to find the best solution for each student, depending on specific requirements.`}
-                  </p>
-                  {/* Changed Link usage for Next.js */}
-                  <Link href="/about" className="site-btn">Know More</Link>
-                </div>
-              </div>
-            </div>
+            <AboutSection />
           </div>
         </div>
       </section>
@@ -453,17 +393,7 @@ function Index() {
         <div className="container">
           <h2 className="heading bottom-divider">Test Preparation</h2>
           <div className="row gy-4 justify-content-center">
-            {CourseData.map((course) => (
-              <div className="col-lg-4 col-6" key={course._id}>
-                {/* Changed Link usage for Next.js - ensure pageName creates a valid URL */}
-                <Link href={`/course/${course.pageName}`} className="test-pre-box">
-                  <div>
-                    <h4 className="text-uppercase">{course.pageName}</h4>
-                    <p>{course.pageTitle}</p>
-                  </div>
-                </Link>
-              </div>
-            ))}
+            <TestPreparation CourseData = {CourseData}/>
           </div>
         </div>
       </section>

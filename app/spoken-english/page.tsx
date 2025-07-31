@@ -1,4 +1,3 @@
-// pages/spoken-english.js or app/spoken-english/page.js (depending on your Next.js structure)
 "use client"; // Required because of hooks, state, forms, sliders, etc.
 
 import React, { useState, useEffect } from 'react';
@@ -11,6 +10,9 @@ import { testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import PageServices from '@/services/PageServices'; // Ensure path is correct
 import Head from 'next/head'; // For managing head tags
 import { constant } from '@/constant/index.constant'; // Ensure path is correct
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import Image from 'next/image';
+import { Star } from 'lucide-react';
 
 function SpokenEnglish() {
   // Updated useRouter import and usage
@@ -19,17 +21,17 @@ function SpokenEnglish() {
   const [spokenEnglishDetails, setspokenEnglishDetails] = useState({});
   const [testimonials, setTestimonial] = useState([]);
   const [faqData, setFaqData] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeTab, setActiveTab] = useState<string | null>()
 
-  const toggleAccordion = (index) => {
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
 
   const getSpokenEnglish = async () => {
     try {
       const response = await PageServices.getSpokenEnglishDetails();
       if (response.status === 'success') {
         setspokenEnglishDetails(response.data);
+        if (response.data.ComponentsLanguage && response.data.ComponentsLanguage.length > 0) {
+          setActiveTab(response.data.ComponentsLanguage[0].section) // This line sets the first tab as active
+        }
       }
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -81,41 +83,52 @@ function SpokenEnglish() {
 
   return (
     <div>
-      {/* Use Next.js Head instead of Helmet */}
       <Head>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
-        {/* Add other meta tags here if needed */}
-        {/* <SEO page="spoken-english" /> // Assuming SEO component handles its own Head tags */}
       </Head>
-      {/* Or if SEO component is responsible for meta tags, just use it */}
-      {/* <SEO page="spoken-english" /> */}
+      <section className="hero-gradient min-h-screen section-padding relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-60 left-10 w-4 h-4 bg-blue-500 rounded-full animate-bounce-slow"></div>
+          <div className="absolute top-80 right-20 w-6 h-6 bg-green-500 rounded-full animate-float"></div>
+          <div className="absolute bottom-20 left-1/4 w-8 h-8 bg-yellow-400 rounded-full animate-pulse-slow"></div>
+        </div>
 
-      <section>
-        <div className="banner-sec banner-new-bg">
-          <div className="container">
-            <div className="row align-items-center">
-              <div className="col-md-6">
-                <div className="banner-content-sec">
-                  <h1>
-                    {spokenEnglishDetails?.Title?.split(';')[0]} <span>{spokenEnglishDetails?.Title?.split(';')?.slice(1, spokenEnglishDetails?.Title?.split(';')?.length)?.join(" ")}</span>
-                  </h1>
-                  <h2 className='vetting-subtittle mb-1'>
-                    {spokenEnglishDetails?.SubTitle ? spokenEnglishDetails.SubTitle : ''}
-                  </h2>
+        <div className="container-sm mx-auto px-12 py-12 mx-auto relative z-2">
+          <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 items-center">
+            <div className="">
+              <div className="animate-fadeInLeft">
+                <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-2">
+                  {spokenEnglishDetails?.Title?.split(';')[0]} <span className="text-gradient">{spokenEnglishDetails?.Title?.split(';')?.slice(1, spokenEnglishDetails?.Title?.split(';')?.length)?.join(" ")}</span>
+                </h1>
+                <div className="text-lg text-gray-600 leading-relaxed">
+                  {spokenEnglishDetails?.SubTitle ? spokenEnglishDetails.SubTitle : ''}
                   <div dangerouslySetInnerHTML={sanitizedData()}></div>
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="contact-us-img text-center">
-                  {/* Ensure image path is correct for Next.js public directory or API */}
-                  <img
-                    loading='lazy'
-                    src={`${constant.REACT_APP_URL}/uploads/${spokenEnglishDetails.image}`}
-                    alt='hero banner'
-                    width={600} // Add appropriate width/height for better loading
-                    height={400}
-                  />
+
+              <div className="flex flex-col sm:flex-row gap-4 animate-fadeInLeft animate-stagger-2">
+                <Link href="/contact" className="btn-primary inline-block text-center">
+                  Enroll Now
+                </Link>
+                <button className="btn-secondary">Free Demo Class</button>
+              </div>
+            </div>
+
+            <div className="animate-fadeInRight">
+              <div className="relative">
+                <Image
+                  src={`${constant.REACT_APP_URL}/uploads/${spokenEnglishDetails.image}`}
+                  alt="IELTS Preparation"
+                  width={600}
+                  height={500}
+                  className="w-full animate-float p-2"
+                />
+                <div className="absolute -top-4 -right-4 bg-gradient-to-r from-blue-500 to-green-500 text-white p-3 rounded-full animate-bounce-slow">
+                  <Star className="h-6 w-6" />
+                </div>
+                <div className="absolute -bottom-4 -left-4 bg-gradient-to-r from-blue-500 to-green-500 text-white p-3 rounded-full animate-bounce-slow">
+                  <Star className="h-6 w-6" />
                 </div>
               </div>
             </div>
@@ -128,38 +141,45 @@ function SpokenEnglish() {
           <div className="get-in-touch-section">
             <h2 className="heading text-center d-block mb-3">Why Choose Gateway Abroad for Spoken English Classes ?</h2>
             <div className="spoken-english-feature-section pt-4">
-              <div className="row gy-3 justify-content-center">
-                {spokenEnglishDetails.WhyChoose?.map((data) => {
-                  return (
-                    <React.Fragment key={data.iconImage}>
-                      <div className="col-lg-6 col-md-6 col-sm-12">
-                        <div className="features-guide-box">
-                          <div className="features-guide-left">
-                            {/* Ensure image path is correct for Next.js public directory or API */}
-                            <img
-                              decoding="async"
-                              src={`${constant.REACT_APP_URL}/uploads/${data.iconImage}`}
-                              alt={data.title}
-                              width={50}
-                              height={50}
-                            />
-                          </div>
-                          <div className="features-guide-right">
-                            <strong>{data.title}</strong>
-                            {data?.content}
-                          </div>
+              <div className="row row-cols-1 row-cols-md-2 g-3 g-lg-4 justify-content-center">
+                {spokenEnglishDetails.WhyChoose?.map((data, index) => (
+                  <div className="col" key={index}>
+                    <div className="d-flex flex-column flex-sm-row align-items-start p-4 rounded-xl shadow-lg hover:shadow-xl bg-gray-100 border border-light h-100">
+                      {/* Icon */}
+                      <div className="features-guide-left me-sm-4 mb-3 mb-sm-0 mx-auto">
+                        <div className="d-flex align-items-center justify-content-center rounded-circle p-3 shadow-sm" style={{ width: '60px', height: '60px' }}>
+                          <img
+                            decoding="async"
+                            src={`${constant.REACT_APP_URL}/uploads/${data.iconImage}`}
+                            alt={data.title}
+                            width={50}
+                            height={50}
+                            className="img-fluid rounded-circle"
+                            loading="lazy"
+                          />
                         </div>
                       </div>
-                    </React.Fragment>
-                  );
-                })}
+
+                      {/* Content */}
+                      <div className="features-guide-right">
+                        <h3 className="h5 text-dark font-bold mb-2">{data.title}</h3>
+                        <p className="text-secondary mb-0">
+                          {typeof data.content === 'string'
+                            ? data.content
+                            : data.content?.toString() || 'No description available.'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ======== Our Testimonials section start ===== */}
+
       <section className="our-testimonials py-70 gmat-testimonials">
         <div className="container">
           <h2 className="heading text-center d-block">What Our Spoken English Prep Achievers Say</h2>
@@ -208,129 +228,108 @@ function SpokenEnglish() {
           )}
         </div>
       </section>
-      {/* ======== Our Testimonials section end ===== */}
 
-      {/* ======== Components of the English Language section start ===== */}
-      <section className="english-components-section py-70">
-        <div className="container">
-          <div className="title text-center mb-5">
-            <h2 className="heading mb-2">Components of the English Language</h2>
-            <p className="descp text-center">The English language can be broken down into several key components that work together to create meaning</p>
+      <section className="english-components-section py-12 md:py-24">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-2">Components of the English Language</h2>
+            <p className="text-gray-600">
+              The English language can be broken down into several key components that work together to create meaning
+            </p>
           </div>
           <div className="english-components-section-inner">
-            <div className="row">
-              <div className="col-lg-5">
-                <div className="english-components-inner-left text-center">
-                  {/* Ensure image path is correct for Next.js public directory */}
+            <div className="flex flex-col lg:flex-row items-start pt-8 gap-8">
+              <div className="lg:w-5/12 text-center">
+                <div className="english-components-inner-left">
                   <img
                     src="/img/english-components-img.svg"
-                    alt='english-components'
+                    alt="english-components"
                     width={400}
                     height={400}
+                    className="mx-auto"
                   />
                 </div>
               </div>
-              <div className="col-lg-7">
+              <div className="lg:w-7/12 w-full">
                 <div className="english-components-inner-right">
-                  <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    {spokenEnglishDetails?.ComponentsLanguage?.map((data, index) => {
-                      return (
-                        <li className="nav-item" key={index} role="presentation">
+                  {spokenEnglishDetails?.ComponentsLanguage && spokenEnglishDetails.ComponentsLanguage.length > 0 && (
+                    <>
+                      {/* Custom Tab Triggers */}
+                      <div className="flex flex-wrap w-full gap-1 mb-4">
+                        {spokenEnglishDetails.ComponentsLanguage.map((data: any) => (
                           <button
-                            className={`nav-link ${index === 0 ? 'active' : ""}`}
-                            id={data.id}
-                            data-bs-toggle="pill"
-                            data-bs-target={`#${data.section}`}
-                            type="button"
-                            role="tab"
-                            aria-controls={`${data.section}`}
-                            aria-selected="true"
+                            key={`trigger-${data.id}`}
+                            className={`
+                              px-3 py-2 rounded-md text-sm font-medium transition-colors
+                              ${activeTab === data.section
+                                ? "bg-red-600 text-white shadow-md"
+                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                              }
+                            `}
+                            onClick={() => setActiveTab(data.section)}
                           >
                             {data.section}
                           </button>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                  <div className="tab-content" id="pills-tabContent">
-                    {spokenEnglishDetails?.ComponentsLanguage?.map((data, index) => {
-                      return (
+                        ))}
+                      </div>
+
+                      {/* Custom Tab Contents */}
+                      {spokenEnglishDetails.ComponentsLanguage.map((data: any) => (
                         <div
-                          key={data.section}
-                          className={`tab-pane fade ${index === 0 ? " show active" : ""}`}
-                          id={`${data.section}`}
-                          role="tabpanel"
-                          aria-labelledby={`${data.section}`}
+                          key={`content-${data.section}`}
+                          className={`
+                            transition-opacity duration-300 ease-in-out
+                            ${activeTab === data.section ? "opacity-100 block" : "opacity-0 hidden"}
+                          `}
                         >
-                          <p className="descp mb-2">
-                            {data.content}
-                          </p>
-                          {data.components?.map((innerData, innerIndex) => {
-                            return (
-                              <p key={`${innerData.name}_${innerIndex}`} className="descp mb-2">
-                                <strong>{innerData.name}</strong>
-                                &nbsp;{innerData.description}
-                              </p>
-                            )
-                          })}
+                          {activeTab === data.section && (
+                            <div className="space-y-4 rounded-xl bg-gray-50 p-3 font-semibold shadow-sm">
+                              <p className="text-gray-700 leading-relaxed">{data.content}</p>
+                              {data.components && data.components.length > 0 ? (
+                                <div className="mt-1 space-y-2">
+                                  {data.components.map((innerData: any, idx: number) => (
+                                    <p key={`${innerData.name}-${idx}`} className="text-gray-700">
+                                      <strong className="font-semibold text-gray-800">{innerData.name}</strong>{" "}
+                                      {innerData.description}
+                                    </p>
+                                  ))}
+                                </div>
+                              ) : null}
+                            </div>
+                          )}
                         </div>
-                      )
-                    })}
-                  </div>
+                      ))}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      {/* ======== Components of the English Language section end ===== */}
-
-      {/* ======== FAQs section start ===== */}
       <section className="faq-section py-70 mb-0">
         <div className="container">
           <div className="title text-center mb-5">
             <h2 className="heading mb-2">Frequently asked questions</h2>
             <p className="descp text-center">Can't find the answer you are looking for?</p>
           </div>
-          <div className="faq-section-container">
-            <div className="accordion" id="accordionExample">
-              {faqData.map((f, index) => (
-                <div className="accordion-item" key={index}>
-                  <h2 className="accordion-header" id={`heading${index}`}>
-                    <button
-                      className={`accordion-button ${activeIndex === index ? '' : 'collapsed'}`}
-                      type="button"
-                      onClick={() => toggleAccordion(index)}
-                      aria-expanded={activeIndex === index ? 'true' : 'false'}
-                      aria-controls={`collapse${index}`}
-                    >
-                      {f.title}
-                    </button>
-                  </h2>
-                  <div
-                    id={`collapse${index}`}
-                    className={`accordion-collapse collapse ${activeIndex === index ? 'show' : ''}`}
-                    aria-labelledby={`heading${index}`}
-                    data-bs-parent="#accordionExample"
-                  >
-                    <div className="accordion-body">
-                      {f.content}
-                    </div>
-                  </div>
-                </div>
+          <div className="max-w-5xl mx-auto">
+            <Accordion type="single" collapsible className="w-full">
+              {faqData.map((f: any, index: number) => (
+                <AccordionItem value={`item-${index}`} key={index}>
+                  <AccordionTrigger className="text-lg font-semibold text-left py-3">{f.title}</AccordionTrigger>
+                  <AccordionContent className="text-gray-700 pb-3">{f.content}</AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </div>
       </section>
-      {/* ======== FAQs section end ===== */}
-
-      {/* ======== Pricing Plan section start ===== */}
       <section className="pricing-plan-section py-70 linear-bg spoken-english">
         <div className="container">
           <div className="price-title">
             <h2 className="heading mb-2">Plans &amp; Pricing</h2>
-            <p className="descp">We are accepting PayPal, Paytm, PhonePe and Debit &amp; Credit Card</p>
+            <p style={{ textAlign: 'left' }} className="descp">We are accepting PayPal, Paytm, PhonePe and Debit &amp; Credit Card</p>
           </div>
           <div className="pricing-plan-section-inner">
             <div className="row justify-content-center">
@@ -386,24 +385,19 @@ function SpokenEnglish() {
           </div>
         </div>
       </section>
-      {/* ======== Pricing Plan section end ===== */}
-
-      {/* ======== Counselling Session section start ===== */}
       <section className="app-banner-section counselling-session-sec">
         <div className="container">
           <div className="app-banner-section-inner counselling-session-sec-inner">
-            <div className="row align-items-center">
+            <div className="row align-items-center p-8">
               <div className="col-lg-6">
                 <div className="app-banner-content-left">
                   <h2 className="mb-3">Avail A Complementary Counselling Session</h2>
                   <p className="mb-4">Join thousand of instructors and earn money hassle free!</p>
-                  {/* Changed Link usage for Next.js */}
                   <Link className="site-btn" href="/contact">Contact us</Link>
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="app-banner-content-right text-center">
-                  {/* Ensure image path is correct for Next.js public directory */}
                   <img
                     src="/img/counselling-session.svg"
                     alt="Counselling Session"

@@ -35,7 +35,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "components/home/HomePage.tsx", "components/TestPreparationSection.jsx", "app/contact/page.tsx"  ],
   "exclude": [
     "node_modules"
   ]
