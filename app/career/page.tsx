@@ -4,9 +4,6 @@ import React, { useRef, useEffect, useState } from "react";
 import PageServices from "@/services/PageServices";
 import useAsync from "@/hooks/useAsync";
 
-// Icons (replace with your icon library or import from Lucide, React Icons, etc.)
-import { Briefcase, MapPin, Clock, DollarSign } from "lucide-react";
-
 export default function CareerPage() {
   const { data, loading, error, run } = useAsync(PageServices.getCareerPageById);
   const { data: jobFormData, loading: jobFormLoading, error: jobFormError, run: runJobForm } = useAsync(PageServices.getJobData);
@@ -86,12 +83,12 @@ export default function CareerPage() {
 
       {/* ====== Hero Section (Tailwind UI) ====== */}
       <section className="hero-gradient">
-        <div className="px-4 min-h-[50vh]">
-          <div className="text-center m-auto max-w-4xl pt-36 pb-8">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+        <div className="px-4 min-h-[40vh]">
+          <div className="text-center m-auto max-w-4xl pt-32 pb-8">
+            <h1 className="text-3xl lg:text-[2.6rem] font-bold text-gray-900 mb-6">
               Join Our <span className="text-gradient">Team</span>
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Be part of a dynamic team that helps students achieve their study abroad dreams. Explore exciting career
               opportunities with Gateway Abroad Education.
             </p>

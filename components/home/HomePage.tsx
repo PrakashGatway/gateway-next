@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // For App Router
 import { useForm } from 'react-hook-form'; // Import useForm
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { slider2settings, settings, youtubeSlider, blogSlider, testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import PageServices from '@/services/PageServices'; // Ensure path is correct
 import useAsync from '@/hooks/useAsync'; // Ensure path is correct
@@ -15,24 +13,16 @@ import Head from 'next/head'; // For managing head tags
 import HeroSection from '../hero-section';
 import AboutSection from '../about-section';
 import TestPreparation from '../TestPreparationSection';
+import { useGlobal } from '@/hooks/AppStateContext';
 
 function Index() {
-  const { data } = useAsync(PageServices.getAboutPageById);
-  const { data: homePageData } = useAsync(PageServices.getHomePageDetails);
-  const { data: course } = useAsync(PageServices.getCourse);
-  const { data: testimonialsData } = useAsync(PageServices.getTestimonial);
-  const { data: videoStudednt } = useAsync(PageServices.getYoutubeVideo);
-  const { data: slider } = useAsync(PageServices.getStudentSlider);
-  const { data: slider2 } = useAsync(PageServices.getStudentHome);
   const router = useRouter(); // For App Router
-  const [aboutPageData, setAboutPageData] = useState({});
-  const [CourseData, setCourseData] = useState([]);
   const [blogData, setBlogData] = useState([]);
   const [video, setVideo] = useState([]);
-  const [testimonials, setTestimonial] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [studentData, setStudentData] = useState([]);
-  const [homePageDetails, setHomePageDetails] = useState({});
+
+  const { homePage:homePageDetails,course: CourseData,aboutPage:aboutPageData,testimonials:testimonials ,youtubeVideo:videoStudednt,studentSlider:slider,studentHome:slider2} = useGlobal();
 
   const fetchBlogs = useCallback(async (page = 1, category = 'All', search = '') => {
     try {
@@ -43,38 +33,26 @@ function Index() {
     }
   }, []);
 
+
   useEffect(() => {
     fetchBlogs();
   }, [fetchBlogs]);
 
   useEffect(() => {
-    if (data?.data?.page) {
-      setAboutPageData(data.data.page || '');
+    if (videoStudednt?.media) {
+      setVideo(videoStudednt.media);
     }
-    if (homePageData?.data) {
-      setHomePageDetails(homePageData?.data || {});
+    if (slider?.media) {
+      setSliderData(slider?.media);
     }
-    if (course?.data?.page) {
-      setCourseData(course.data.page);
+    if (slider2?.media) {
+      setStudentData(slider2?.media);
     }
-    if (videoStudednt?.data?.media) {
-      setVideo(videoStudednt.data.media);
-    }
-    if (testimonialsData?.data?.testimonial) {
-      setTestimonial(testimonialsData.data.testimonial);
-    }
-    if (slider?.data?.media) {
-      setSliderData(slider.data.media);
-    }
-    if (slider2?.data?.media) {
-      setStudentData(slider2.data.media);
-    }
-  }, [data, course, testimonialsData, video, slider, slider2, homePageData, videoStudednt]);
+  }, [slider, slider2, videoStudednt]);
 
 
   const marqueeRef = useRef(null);
 
-  // --- Register Now Form Setup ---
   const {
     register: registerRegister,
     handleSubmit: handleSubmitRegister,
@@ -91,7 +69,6 @@ function Index() {
   });
 
   const handleUpdate = async (data) => { // 'data' now contains validated form values
-    // Destructure data if needed, or use data directly
     const { name, email, mobile, studyDestination, query } = data;
     try {
       const createJob = await PageServices.createForme({
@@ -137,66 +114,9 @@ function Index() {
     }
   });
 
-  const handleUpdate2 = async (data) => { // 'data' now contains validated form values
-    // Destructure data if needed, or use data directly
-    const {
-      name, lastName, email, mobile, whatsappNo, age, city,
-      occupation, adress, howDidyouKnow, qualifications, query
-    } = data;
-    try {
-      // Make an API call to update the data
-      const createJob = await PageServices.createForme({
-        name,
-        email,
-        mobileNo: mobile,
-        lastName,
-        whatsappNo,
-        city,
-        age,
-        occupation,
-        adress, // Keep typo for consistency
-        howDidyouKnow,
-        qualification: qualifications,
-        message: query,
-        type: 'partner'
-      });
-      if (createJob.status === 'success') {
-        // Reset the form fields to their default values
-        resetPartnerForm();
-        const modalEl = document.getElementById("partnerModal");
-        if (modalEl) {
-          // Use Bootstrap's modal methods if jQuery/Bootstrap JS is available
-          // Otherwise, manipulate classes/styles directly
-          const bootstrapModal = window.bootstrap?.Modal.getInstance(modalEl);
-          if (bootstrapModal) {
-            bootstrapModal.hide();
-          } else {
-            // Fallback if Bootstrap JS instance isn't available
-            modalEl.classList.remove("show");
-            modalEl.style.display = "none";
-            modalEl.setAttribute("aria-hidden", "true");
-            document.body.classList.remove("modal-open");
-            const backdrop = document.querySelector(".modal-backdrop");
-            if (backdrop) backdrop.remove();
-          }
-        }
-        // Navigate using Next.js router
-        router.push('/thank-you'); // For App Router
-        // router.push('/thank-you'); // For Pages Router (same method)
-      } else {
-        alert('Something went wrong');
-      }
-    } catch (error) {
-      console.error("Error submitting partner form:", error);
-      alert('An error occurred. Please try again.'); // Provide user feedback
-    }
-  };
-
-  // Meta data for Next.js Head (alternative to Helmet)
   const meta = {
     title: 'Home',
     description: 'Welcome to our website.',
-    // Add more meta tags as needed
   };
 
   return (
@@ -206,13 +126,13 @@ function Index() {
         <meta name="description" content={meta.description} />
       </Head>
 
-      <HeroSection title={homePageDetails?.Title} description={homePageDetails?.Description} image={`${constant.REACT_APP_URL}/uploads/${homePageDetails.image}`} />
+      <HeroSection title={homePageDetails?.Title} description={homePageDetails?.Description} image={`${constant.REACT_APP_URL}/uploads/${homePageDetails?.image}`} />
 
       <section className="about-us-sec py-70">
         <div className="container">
           <h2 className="heading bottom-divider">About us</h2>
           <div className="about-us-inner">
-            <AboutSection />
+            <AboutSection aboutUs={aboutPageData?.page} />
           </div>
         </div>
       </section>
@@ -393,7 +313,7 @@ function Index() {
         <div className="container">
           <h2 className="heading bottom-divider">Test Preparation</h2>
           <div className="row gy-4 justify-content-center">
-            <TestPreparation CourseData = {CourseData}/>
+            <TestPreparation CourseData={CourseData?.page} />
           </div>
         </div>
       </section>
@@ -567,12 +487,12 @@ function Index() {
       <section className="our-testimonials py-70">
         <div className="container">
           <h2 className="heading bottom-divider mb-0">Our Testimonials</h2>
-          {testimonials.length === 1 ? (
+          {testimonials?.testimonial?.length === 1 ? (
             <div className="our-testimonials-slider-inner single-testmonial">
               <div className="student-test-box">
                 <div className="stundent-content"> {/* Note: Typo in class name 'stundent-content' kept */}
                   <div className="d-flex align-items-center justify-content-between">
-                    <h6>{testimonials[0].name}</h6>
+                    <h6>{testimonials?.testimonial[0]?.name}</h6>
                     <ul className="list-unstyled d-flex">
                       <li><span><i className="fa fa-star" /></span></li>
                       <li><span><i className="fa fa-star" /></span></li>
@@ -581,7 +501,7 @@ function Index() {
                       <li><span><i className="fa fa-star" /></span></li>
                     </ul>
                   </div>
-                  <p className="descp">{testimonials[0].content.substring(0, 250)}</p>
+                  <p className="descp">{testimonials?.testimonial[0]?.content.substring(0, 250)}</p>
                 </div>
                 <div className="test-univ-sec">
                   <h5></h5>
@@ -590,7 +510,7 @@ function Index() {
             </div>
           ) : (
             <Slider {...testimonialSlider} className="our-testimonials-slider">
-              {testimonials.map((test) => (
+              {testimonials?.testimonial?.map((test) => (
                 <div className="our-testimonials-slider-inner" key={test._id}>
                   <div className="student-test-box">
                     <div className="stundent-content"> {/* Note: Typo in class name 'stundent-content' kept */}

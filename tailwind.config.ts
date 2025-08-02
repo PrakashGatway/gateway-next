@@ -1,15 +1,17 @@
 import type { Config } from "tailwindcss"
 
 const config: Config = {
+  prefix: "",
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,tsx,mdx}",
-    "*.{js,ts,jsx,tsx,mdx}",
+    "*.{js,ts,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     extend: {
+      scrollBehavior: ["smooth"], 
       colors: {
         border: "hsl(var(--border))",
         "heading-clr": "#454056", // ← Your custom color

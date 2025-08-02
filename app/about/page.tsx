@@ -6,9 +6,10 @@ import useAsync from '@/hooks/useAsync';
 import Link from 'next/link'; // Changed from react-router-dom
 import Head from 'next/head'; // For managing head tags
 import HeroSection from '@/components/hero-section';
+import { useGlobal } from '@/hooks/AppStateContext';
 
 function About() {
-  const { data } = useAsync(PageServices.getAboutPageById);
+  // const { data } = useAsync(PageServices.getAboutPageById);
   const { data: member } = useAsync(PageServices.getMember);
   const [pageTitle, setPageTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -20,16 +21,18 @@ function About() {
   const [students, setStudents] = useState(1000000);
   const [experience, setExperience] = useState(15);
 
+  const { aboutPage:data } = useGlobal();
+
   useEffect(() => {
-    if (data?.data?.page) {
-      setPageTitle(data.data.page.pageTitle || '');
-      setPageName(data.data.page.pageName || '');
-      setHtmlData(data.data.page.htmldes || '');
-      setDescription(data.data.page.description || '');
-      setExperience(data.data.page.experience || 0);
-      setInterNationalOfc(data.data.page.interNationalOfc || 0);
-      setNationalofc(data.data.page.nationalOfc || 0);
-      setStudents(data.data.page.students || 0);
+    if (data?.page) {
+      setPageTitle(data.page.pageTitle || '');
+      setPageName(data.page.pageName || '');
+      setHtmlData(data.page.htmldes || '');
+      setDescription(data.page.description || '');
+      setExperience(data.page.experience || 0);
+      setInterNationalOfc(data.page.interNationalOfc || 0);
+      setNationalofc(data.page.nationalOfc || 0);
+      setStudents(data.page.students || 0);
     }
     if (member?.data?.member) {
       setform(member.data.member || []);
@@ -38,10 +41,10 @@ function About() {
 
   const [counted, setCounted] = useState(0);
   const handleScroll = () => {
-    if (counted === 0 && window.scrollY > 200) {
+    if (counted == 0 && window.scrollY > 200) {
       document.querySelectorAll('.count').forEach(element => {
         const target = parseInt(element.getAttribute('data-target'), 10);
-        const duration = 3000;
+        const duration = 5000;
         let start;
         const updateCounter = timestamp => {
           if (!start) start = timestamp;
@@ -67,21 +70,16 @@ function About() {
     };
   }, [counted]);
 
-  // Meta data for Next.js Head (alternative to Helmet)
   const meta = {
     title: 'About Us',
     description: 'Learn about our company.',
-    // Add more meta tags as needed
   };
 
   return (
     <>
-      {/* Use Next.js Head instead of Helmet */}
       <Head>
         <title>{meta.title}</title>
         <meta name="description" content={meta.description} />
-        {/* Add other meta tags here if needed */}
-        {/* <SEO page="about" /> // Assuming SEO component handles its own Head tags */}
       </Head>
 
       <div>
@@ -103,7 +101,7 @@ function About() {
                 <div className="col-md-7">
                   <div className="about-us-right-new ps-3">
                     <h2 className="heading">Who Are We?</h2>
-                    <p style={{textAlign:'left'}} className="descp">{pageTitle ? pageTitle : 'Gateway Abroad is run by a team of British education consultants who have themselves been students in various UK universities for a number of years. We are connected to a large network of overseas students and staff currently studying or working in universities throughout the UK. Through this network and through our in-house experience, we are able to find the best solution for each student, depending on specific requirements.'}</p>
+                    <p style={{ textAlign: 'left' }} className="descp">{pageTitle ? pageTitle : 'Gateway Abroad is run by a team of British education consultants who have themselves been students in various UK universities for a number of years. We are connected to a large network of overseas students and staff currently studying or working in universities throughout the UK. Through this network and through our in-house experience, we are able to find the best solution for each student, depending on specific requirements.'}</p>
                   </div>
                 </div>
               </div>
@@ -114,7 +112,7 @@ function About() {
                 <div className="col-md-7">
                   <div className="about-us-right-new ps-3">
                     <h2 className="heading">What Will We Do for You?</h2>
-                    <p style={{textAlign:'left'}}  className="descp">{description ? description : 'Gateway Abroad will be your direct window to British further education. Selecting a university for postgraduate studies in an unfamiliar country can be a daunting task. Gateway Abroad will help you to find the right university, based on your individual requirements. Once a pre-selection is made, we can contact the institutions and make all enquiries and admissions arrangements on your behalf.'}</p>
+                    <p style={{ textAlign: 'left' }} className="descp">{description ? description : 'Gateway Abroad will be your direct window to British further education. Selecting a university for postgraduate studies in an unfamiliar country can be a daunting task. Gateway Abroad will help you to find the right university, based on your individual requirements. Once a pre-selection is made, we can contact the institutions and make all enquiries and admissions arrangements on your behalf.'}</p>
                   </div>
                 </div>
                 <div className="col-md-5">

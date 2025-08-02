@@ -34,6 +34,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.jsx",
     ".next/types/**/*.ts"
 , "components/home/HomePage.tsx", "components/TestPreparationSection.jsx", "app/contact/page.tsx"  ],
   "exclude": [

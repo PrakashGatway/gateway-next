@@ -23,23 +23,23 @@ const HeroSection = ({type ,title,description,image}:any) => {
       <div className="container-sm mx-auto px-12 py-28 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content with staggered animations */}
-          <div className="space-y-6">
-            <div className="animate-fadeInLeft">
-              <h1 className="text-3xl lg:text-5xl font-bold leading-tight">
-                <span className="inline-block animate-fadeInUp">{title?.split(';')[0]}</span>
+          <div className="space-y-3">
+            <div className="">
+              <h1 className="text-3xl lg:text-[2.6rem] font-bold leading-tight">
+                <span className="inline-block">{title?.split(';')[0]}</span>
                 <br />
-              { type != "about" &&<> <span className="text-gradient py-2 inline-block animate-fadeInUp animate-stagger-1">
+              { type != "about" &&<> <span className="text-gradient py-2 inline-block">
                   {title?.split(';')?.slice(1, title?.split(';')?.length)?.join(" ")}
                 </span>
                 <br /> </>}
               </h1>
             </div>
 
-            <div className="animate-fadeInLeft animate-stagger-3">
-              <div className="text-gray-600 text-lg leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{__html :description}}></div>
+            <div className="">
+              <div className="text-gray-600 text-base leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{__html :description}}></div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 animate-fadeInLeft animate-stagger-4">
+            <div className="flex flex-col sm:flex-row gap-4 animate-stagger-4">
               <Link href="/contact" className="btn-primary inline-block text-center group">
                 <span className="relative z-10">Get Started Today</span>
               </Link>

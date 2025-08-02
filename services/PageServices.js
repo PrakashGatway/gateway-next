@@ -257,7 +257,6 @@ const PageServices = {
         return await requests.delete(`/office/${id} `)
     },
 
-
     getAllFaq: async (category) => {
         return await requests.get(`/faq`);
     },

@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // For App Router
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+
 import { testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import PageServices from '@/services/PageServices'; // Ensure path is correct
 import Head from 'next/head'; // For managing head tags
@@ -98,10 +97,10 @@ function SpokenEnglish() {
           <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 items-center">
             <div className="">
               <div className="animate-fadeInLeft">
-                <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl lg:text-[2.6rem] font-bold text-gray-900 mb-2">
                   {spokenEnglishDetails?.Title?.split(';')[0]} <span className="text-gradient">{spokenEnglishDetails?.Title?.split(';')?.slice(1, spokenEnglishDetails?.Title?.split(';')?.length)?.join(" ")}</span>
                 </h1>
-                <div className="text-lg text-gray-600 leading-relaxed">
+                <div className="text-base text-gray-600 leading-relaxed">
                   {spokenEnglishDetails?.SubTitle ? spokenEnglishDetails.SubTitle : ''}
                   <div dangerouslySetInnerHTML={sanitizedData()}></div>
                 </div>

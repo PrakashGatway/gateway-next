@@ -72,12 +72,12 @@ function Contact() {
   return (
     <div>
             <section className="hero-gradient">
-        <div className="px-4 min-h-[50vh]">
-          <div className="text-center m-auto max-w-4xl pt-36 pb-8">
-              <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+        <div className="px-4 min-h-[40vh]">
+          <div className="text-center m-auto max-w-4xl pt-32 pb-6">
+              <h1 className="text-3xl lg:text-[2.6rem] font-bold text-gray-900 mb-6">
               Contact <span className="text-gradient">Us</span>
             </h1>
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-lg text-gray-600 leading-relaxed">
               Ready to start your study abroad journey? Get in touch with our expert counselors today.
             </p>
           </div>
