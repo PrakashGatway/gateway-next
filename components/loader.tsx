@@ -1,18 +1,8 @@
-// components/Loader.jsx
-import { useEffect, useState } from 'react';
-
 export default function Loader() {
-  const [mounted, setMounted] = useState(false);
-
-  // Ensure React is mounted before showing full loader
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="loader-overlay">
       <div className="loader-container">
-        {/* Centered Logo Container */}
         <div className="loader-inner">
           <img
             src="/img/favicon.png"
@@ -22,7 +12,6 @@ export default function Loader() {
           />
         </div>
 
-        {/* Outer Spinning Ring */}
         <div className="loader-spinner"></div>
       </div>
 

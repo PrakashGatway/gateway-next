@@ -13,11 +13,22 @@ import { useEffect, useState } from "react";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { GlobalProvider } from "@/hooks/AppStateContext";
+import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
+import Loader from "@/components/loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const hideLayoutOnPaths = ['/thank-you'];
+
+function LoaderWrapper({ children }: { children: ReactNode }) {
+  const { loading } = useGlobal();
+  return (
+    <>
+      {children}
+      {loading && <Loader/>}
+    </>
+  );
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -39,13 +50,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className={`${inter.className} hold-transition sidebar-mini layout-fixed`}>
         <ThemeProvider defaultTheme="light" storageKey="gateway-theme">
           <GlobalProvider>
-              <>
-                {!shouldHideLayout && <Header />}
-                <main>
-                  <div>{children}</div>
-                </main>
-                {!shouldHideLayout && <Footer />}
-              </>
+            <LoaderWrapper>
+              {!shouldHideLayout && <Header />}
+              <main>
+                <div>{children}</div>
+              </main>
+              {!shouldHideLayout && <Footer />}
+            </LoaderWrapper>
           </GlobalProvider>
         </ThemeProvider>
       </body>
