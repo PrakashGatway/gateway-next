@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
           rel="stylesheet"
         />
-        <title>Gateway Abroad</title>
+        <title>Gateway Abroad | Study Abroad Consultants</title>
       </head>
       <body className={`${inter.className} hold-transition sidebar-mini layout-fixed`}>
         <ThemeProvider defaultTheme="light" storageKey="gateway-theme">
