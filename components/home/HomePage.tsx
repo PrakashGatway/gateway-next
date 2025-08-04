@@ -13,6 +13,8 @@ import HeroSection from '../hero-section';
 import AboutSection from '../about-section';
 import TestPreparation from '../TestPreparationSection';
 import { useGlobal } from '@/hooks/AppStateContext';
+import BecomePartnerSection from '../pages/becomePartner';
+import PartnerSection from '../pages/partnerSection';
 
 function Index() {
   const router = useRouter(); // For App Router
@@ -21,7 +23,7 @@ function Index() {
   const [sliderData, setSliderData] = useState([]);
   const [studentData, setStudentData] = useState([]);
 
-  const { homePage:homePageDetails,course: CourseData,aboutPage:aboutPageData,testimonials:testimonials ,youtubeVideo:videoStudednt,studentSlider:slider,studentHome:slider2} = useGlobal();
+  const { homePage: homePageDetails, course: CourseData, aboutPage: aboutPageData, testimonials: testimonials, youtubeVideo: videoStudednt, studentSlider: slider, studentHome: slider2 } = useGlobal();
 
   const fetchBlogs = useCallback(async (page = 1, category = 'All', search = '') => {
     try {
@@ -90,7 +92,6 @@ function Index() {
     }
   };
 
-  // --- Become a Partner Form Setup ---
   const {
     register: registerPartner,
     handleSubmit: handleSubmitPartner,
@@ -113,10 +114,58 @@ function Index() {
     }
   });
 
-  const meta = {
-    title: 'Home',
-    description: 'Welcome to our website.',
+  const handleUpdate2 = async (data) => { // 'data' now contains validated form values
+    // Destructure data if needed, or use data directly
+    const {
+      name, lastName, email, mobile, whatsappNo, age, city,
+      occupation, adress, howDidyouKnow, qualifications, query
+    } = data;
+
+    try {
+      // Make an API call to update the data
+      const createJob = await PageServices.createForme({
+        name,
+        email,
+        mobileNo: mobile,
+        lastName,
+        whatsappNo,
+        city,
+        age,
+        occupation,
+        adress, // Keep typo for consistency
+        howDidyouKnow,
+        qualification: qualifications,
+        message: query,
+        type: 'partner'
+      });
+
+
+
+      if (createJob.status === 'success') {
+        // Reset the form fields to their default values
+        resetPartnerForm();
+
+        const modalEl = document.getElementById("partnerModal");
+
+        // Manually hide the modal
+        modalEl.classList.remove("show");
+        modalEl.style.display = "none";
+        modalEl.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+
+        // Remove backdrop
+        const backdrop = document.querySelector(".modal-backdrop");
+        if (backdrop) backdrop.remove();// ✅ safer method
+        navigate('/thank-you');
+      } else {
+        alert('Something went wrong');
+      }
+    } catch (error) {
+      console.error("Error submitting partner form:", error);
+      alert('An error occurred. Please try again.'); // Provide user feedback
+    }
   };
+
 
   return (
     <>
@@ -286,12 +335,12 @@ function Index() {
         </Slider>
       </section>
 
-      <marquee
+      <marquee 
         ref={marqueeRef}
         className="marquee-product"
         behavior="alternate"
         direction="right"
-        scrollAmount={5}
+        // scrollAmount={5}
         onMouseEnter={() => marqueeRef.current?.stop()}
         onMouseLeave={() => marqueeRef.current?.start()}
       >
@@ -567,7 +616,7 @@ function Index() {
           </div>
         </div>
       </section>
-
+      <PartnerSection/>
       <section className="app-banner-section">
         <div className="container">
           <div className="app-banner-section-inner">
@@ -576,21 +625,12 @@ function Index() {
                 <div className="app-banner-content-left">
                   <h2 className="mb-3">Become a Partner</h2>
                   <p className="mb-4">Join thousand of instructors and earn money hassle free!</p>
-                  {/* Changed Link usage for Next.js */}
-                  <Link
-                    className="site-btn"
-                    href=""
-                    data-bs-toggle="modal"
-                    data-bs-target="#partnerModal"
-                  >
-                    Apply Now
-                  </Link>
+                  <button className="site-btn" data-bs-toggle="modal" data-bs-target="#partnerModal">Apply Now</button>
                 </div>
               </div>
               <div className="col-lg-6">
                 <div className="app-banner-content-right text-center">
-                  {/* Ensure image path is correct for Next.js public directory */}
-                  <img src="/img/partner-img.svg" alt="partner" />
+                  <img className='mx-auto' src="/img/partner-img.svg" alt="partner" />
                 </div>
               </div>
             </div>

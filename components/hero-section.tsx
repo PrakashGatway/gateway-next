@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const HeroSection = ({type ,title,description,image}:any) => {
   return (
-    <section className="hero-gradient min-h-screen pt-6 flex items-center relative overflow-hidden">
+    <section className="hero-gradient pt-6 py-12 flex items-center relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-28 left-10 w-4 h-4 bg-red-500 rounded-full animate-bounce-slow"></div>

@@ -1,10 +1,7 @@
-// app/gallery/page.js
 'use client';
 
 import React, { useState, useEffect } from 'react';
-// import Link from 'next/link'; // Not used with state-based tabs
 import Image from 'next/image';
-// Removed usePathname import
 import useAsync from '@/hooks/useAsync'; // Adjust path as needed
 import PageServices from '@/services/PageServices'; // Adjust path as needed
 import { motion, AnimatePresence } from 'framer-motion';

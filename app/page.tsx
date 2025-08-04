@@ -12,7 +12,7 @@ export async function generateMetadata() {
           ogDescription: "We home appreciate your interest in Gateway Abroad. Stay tuned for updates!",
           ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
         }),
-      1000 
+      500 
     )
   );
 
@@ -24,9 +24,9 @@ export async function generateMetadata() {
       title: seoData.ogTitle,
       description: seoData.ogDescription,
       images: [seoData.ogImage],
-      url: "https://gatewayabroad.com/home",
+      url: "https://www.gatewayabroadeducations.com",
     },
-    alternates: { canonical: "https://gatewayabroad.com/home" },
+    alternates: { canonical: "https://www.gatewayabroadeducations.com/" },
   };
 }
 

@@ -19,7 +19,6 @@ export function GlobalProvider({ children }) {
         contactPage: null,
         contactSettings: null,
         faqData: null,
-        photoGallery: null,
         courseSlider: null,
         spokenEnglish: null,
     });
@@ -46,7 +45,6 @@ export function GlobalProvider({ children }) {
                     contactPage,
                     contactSettings,
                     faqData,
-                    photoGallery,
                     courseSlider,
                     spokenEnglish,
                 ] = await Promise.all([
@@ -63,7 +61,6 @@ export function GlobalProvider({ children }) {
                     PageServices.getContactPageById().then(res => res?.data || null).catch(() => null),
                     PageServices.getSettingData().then(res => res?.data || null).catch(() => null),
                     PageServices.getOffice().then(res => res?.data || null).catch(() => null),
-                    PageServices.getPhoto().then(res => res?.data || null).catch(() => null),
                     PageServices.getStudent().then(res => res?.data || null).catch(() => null),
                     PageServices.getSpokenEnglishDetails().then(res => res?.data || null).catch(() => null),
                 ]);
@@ -82,7 +79,6 @@ export function GlobalProvider({ children }) {
                     contactPage,
                     contactSettings,
                     faqData,
-                    photoGallery,
                     courseSlider,
                     spokenEnglish,
                 });

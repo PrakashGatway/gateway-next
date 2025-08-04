@@ -14,7 +14,6 @@ import Image from 'next/image';
 import { Star } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
-// --- Move these hooks inside the Client Component ---
 const Course = ({ params }) => { // Receive params from Next.js
   const router = useRouter(); // Use useRouter for navigation
   const { course } = params; // Get course from params
@@ -28,7 +27,6 @@ const Course = ({ params }) => { // Receive params from Next.js
   const [courseData, setCourseData] = useState({});
   const [faqData, setFaqData] = useState([]);
   const [sliderData, setSliderData] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const marqueeRef = useRef(null);
@@ -48,11 +46,7 @@ const Course = ({ params }) => { // Receive params from Next.js
       message: '',
     },
   });
-  // --- End react-hook-form initialization ---
 
-  const toggleAccordion = (index) => {
-    setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
-  };
 
   const getAllfaqData = async (value) => {
     try {
@@ -199,7 +193,6 @@ const Course = ({ params }) => { // Receive params from Next.js
                 <Link href="/contact" className="btn-primary">
                   Enroll Now
                 </Link>
-                {/* <button className="btn-secondary">Free Demo Class</button> */}
               </div>
             </div>
 
@@ -235,7 +228,7 @@ const Course = ({ params }) => { // Receive params from Next.js
           className="marquee-product marquee-product-2"
           behavior="alternate"
           direction="left"
-          scrollAmount={5}
+          // scrollAmount={5}
           onMouseEnter={() => marqueeRef.current?.stop()}
           onMouseLeave={() => marqueeRef.current?.start()}
         >
@@ -265,7 +258,7 @@ const Course = ({ params }) => { // Receive params from Next.js
               <div className="col-md-7">
                 <div className="about-us-right-new ps-3 gmat-test-pre-right">
                   <h2 className="heading">What is {courseName}?</h2>
-                  <p style={{textAlign:"left"}} className="descp mb-3">{description}</p>
+                  <p style={{ textAlign: "left" }} className="descp mb-3">{description}</p>
                 </div>
               </div>
             </div>
@@ -349,7 +342,7 @@ const Course = ({ params }) => { // Receive params from Next.js
             <div className="col-md-6">
               <div className="country-accept-gmat-right">
                 <h2 className="heading">Countries Accepting {courseName} Scores</h2>
-                <p style={{textAlign:"left"}} className="descp">{courseName} is accepted in {courseData?.acceptedCountrie || 'various'} countries around the world.</p>
+                <p style={{ textAlign: "left" }} className="descp">{courseName} is accepted in {courseData?.acceptedCountrie || 'various'} countries around the world.</p>
                 <h6>Some of the popular countries accepting {courseName} scores are as follows:</h6>
                 <div className="country-accept-list">
                   <ul className="list-unstyled">
@@ -522,7 +515,7 @@ const Course = ({ params }) => { // Receive params from Next.js
                       </li>
                     </ul>
                   </div>
-                  <p style={{textAlign:"left"}} className="descp">{testimonials[0].content?.substring(0, 250) || 'No testimonial content available.'}</p>
+                  <p style={{ textAlign: "left" }} className="descp">{testimonials[0].content?.substring(0, 250) || 'No testimonial content available.'}</p>
                 </div>
                 <div className="test-univ-sec"></div>
               </div>
@@ -563,7 +556,7 @@ const Course = ({ params }) => { // Receive params from Next.js
                           </li>
                         </ul>
                       </div>
-                      <p style={{textAlign:"left"}} className="descp">{test.content?.substring(0, 250) || 'No testimonial content available.'}</p>
+                      <p style={{ textAlign: "left" }} className="descp">{test.content?.substring(0, 250) || 'No testimonial content available.'}</p>
                     </div>
                     <div className="test-univ-sec"></div>
                   </div>
@@ -580,7 +573,7 @@ const Course = ({ params }) => { // Receive params from Next.js
         <div className="container">
           <div className="price-title">
             <h2 className="heading mb-2">Plans &amp; Pricing</h2>
-            <p style={{textAlign:"left"}} className="descp">We are accepting PayPal, Paytm, PhonePe and Debit &amp; Credit Card</p>
+            <p style={{ textAlign: "left" }} className="descp">We are accepting PayPal, Paytm, PhonePe and Debit &amp; Credit Card</p>
           </div>
           <div className="pricing-plan-section-inner">
             <div className="row justify-content-center">
@@ -933,16 +926,16 @@ const Course = ({ params }) => { // Receive params from Next.js
 
       {/* --- Updated Modal Form using react-hook-form --- */}
       <div
-        className={`modal right fade ${showModal ? 'show' : ''}`}
+        className={`modal right bg-black/20 fade ${showModal ? 'show' : ''}`}
         style={{ display: showModal ? 'block' : 'none' }}
-        id="pdfdownModel" // Consider changing ID if multiple modals are used
+        id="pdfdownModel"
         tabIndex={-1}
         aria-labelledby="pdfdownModelLabel"
         aria-hidden={!showModal}
         aria-modal={showModal}
       >
         <div className="modal-dialog">
-          <div className="modal-content">
+          <div className="modal-content shadow-xl">
             <div className="modal-header">
               <h5 className="modal-title" id="pdfdownModelLabel">
                 Get in touch

@@ -38,7 +38,6 @@ export const Footer = () => {
       newsEmail: ''
     }
   });
-  // --- End react-hook-form initialization for Newsletter ---
 
   useEffect(() => {
     if (course?.data?.page) {
@@ -64,11 +63,9 @@ export const Footer = () => {
       });
       if (createJob.status === 'success') {
         resetContactForm(); // Reset the contact form fields
-        // Close the modal using vanilla JS (as in original)
         const modalEl = document.getElementById("getintouchModel");
         if (modalEl) {
-            // Use Bootstrap's modal methods if jQuery/Bootstrap JS is available
-            // Otherwise, manipulate classes/styles directly
+
             const bootstrapModal = window.bootstrap?.Modal.getInstance(modalEl);
             if (bootstrapModal) {
                 bootstrapModal.hide();
@@ -82,9 +79,7 @@ export const Footer = () => {
                 if (backdrop) backdrop.remove();
             }
         }
-        // Navigate using Next.js router
         router.push('/thank-you'); // For App Router
-        // router.push('/thank-you'); // For Pages Router (same method)
       } else {
         console.error('Contact form submission failed:', createJob);
       }
@@ -92,9 +87,7 @@ export const Footer = () => {
       console.error("Error submitting contact form:", error);
     }
   };
-  // --- End updated Contact Us handler ---
 
-  // --- Updated Newsletter form submission handler ---
   const handleUpdate2 = async (formData) => { // Renamed 'data' to 'formData' for clarity
     const { newsEmail } = formData;
     try {
@@ -263,7 +256,7 @@ export const Footer = () => {
       </div>
 
       {/* --- Updated Contact Us Modal Form using react-hook-form --- */}
-      {/* <div className="modal right fade" id="getintouchModel" tabIndex={-1} aria-labelledby="getintouchModelLabel" aria-hidden="true">
+      <div className="modal right fade" id="getintouchModel" tabIndex={-1} aria-labelledby="getintouchModelLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -336,7 +329,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
