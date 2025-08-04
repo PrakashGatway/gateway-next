@@ -8,6 +8,7 @@ import Head from 'next/head'; // For managing head tags
 import HeroSection from '@/components/hero-section';
 import { useGlobal } from '@/hooks/AppStateContext';
 
+
 function About() {
   // const { data } = useAsync(PageServices.getAboutPageById);
   const { data: member } = useAsync(PageServices.getMember);
@@ -21,7 +22,7 @@ function About() {
   const [students, setStudents] = useState(1000000);
   const [experience, setExperience] = useState(15);
 
-  const { aboutPage:data } = useGlobal();
+  const { aboutPage: data } = useGlobal();
 
   useEffect(() => {
     if (data?.page) {
@@ -70,18 +71,9 @@ function About() {
     };
   }, [counted]);
 
-  const meta = {
-    title: 'About Us',
-    description: 'Learn about our company.',
-  };
 
   return (
     <>
-      <Head>
-        <title>{meta.title}</title>
-        <meta name="description" content={meta.description} />
-      </Head>
-
       <div>
         <HeroSection type="about" title={'About Us'} description={`<p>Gateway Abroad: Your Launchpad to Global Education
                       We empower students to achieve their dreams of studying abroad with expert coaching for: IELTS, TOEFL, PTE, GRE, GMAT, SAT

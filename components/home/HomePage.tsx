@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'; // Import useForm
 import Slider from 'react-slick';
 import { slider2settings, settings, youtubeSlider, blogSlider, testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import PageServices from '@/services/PageServices'; // Ensure path is correct
-import useAsync from '@/hooks/useAsync'; // Ensure path is correct
 import { constant } from '@/constant/index.constant.js'; // Ensure path is correct
 import Head from 'next/head'; // For managing head tags
 import HeroSection from '../hero-section';
@@ -121,13 +120,7 @@ function Index() {
 
   return (
     <>
-      <Head>
-        <title>{meta.title}</title>
-        <meta name="description" content={meta.description} />
-      </Head>
-
       <HeroSection title={homePageDetails?.Title} description={homePageDetails?.Description} image={`${constant.REACT_APP_URL}/uploads/${homePageDetails?.image}`} />
-
       <section className="about-us-sec py-70">
         <div className="container">
           <h2 className="heading bottom-divider">About us</h2>

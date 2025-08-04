@@ -1,4 +1,3 @@
-// components/Thankyou.js (or pages/thankyou.js if it's a page)
 import Link from 'next/link';
 import { constant } from '@/constant/index.constant.js'; // Adjust path as needed
 
