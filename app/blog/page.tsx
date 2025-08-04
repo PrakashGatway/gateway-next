@@ -1,11 +1,12 @@
-"use client";
+"use client"
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import PageServices from "@/services/PageServices";
 import { constant } from "@/constant/index.constant";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Loader from "@/components/loader";
 
 const BlogCardSkeleton = () => (
   <div className="col-md-6 col-lg-4">
@@ -358,4 +359,10 @@ const Blog = () => {
   );
 };
 
-export default Blog;
+export default function BlogPage() {
+  return (
+    <Suspense fallback={<Loader/>}>
+      <Blog />
+    </Suspense>
+  );
+}
