@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { ChevronRight, ChevronLeft, User, BookOpen, FileText, Send } from "lucide-react";
+import MultiStepForm from "@/components/pages/multiStep";
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -40,27 +41,27 @@ const ApplicationForm = () => {
   };
 
   return (
-    <section 
+    <section
       className="py-20 bg-cover bg-center bg-no-repeat relative"
-      style={{ 
+      style={{
         backgroundImage: `url(/img/uk.webp)`,
         minHeight: "100vh"
       }}
     >
-      <div 
+      <div
         className="absolute inset-0"
         style={{
           background: "linear-gradient(135deg, hsl(221 83% 53% / 0.8) 0%, hsl(0 100% 50% / 0.9) 100%)"
         }}
       ></div>
-      
+
       <div className="relative z-10 container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <div 
+          <div
             className="text-white space-y-8 animate-fade-in"
           >
-            <h2 
+            <h2
               className="text-4xl lg:text-5xl font-bold leading-tight"
               style={{
                 textShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
@@ -72,17 +73,17 @@ const ApplicationForm = () => {
             >
               Start Your Application Journey
             </h2>
-            <p 
+            <p
               className="text-xl"
               style={{
                 color: "rgba(255, 255, 255, 0.9)",
                 textShadow: "0 2px 8px rgba(0, 0, 0, 0.2)"
               }}
             >
-              Take the first step towards your UK education with our simple, 
+              Take the first step towards your UK education with our simple,
               step-by-step application process.
             </p>
-            
+
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center">
@@ -104,15 +105,15 @@ const ApplicationForm = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Right Content - Form */}
-          <div 
+          <div
             className="flex justify-end animate-fade-in"
             style={{
               animationDelay: "0.3s"
             }}
           >
-            <Card 
+            <Card
               className="w-full max-w-md"
               style={{
                 background: "rgba(255, 255, 255, 0.95)",
@@ -122,8 +123,8 @@ const ApplicationForm = () => {
                 boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)"
               }}
             >
-              
-              <CardHeader 
+
+              <CardHeader
                 className="text-center"
                 style={{
                   background: "linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(0 100% 50%) 100%)",
@@ -132,7 +133,7 @@ const ApplicationForm = () => {
                   padding: "24px"
                 }}
               >
-                <CardTitle 
+                <CardTitle
                   className="text-2xl font-bold"
                   style={{
                     textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)"
@@ -143,18 +144,18 @@ const ApplicationForm = () => {
                 <div className="mt-4">
                   <div className="flex justify-between mb-2">
                     {steps.map((step) => (
-                      <div 
+                      <div
                         key={step.number}
                         className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300"
                         style={{
-                          background: currentStep >= step.number 
-                            ? "rgba(255, 255, 255, 0.9)" 
+                          background: currentStep >= step.number
+                            ? "rgba(255, 255, 255, 0.9)"
                             : "rgba(255, 255, 255, 0.2)",
-                          color: currentStep >= step.number 
-                            ? "hsl(221 83% 53%)" 
+                          color: currentStep >= step.number
+                            ? "hsl(221 83% 53%)"
                             : "rgba(255, 255, 255, 0.7)",
-                          boxShadow: currentStep >= step.number 
-                            ? "0 4px 15px rgba(255, 255, 255, 0.3)" 
+                          boxShadow: currentStep >= step.number
+                            ? "0 4px 15px rgba(255, 255, 255, 0.3)"
                             : "none",
                           transform: currentStep >= step.number ? "scale(1.1)" : "scale(1)"
                         }}
@@ -163,14 +164,14 @@ const ApplicationForm = () => {
                       </div>
                     ))}
                   </div>
-                  <div 
+                  <div
                     className="mt-4 rounded-full overflow-hidden"
                     style={{
                       background: "rgba(255, 255, 255, 0.2)",
                       height: "6px"
                     }}
                   >
-                    <div 
+                    <div
                       className="h-full transition-all duration-500 ease-out rounded-full"
                       style={{
                         background: "linear-gradient(90deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)",
@@ -178,7 +179,7 @@ const ApplicationForm = () => {
                       }}
                     />
                   </div>
-                  <p 
+                  <p
                     className="text-sm mt-2"
                     style={{
                       color: "rgba(255, 255, 255, 0.8)",
@@ -189,8 +190,8 @@ const ApplicationForm = () => {
                   </p>
                 </div>
               </CardHeader>
-              
-              <CardContent 
+
+              <CardContent
                 className="space-y-6"
                 style={{
                   padding: "24px"
@@ -218,7 +219,7 @@ const ApplicationForm = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {currentStep === 2 && (
                   <div className="space-y-4">
                     <div>
@@ -264,7 +265,7 @@ const ApplicationForm = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {currentStep === 3 && (
                   <div className="space-y-4">
                     <div>
@@ -281,7 +282,7 @@ const ApplicationForm = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {currentStep === 4 && (
                   <div className="text-center space-y-4">
                     <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
@@ -289,22 +290,22 @@ const ApplicationForm = () => {
                     </div>
                     <h3 className="text-xl font-bold">Ready to Submit!</h3>
                     <p className="text-muted-foreground">
-                      Review your information and submit your application to get started 
+                      Review your information and submit your application to get started
                       with your UK education journey.
                     </p>
                   </div>
                 )}
-                
+
                 <div className="flex justify-between pt-6">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={prevStep}
                     disabled={currentStep === 1}
                   >
                     <ChevronLeft className="w-4 h-4 mr-2" />
                     Previous
                   </Button>
-                  
+
                   {currentStep < totalSteps ? (
                     <Button onClick={nextStep} variant="hero">
                       Next
@@ -328,258 +329,320 @@ const ApplicationForm = () => {
 
 
 const HeroSection = () => {
-    const reasons = [
+  const reasons = [
     {
-      icon: GraduationCap,
-      title: "World-Class Education",
-      description: "Learn from top-ranked universities with cutting-edge research facilities and renowned faculty members.",
+      title: "Assured Success",
+      icon: "/icons/success.png", // Replace with actual icon path
+      description:
+        "Gateway Abroad Jaipur is committed to your global education dreams. With personalized guidance, expert strategies, and continuous support, we ensure students take confident steps toward successful overseas admissions."
     },
     {
-      icon: Globe,
-      title: "Global Recognition",
-      description: "UK degrees are recognized worldwide, opening doors to international career opportunities.",
+      title: "Test Prep",
+      icon: "/icons/test-prep.png", // Replace with actual icon path
+      description:
+        "We offer specialized coaching for IELTS, TOEFL, PTE, GRE, GMAT, and SAT. Our test prep ensures strong performance through proven techniques, mock tests, and individualized attention to weaknesses."
     },
     {
-      icon: Trophy,
-      title: "Academic Excellence",
-      description: "Experience the highest standards of education with innovative teaching methodologies.",
+      title: "Expert Team",
+      icon: "/icons/expert-team.png", // Replace with actual icon path
+      description:
+        "Our experienced consultants and trainers bring deep industry knowledge. They guide students at every stage—from course selection to visa interviews—with accurate, up-to-date information and friendly, professional support."
     },
     {
-      icon: Clock,
-      title: "Shorter Duration",
-      description: "Complete your degree faster with UK's efficient education system and save time.",
+      title: "University Shortlists",
+      icon: "/icons/university.png", // Replace with actual icon path
+      description:
+        "We help shortlist top universities based on academic background, test scores, and career goals. Our curated selections align with students’ profiles, boosting chances of admission and scholarship opportunities."
     },
     {
-      icon: Shield,
-      title: "Quality Assurance",
-      description: "All UK institutions are regularly monitored to ensure consistent quality of education.",
+      title: "Financial Services",
+      icon: "/icons/finance.png", // Replace with actual icon path
+      description:
+        "Our advisors assist in finding the best financial aid options—scholarships, education loans, fee waivers. We simplify the paperwork and guide students toward making cost-effective study abroad decisions."
     },
     {
-      icon: DollarSign,
-      title: "Value for Money",
-      description: "Get excellent return on investment with competitive tuition fees and living costs.",
-    },
+      title: "Visa Application",
+      icon: "/icons/visa.png", // Replace with actual icon path
+      description:
+        "From documentation to interview prep, we handle every aspect of the visa process. With a high success rate, Gateway Abroad Jaipur makes the student visa journey stress-free and efficient."
+    }
   ];
   return (
     <>
-    <section 
-      className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
-      style={{ backgroundImage: `url(/img/uk.webp)` }}
-    >
-      {/* Enhanced Gradient Overlay */}
-      <div 
-        style={{
-          background: "linear-gradient(135deg, hsl(221 83% 53% / 0.95) 0%, hsl(0 100% 50% / 0.85) 50%, hsl(14 100% 57% / 0.90) 100%)"
-        }}
-        className="absolute inset-0"
-      ></div>
-      <div 
-        style={{
-          background: "linear-gradient(to top, rgba(0, 0, 0, 0.2) 0%, transparent 50%, transparent 100%)"
-        }}
-        className="absolute inset-0"
-      ></div>
-      
-      {/* Animated Background Elements */}
-      <div 
-        className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl opacity-30 animate-bounce"
-        style={{
-          background: "linear-gradient(45deg, hsl(0 100% 50% / 0.2) 0%, hsl(221 83% 53% / 0.2) 100%)",
-          animationDuration: "6s"
-        }}
-      ></div>
-      <div 
-        className="absolute bottom-20 right-10 w-96 h-96 rounded-full blur-3xl opacity-30 animate-bounce"
-        style={{
-          background: "linear-gradient(45deg, hsl(221 83% 53% / 0.2) 0%, hsl(0 100% 50% / 0.2) 100%)",
-          animationDuration: "6s",
-          animationDelay: "1s"
-        }}
-      ></div>
-      
-      
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div 
-            className="text-white space-y-8 animate-fade-in"
-          >
-            <div className="space-y-4">
-              <h1 
-                className="text-5xl lg:text-7xl font-bold leading-tight"
-                style={{
-                  textShadow: "0 4px 20px rgba(0, 0, 0, 0.3)"
-                }}
-              >
-                Study in{" "}
-                <span 
+      <section
+        className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: `url(/img/uk.webp)` }}
+      >
+        {/* Enhanced Gradient Overlay */}
+        <div
+          style={{
+            background: "linear-gradient(135deg, hsl(221 83% 53% / 0.5) 0%, hsl(0 100% 50% / 0.5) 50%, hsl(221 100% 57% / 0.7) 100%)"
+          }}
+          className="absolute inset-0"
+        ></div>
+        <div
+          style={{
+            background: "linear-gradient(to top, rgba(0, 0, 0, 0.3) 30%, transparent 100%, transparent 10%)"
+          }}
+          className="absolute inset-0"
+        ></div>
+
+        <div className="relative z-10 container-sm mx-auto px-4 pt-16 pb-12">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div
+              className="text-white space-y-8 animate-fade-in"
+            >
+              <div className="space-y-4">
+                <h1
+                  className="text-4xl lg:text-4xl font-bold leading-tight"
                   style={{
-                    background: "linear-gradient(45deg, hsl(45 100% 60%) 0%, hsl(14 100% 57%) 50%, hsl(0 100% 50%) 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                    backgroundSize: "200% 200%",
-                    animation: "gradient-shift 3s ease infinite",
-                    filter: "drop-shadow(0 2px 4px rgba(255, 69, 0, 0.3))"
+                    textShadow: "0 4px 20px rgba(0, 0, 0, 0.5)"
                   }}
                 >
-                  UK
-                </span>
-              </h1>
-              <p 
-                className="text-xl lg:text-2xl leading-relaxed"
+                  Study in{" "}
+                  <span className="text-gradient py-2 inline-block"
+                  >
+                    UK
+                  </span> <br />
+                  Explore the Best Ways to Success
+                </h1>
+                <p
+                  className="text-base lg:text-lg leading-relaxed"
+                  style={{
+                    color: "rgba(255, 255, 255, 0.9)",
+                    textShadow: "0 2px 8px rgba(0, 0, 0, 0.6)"
+                  }}
+                >
+                  Unlock your potential with world-class education in the United Kingdom.
+                  Experience academic excellence in historic universities.
+                </p>
+              </div>
+
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Card 1: Students Placed */}
+                <div
+                  className="flex items-center gap-3 
+      p-2 
+      border-2 border-blue-300 
+      shadow-lg 
+      rounded-2xl 
+      bg-gradient-to-br from-indigo-100/30 to-indigo-100/10 
+      backdrop-blur-[2px] 
+      hover:backdrop-blur-sm 
+      hover:border-blue-600 
+      transition-all duration-300 
+      relative 
+      overflow-hidden 
+      group
+      hover:shadow-blue-200/20 hover:shadow-2xl
+      animate-slide-up"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  {/* Text Content */}
+                  <div className="text-left flex-1">
+                    <div className="text-2xl font-bold 
+        text-transparent bg-clip-text 
+        bg-gradient-to-b from-white via-blue-50 to-cyan-100 
+        drop-shadow-md group-hover:drop-shadow-lg
+      ">
+                      50K+
+                    </div>
+                    <div className="text-xs text-white/90 tracking-wide drop-shadow-sm">
+                      Students Placed
+                    </div>
+                  </div>
+
+                  {/* Anime Character */}
+                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
+                    <img src="/anime/a1.png" alt="Student" className="w-full h-full object-contain" />
+                  </div>
+
+                  {/* Glow Overlay */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-200/5 to-pink-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </div>
+
+                {/* Card 2: Universities */}
+                <div
+                  className="flex items-center gap-3 
+      p-2 
+      border-2 border-violet-300 
+      shadow-lg 
+      rounded-2xl 
+      bg-gradient-to-br from-violet-100/30 to-violet-100/10 
+      backdrop-blur-[2px] 
+      hover:backdrop-blur-sm 
+      hover:border-violet-600 
+      transition-all duration-300 
+      relative 
+      overflow-hidden 
+      group
+      hover:shadow-violet-200/20 hover:shadow-2xl
+      animate-slide-up"
+                  style={{ animationDelay: '0.5s' }}
+                >
+                  {/* Text Content */}
+                  <div className="text-left flex-1">
+                    <div className="text-2xl font-bold 
+        text-transparent bg-clip-text 
+        bg-gradient-to-b from-white via-violet-50 to-purple-100 
+        drop-shadow-md group-hover:drop-shadow-lg
+      ">
+                      200+
+                    </div>
+                    <div className="text-xs text-white/90 tracking-wide drop-shadow-xl">
+                      Universities
+                    </div>
+                  </div>
+
+                  {/* Anime Character - Maybe a Grad Cap or Mascot? */}
+                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
+                    <img src="/anime/a1.png" alt="University" className="w-full h-full object-contain" />
+                  </div>
+
+                  {/* Glow Overlay */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-200/5 to-purple-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </div>
+
+                {/* Card 3: Cities */}
+                <div
+                  className="flex items-center gap-3 
+      p-2 
+      border-2 border-emerald-100 
+      shadow-lg 
+      rounded-2xl 
+      bg-gradient-to-br from-emerald-100/30 to-emerald-100/10 
+      backdrop-blur-[2px] 
+      hover:backdrop-blur-sm 
+      hover:border-emerald-400 
+      transition-all duration-300 
+      relative 
+      overflow-hidden 
+      group
+      hover:shadow-emerald-200/20 hover:shadow-2xl
+      animate-slide-up"
+                  style={{ animationDelay: '0.7s' }}
+                >
+                  {/* Text Content */}
+                  <div className="text-left flex-1">
+                    <div className="text-2xl font-bold 
+        text-transparent bg-clip-text 
+        bg-gradient-to-b from-white via-emerald-50 to-emerald-100 
+        drop-shadow-md group-hover:drop-shadow-lg
+      ">
+                      15+
+                    </div>
+                    <div className="text-xs text-white/90 tracking-wide drop-shadow-sm">
+                      Cities
+                    </div>
+                  </div>
+
+                  {/* Anime Character - Traveler or Explorer */}
+                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
+                    <img src="/anime/a1.png" alt="City Explorer" className="w-full h-full object-contain" />
+                  </div>
+
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-200/5 to-teal-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div
+                className="flex flex-col sm:flex-row gap-4 animate-scale-in"
                 style={{
-                  color: "rgba(255, 255, 255, 0.9)",
-                  textShadow: "0 2px 8px rgba(0, 0, 0, 0.2)"
+                  animationDelay: "0.6s"
                 }}
               >
-                Unlock your potential with world-class education in the United Kingdom. 
-                Experience academic excellence in historic universities.
-              </p>
-            </div>
-            
-            
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 animate-slide-up" style={{animationDelay: '0.3s'}}>
-              <div className="text-center group">
-                <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm rounded-full mb-2 mx-auto border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-2xl font-bold">50K+</div>
-                <div className="text-sm text-white/80">Students Placed</div>
-              </div>
-              <div className="text-center group">
-                <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm rounded-full mb-2 mx-auto border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                  <Award className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-2xl font-bold">200+</div>
-                <div className="text-sm text-white/80">Universities</div>
-              </div>
-              <div className="text-center group">
-                <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-white/30 to-white/10 backdrop-blur-sm rounded-full mb-2 mx-auto border border-white/20 group-hover:scale-110 transition-transform duration-300">
-                  <MapPin className="w-6 h-6 text-white" />
-                </div>
-                <div className="text-2xl font-bold">15+</div>
-                <div className="text-sm text-white/80">Cities</div>
-              </div>
-            </div>
-            
-            {/* CTA Buttons */}
-            <div 
-              className="flex flex-col sm:flex-row gap-4 animate-scale-in"
-              style={{
-                animationDelay: "0.6s"
-              }}
-            >
-              {/* <BasicDetailsDialog> */}
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 group"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(0 100% 50%) 0%, hsl(14 100% 57%) 50%, hsl(45 100% 60%) 100%)",
-                    border: "none",
-                    color: "white",
-                    fontWeight: "600",
-                    boxShadow: "0 8px 32px rgba(255, 69, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                  }}
-                  // onMouseEnter={(e) => {
-                  //   e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
-                  //   e.currentTarget.style.boxShadow = "0 12px 40px rgba(255, 69, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2)";
-                  // }}
-                  // onMouseLeave={(e) => {
-                  //   e.currentTarget.style.transform = "translateY(0) scale(1)";
-                  //   e.currentTarget.style.boxShadow = "0 8px 32px rgba(255, 69, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1)";
-                  // }}
+                <Button
+                  size="lg"
+                  className="btn-primary text-center border group"
                 >
                   Start Your Journey
-                  <ArrowRight 
-                    className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" 
+                  <ArrowRight
+                    className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
                   />
                 </Button>
-              {/* </BasicDetailsDialog> */}
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-lg px-8"
-                style={{
-                  background: "rgba(255, 255, 255, 0.1)",
-                  border: "1px solid rgba(255, 255, 255, 0.3)",
-                  color: "white",
-                  backdropFilter: "blur(20px)",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                }}
-                // onMouseEnter={(e) => {
-                //   e.currentTarget.style.background = "rgba(255, 255, 255, 0.2)";
-                //   e.currentTarget.style.transform = "translateY(-2px) scale(1.05)";
-                //   e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.5)";
-                // }}
-                // onMouseLeave={(e) => {
-                //   e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)";
-                //   e.currentTarget.style.transform = "translateY(0) scale(1)";
-                //   e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.3)";
-                // }}
-              >
-                Download Guide
-              </Button>
+              </div>
             </div>
-          </div>
-          
-          {/* Right Content - UK Map */}
-          <div className="flex justify-center lg:justify-end animate-fade-in" style={{animationDelay: '0.4s'}}>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-xl blur-2xl transform group-hover:scale-110 transition-transform duration-500"></div>
-              <img 
-                src={'https://www.gatewayabroadeducations.com/lp/uk_new_page/map.svg'} 
-                alt="UK Map" 
-                className="relative w-full max-w-md lg:max-w-lg h-auto drop-shadow-2xl filter brightness-110 contrast-110 group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute top-1/4 left-1/4 w-4 h-4 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse shadow-lg"></div>
-              <div className="absolute top-1/3 right-1/3 w-4 h-4 bg-gradient-to-r from-red-400 to-pink-500 rounded-full animate-pulse shadow-lg" style={{animationDelay: '0.5s'}}></div>
-              <div className="absolute bottom-1/3 left-1/2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-        <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-foreground mb-6">
-            Why Choose Our Study Platform?
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We provide comprehensive support to make your UK education dreams a reality 
-            with personalized guidance and expert assistance.
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reasons.map((reason, index) => (
-            <Card 
-              key={index} 
-              className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-0 shadow-lg bg-white"
-            >
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-hover rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <reason.icon className="w-8 h-8 text-white" />
+
+            <div className="flex justify-center lg:justify-end" >
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-xl blur-2xl transform transition-transform duration-500"></div>
+                <img
+                  src={'https://www.gatewayabroadeducations.com/lp/uk_new_page/map_mobile.svg'}
+                  alt="UK Map"
+                  className="relative w-full max-w-md lg:max-w-xl h-auto drop-shadow-4xl filter brightness-120 contrast-110 transition-transform duration-500"
+                />
+                <div className="w-full text-center mt-8">
+                  <p className="text-white text-base md:text-base font-medium bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2 inline-block">
+                    🎓 Top UK Universities Across 15+ Cities
+                  </p>
                 </div>
-                <CardTitle className="text-xl font-bold text-foreground">
-                  {reason.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center leading-relaxed">
-                  {reason.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+              </div>
+
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
-    <ApplicationForm/>
+      </section>
+      <section className="py-20 bg-background">
+        <div className="container-sm mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="heading text-center d-block mb-2">
+              Why Choose Our Study Platform?
+            </h2>
+            <p className="sub-heading !text-base max-w-3xl mx-auto">
+              We provide comprehensive support to make your UK education dreams a reality
+              with personalized guidance and expert assistance.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {reasons.map((reason, index) =>
+              <div key={index}
+                className="flex items-start gap-3 
+      p-4 
+      border-2 border-blue-300 
+      shadow-lg 
+      rounded-2xl 
+      bg-gradient-to-br from-red-300/30 to-indigo-200/30 
+      backdrop-blur-[2px] 
+      hover:backdrop-blur-sm 
+      hover:border-blue-600 
+      transition-all duration-300 
+      relative 
+      overflow-hidden 
+      group
+      hover:shadow-blue-200/20 hover:shadow-2xl
+      animate-slide-up"
+                style={{ animationDelay: '0.3s' }}
+              >
+                {/* Text Content */}
+                <div className="text-left flex-1">
+                  <div className="sub-heading mb-2 bg-clip-text 
+        bg-gradient-to-b from-white via-blue-50 to-cyan-100 
+        drop-shadow-md group-hover:drop-shadow-lg
+      ">
+                    {reason.title}
+                  </div>
+                  <div className="descp !text-left !text-gray-700 !text-sm drop-shadow-lg">
+                    {reason.description}
+                  </div>
+                </div>
+
+                {/* Anime Character */}
+                <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
+                  <img src="https://www.gatewayabroadeducations.com/lp/uk_new_page/reasons_one.svg" alt="Student" className="w-full h-full object-contain" />
+                </div>
+
+                {/* Glow Overlay */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-200/5 to-pink-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+      {/* <MultiStepForm/> */}
+      {/* <ApplicationForm /> */}
     </>
   );
 };

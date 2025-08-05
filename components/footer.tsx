@@ -250,9 +250,9 @@ export const Footer = () => {
         {/* Scroll to top functionality */}
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
-      <div className="get-in-touch-sidebar">
+      <div style={{zIndex:'99999!important'}} className="get-in-touch-sidebar">
         {/* Trigger for Contact Modal */}
-        <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
+        <button  data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
       </div>
 
       {/* --- Updated Contact Us Modal Form using react-hook-form --- */}

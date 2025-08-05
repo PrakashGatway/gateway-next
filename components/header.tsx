@@ -90,7 +90,6 @@ const Header = () => {
     >
       <div className="mx-auto px-2 lg:p-0 sm:px-4 container-sm">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group flex-shrink-0">
             <Image
               src="/images/logo.svg"
