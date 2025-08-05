@@ -1,275 +1,333 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronRight, ChevronLeft, Check, User, MapPin, Calendar, GraduationCap } from "lucide-react"
 
-const steps = ['course', 'country', 'intake', 'details'];
-const courses = ['UG', 'PG', 'PHD', 'MBBS'];
-const countries = ['UK', 'USA', 'Canada', 'Australia'];
-const intakes = ['January', 'May', 'September'];
+const steps = ["course", "country", "intake", "details"]
+const courses = ["UG", "PG", "PHD", "MBBS"]
+const countries = ["UK", "USA", "Canada", "Australia"]
+const intakes = ["Jan 2026", "May 2026", "September","Nov 2026"]
 
-export default function MultiStepForm() {
-  const [step, setStep] = useState(0);
+const stepIcons = [GraduationCap, MapPin, Calendar, User]
 
+export default function EnhancedMultiStepForm() {
+  const [step, setStep] = useState(0)
   const {
     register,
     handleSubmit,
     watch,
     trigger,
     formState: { errors },
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ mode: "onChange" })
 
   const onNext = async () => {
-    const valid = await trigger();
-    if (valid) setStep((prev) => prev + 1);
-  };
+    const valid = await trigger()
+    if (valid) setStep((prev) => prev + 1)
+  }
 
-  const onBack = () => setStep((prev) => prev - 1);
+  const onBack = () => setStep((prev) => prev - 1)
 
-  const onSubmit = ( any) => {
-    console.log('Final Data Submitted:', data);
-    alert('Form Submitted Successfully!');
-  };
+  const onSubmit = (data: any) => {
+    console.log("Final Data Submitted:", data)
+    alert("Form Submitted Successfully!")
+  }
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-5xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
-        {/* Left: Form */}
-        <div className="p-6 md:p-8 bg-gray-50">
-          {/* Step Indicator */}
-          <div className="flex justify-center mb-6">
-            {steps.map((_, i) => (
-              <div
-                key={i}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                  i === step
-                    ? 'bg-blue-600 text-white shadow-md scale-105'
-                    : i < step
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-200 text-gray-600'
-                }`}
-              >
-                {i < step ? '✓' : i + 1}
-              </div>
-            ))}
-          </div>
+    <section className="relative bg-pink-100 py-12 overflow-hidden">
+      {/* Background blur effect */}
+      <div className="absolute inset-0 bg-pink-200 backdrop-blur-sm opacity-40"></div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 30 }}
-                transition={{ duration: 0.3 }}
-                className="flex-1"
-              >
-                {/* Step 0: Course */}
-                {step === 0 && (
-                  <>
-                    <h2 className="text-xl font-bold text-center mb-6 text-gray-800">
-                      What is your desired academic course?
-                    </h2>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      {courses.map((course) => {
-                        const isSelected = watch('course') === course;
-                        return (
-                          <label
-                            key={course}
-                            className={`px-6 py-3 border-2 rounded-xl min-w-[100px] text-center font-medium cursor-pointer transition-all duration-200 ${
-                              isSelected
-                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                                : 'bg-white text-gray-700 border-gray-300 hover:shadow-md'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              value={course}
-                              {...register('course', { required: 'Course is required' })}
-                              className="hidden"
-                            />
-                            {course}
-                          </label>
-                        );
-                      })}
-                    </div>
-                    {errors.course && (
-                      <p className="text-red-500 text-sm text-center mt-2">
-                        {errors.course.message?.toString()}
-                      </p>
-                    )}
-                  </>
-                )}
+      <div className="relative z-10">
+        <h3 className="sub-heading mx-auto font-semibold !text-center mb-8 px-4">
+          Let's calculate your chances of getting into your dream University
+        </h3>
 
-                {/* Step 1: Country */}
-                {step === 1 && (
-                  <>
-                    <h2 className="text-xl font-bold text-center mb-6 text-gray-800">
-                      Which country do you want to go to?
-                    </h2>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      {countries.map((country) => {
-                        const isSelected = watch('country') === country;
-                        return (
-                          <label
-                            key={country}
-                            className={`px-6 py-3 border-2 rounded-xl min-w-[100px] text-center font-medium cursor-pointer transition-all duration-200 ${
-                              isSelected
-                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                                : 'bg-white text-gray-700 border-gray-300 hover:shadow-md'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              value={country}
-                              {...register('country', { required: 'Country is required' })}
-                              className="hidden"
-                            />
-                            {country}
-                          </label>
-                        );
-                      })}
-                    </div>
-                    {errors.country && (
-                      <p className="text-red-500 text-sm text-center mt-2">
-                        {errors.country.message?.toString()}
-                      </p>
-                    )}
-                  </>
-                )}
+        {/* Inner container with background image and glassmorphism */}
+        <div
+          className="relative mx-auto max-w-7xl px-4 py-8 backdrop-blur-md bg-white/20 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
+          style={{
+            backgroundImage: `url('https://www.wallpaperflare.com/static/930/175/684/circles-highlights-background-form-wallpaper.jpg')`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right center",
+            backgroundSize: "cover",
+          }}
+        >
+          {/* Glassmorphism overlay */}
+          <div className="absolute inset-0 backdrop-blur-sm bg-white/10"></div>
 
-                {/* Step 2: Intake */}
-                {step === 2 && (
-                  <>
-                    <h2 className="text-xl font-bold text-center mb-6 text-gray-800">
-                      Preferred Intake Month?
-                    </h2>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      {intakes.map((month) => {
-                        const isSelected = watch('intake') === month;
-                        return (
-                          <label
-                            key={month}
-                            className={`px-6 py-3 border-2 rounded-xl min-w-[100px] text-center font-medium cursor-pointer transition-all duration-200 ${
-                              isSelected
-                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg'
-                                : 'bg-white text-gray-700 border-gray-300 hover:shadow-md'
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              value={month}
-                              {...register('intake', { required: 'Intake is required' })}
-                              className="hidden"
-                            />
-                            {month}
-                          </label>
-                        );
-                      })}
-                    </div>
-                    {errors.intake && (
-                      <p className="text-red-500 text-sm text-center mt-2">
-                        {errors.intake.message?.toString()}
-                      </p>
-                    )}
-                  </>
-                )}
-
-                {/* Step 3: Details */}
-                {step === 3 && (
-                  <>
-                    <h2 className="text-xl font-bold text-center mb-6 text-gray-800">
-                      Basic Details
-                    </h2>
-                    <div className="space-y-4">
-                      {[
-                        { label: 'Full Name', name: 'name', type: 'text' },
-                        { label: 'City', name: 'city', type: 'text' },
-                        { label: 'Mobile', name: 'mobile', type: 'text' },
-                        { label: 'Email', name: 'email', type: 'email' },
-                      ].map((field) => (
-                        <div key={field.name}>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            {field.label}
-                          </label>
-                          <input
-                            type={field.type}
-                            {...register(field.name, {
-                              required: `${field.label} is required`,
-                              ...(field.name === 'mobile' && {
-                                pattern: {
-                                  value: /^[0-9]{10}$/,
-                                  message: 'Enter a valid 10-digit number',
-                                },
-                              }),
-                              ...(field.name === 'email' && {
-                                pattern: {
-                                  value: /^\S+@\S+$/i,
-                                  message: 'Invalid email address',
-                                },
-                              }),
-                            })}
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-6 gap-8 items-center">
+            {/* Form: 4.5 out of 6 columns = 75% */}
+            <div className="md:col-span-4">
+              <div className="mb-6">
+                <div className="flex mb-3 justify-center">
+                  {steps.map((_, index) => {
+                    const Icon = stepIcons[index]
+                    return (
+                      <div key={index} className="flex items-center">
+                        <motion.div
+                          initial={false}
+                          animate={{
+                            scale: step === index ? 1.05 : 1,
+                            backgroundColor: step >= index ? "#ec4899" : "#e5e7eb",
+                          }}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shadow-md ${
+                            step >= index ? "bg-pink-500" : "bg-gray-300"
+                          }`}
+                        >
+                          {step > index ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
+                        </motion.div>
+                        {index < steps.length - 1 && (
+                          <motion.div
+                            initial={false}
+                            animate={{
+                              backgroundColor: step > index ? "#ec4899" : "#e5e7eb",
+                            }}
+                            className="w-12 h-0.5 mx-2 rounded-full"
                           />
-                          {errors[field.name as keyof typeof errors] && (
-                            <p className="text-red-500 text-xs mt-1">
-                              {errors[field.name as keyof typeof errors]?.message?.toString()}
-                            </p>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Form Content with Glassmorphism */}
+              <div className="backdrop-blur-lg bg-white/10 rounded-2xl p-6 border border-white/20 shadow-3xl">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={step}
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 30 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      {step === 0 && (
+                        <div className="space-y-4">
+                          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                            What is your desired academic course?
+                          </h2>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            {courses.map((course, index) => (
+                              <motion.label
+                                key={course}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
+                                  watch("course") === course
+                                    ? "bg-pink-500/80 border-pink-400 text-white shadow-lg"
+                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  value={course}
+                                  {...register("course", { required: "Course is required" })}
+                                  className="hidden"
+                                />
+                                <div className="font-medium">{course}</div>
+                              </motion.label>
+                            ))}
+                          </div>
+                          {errors.course && (
+                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.course.message}</p>
                           )}
                         </div>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                      )}
 
-            {/* Navigation Buttons */}
-            <div className="flex justify-between items-center mt-8 gap-4">
-              {step > 0 && (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  className="px-5 py-2.5 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition"
-                >
-                  ← Previous
-                </button>
-              )}
-              {step < steps.length - 1 ? (
-                <button
-                  type="button"
-                  onClick={onNext}
-                  className="ml-auto px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-md hover:shadow-lg"
-                >
-                  Save & Go Next →
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  className="ml-auto px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md hover:shadow-lg"
-                >
-                  Submit ✔
-                </button>
-              )}
+                      {step === 1 && (
+                        <div className="space-y-4">
+                          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                            Which country do you want to go to?
+                          </h2>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            {countries.map((country, index) => (
+                              <motion.label
+                                key={country}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
+                                  watch("country") === country
+                                    ? "bg-green-500/80 border-green-400 text-white shadow-lg"
+                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  value={country}
+                                  {...register("country", { required: "Country is required" })}
+                                  className="hidden"
+                                />
+                                <div className="font-medium">{country}</div>
+                              </motion.label>
+                            ))}
+                          </div>
+                          {errors.country && (
+                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.country.message}</p>
+                          )}
+                        </div>
+                      )}
+
+                      {step === 2 && (
+                        <div className="space-y-4">
+                          <h2 className="text-xl font-semibold mb-4 text-gray-800">Preferred Intake Month?</h2>
+                          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            {intakes.map((month, index) => (
+                              <motion.label
+                                key={month}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
+                                  watch("intake") === month
+                                    ? "bg-purple-500/80 border-purple-400 text-white shadow-lg"
+                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
+                                }`}
+                              >
+                                <input
+                                  type="radio"
+                                  value={month}
+                                  {...register("intake", { required: "Intake month is required" })}
+                                  className="hidden"
+                                />
+                                <div className="font-medium">{month}</div>
+                              </motion.label>
+                            ))}
+                          </div>
+                          {errors.intake && (
+                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.intake.message}</p>
+                          )}
+                        </div>
+                      )}
+
+                      {step === 3 && (
+                        <div className="space-y-4">
+                          <h2 className="text-xl font-semibold mb-4 text-gray-800">Basic Details</h2>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {[
+                              {
+                                name: "name",
+                                label: "Full Name",
+                                type: "text",
+                                validation: { required: "Name is required" },
+                              },
+                              {
+                                name: "city",
+                                label: "City",
+                                type: "text",
+                                validation: { required: "City is required" },
+                              },
+                              {
+                                name: "mobile",
+                                label: "Mobile",
+                                type: "text",
+                                validation: {
+                                  required: "Mobile is required",
+                                  pattern: { value: /^[0-9]{10}$/, message: "Enter a valid 10-digit number" },
+                                },
+                              },
+                              {
+                                name: "email",
+                                label: "Email",
+                                type: "email",
+                                validation: {
+                                  pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
+                                },
+                              },
+                            ].map((field, index) => (
+                              <motion.div
+                                key={field.name}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: index * 0.05 }}
+                                className=""
+                              >
+                                <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
+                                <input
+                                  type={field.type}
+                                  {...register(field.name, field.validation)}
+                                  className="w-full p-2 rounded-xl px-3 backdrop-blur-sm bg-white/80 focus:bg-white/60 focus:border-pink-400 focus:outline-none transition-all duration-200 shadow-xl"
+                                  placeholder={`Enter your ${field.label.toLowerCase()}`}
+                                />
+                                {errors[field.name] && (
+                                  <p className="text-red-600 text-xs">{errors[field.name].message}</p>
+                                )}
+                              </motion.div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* Navigation Buttons */}
+                  <div className="flex justify-between items-center pt-6">
+                    {step > 0 ? (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={onBack}
+                        className="flex items-center px-6 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 transition-colors duration-200"
+                      >
+                        <ChevronLeft className="w-4 h-4 mr-1" />
+                        Back
+                      </motion.button>
+                    ) : (
+                      <div></div>
+                    )}
+
+                    {step < steps.length - 1 ? (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={onNext}
+                        className="flex items-center ml-auto px-6 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-colors duration-200"
+                      >
+                        Next
+                        <ChevronRight className="w-4 h-4 ml-1" />
+                      </motion.button>
+                    ) : (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        type="submit"
+                        className="flex items-center ml-auto px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors duration-200"
+                      >
+                        Submit
+                        <Check className="w-4 h-4 ml-1" />
+                      </motion.button>
+                    )}
+                  </div>
+                </form>
+              </div>
             </div>
-          </form>
-        </div>
 
-        {/* Right: Illustration */}
-        <div className="hidden lg:flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-          <div className="relative">
-            <img
-              src="/images/students.png"
-              alt="Study Abroad Illustration"
-              className="max-w-full h-auto object-contain drop-shadow-2xl"
-              style={{ maxHeight: '400px' }}
-            />
-            {/* Optional floating element */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-yellow-300 rounded-full opacity-60 blur-xl"></div>
+            {/* Image: 1.5 out of 6 columns = 25% */}
+            <div className="md:col-span-2 hidden md:flex justify-center">
+              <motion.img
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                src="/anime/a2.png"
+                alt="University Illustration"
+                className="max-w-[240px] h-auto object-contain drop-shadow-xl"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </section>
+  )
 }

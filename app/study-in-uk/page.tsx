@@ -15,6 +15,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import { ChevronRight, ChevronLeft, User, BookOpen, FileText, Send } from "lucide-react";
 import MultiStepForm from "@/components/pages/multiStep";
+import CardStackGridSection from "@/components/pages/cardStack";
+import Component from "@/components/pages/partnerSlider";
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -369,15 +371,20 @@ const HeroSection = () => {
   ];
   return (
     <>
+    <section className="mt-20 lg:mt-0">
+       
+          <img src="/anime/bg.jpg" alt="" className="h-full w-full" />
+
+    </section>
       <section
         className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{ backgroundImage: `url(/img/uk.webp)` }}
       >
         {/* Enhanced Gradient Overlay */}
         <div
-          style={{
-            background: "linear-gradient(135deg, hsl(221 83% 53% / 0.5) 0%, hsl(0 100% 50% / 0.5) 50%, hsl(221 100% 57% / 0.7) 100%)"
-          }}
+          // style={{
+          //   background: "linear-gradient(135deg, hsl(221 83% 53% / 0.5) 0%, hsl(0 100% 50% / 0.5) 50%, hsl(221 100% 57% / 0.7) 100%)"
+          // }}
           className="absolute inset-0"
         ></div>
         <div
@@ -396,7 +403,7 @@ const HeroSection = () => {
                 <h1
                   className="text-4xl lg:text-4xl font-bold leading-tight"
                   style={{
-                    textShadow: "0 4px 20px rgba(0, 0, 0, 0.5)"
+                    textShadow: "0 4px 20px rgba(0, 0, 0, 0.2)"
                   }}
                 >
                   Study in{" "}
@@ -584,6 +591,8 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
+          <MultiStepForm />
+
       <section className="py-20 bg-background">
         <div className="container-sm mx-auto px-4">
           <div className="text-center mb-16">
@@ -641,7 +650,10 @@ const HeroSection = () => {
           </div>
         </div>
       </section>
-      {/* <MultiStepForm/> */}
+
+      <CardStackGridSection/>
+      <Component/>
+
       {/* <ApplicationForm /> */}
     </>
   );
