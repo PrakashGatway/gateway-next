@@ -19,6 +19,7 @@ import CardStackGridSection from "@/components/pages/cardStack";
 import Component from "@/components/pages/partnerSlider";
 import Image from "next/image";
 import Link from "next/link";
+import CounterUp from "@/components/CounterUp";
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -428,7 +429,7 @@ const HeroSection = () => {
   {/* Card 1 */}
   <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
     <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
-      50K<span className="text-red-600">+</span>
+      {<CounterUp end={50000} />}<span className="text-red-600">+</span>
     </h3>
     <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Students Placed</p>
   </div>
@@ -436,7 +437,7 @@ const HeroSection = () => {
   {/* Card 2 */}
   <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
     <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
-      200<span className="text-red-600">+</span>
+      <CounterUp end={200} /><span className="text-red-600">+</span>
     </h3>
     <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Universities</p>
   </div>
@@ -444,7 +445,7 @@ const HeroSection = () => {
   {/* Card 3 */}
   <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
     <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
-      15<span className="text-red-600">+</span>
+      <CounterUp end={15} /><span className="text-red-600">+</span>
     </h3>
     <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Cities</p>
   </div>
