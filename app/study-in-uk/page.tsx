@@ -17,6 +17,8 @@ import { ChevronRight, ChevronLeft, User, BookOpen, FileText, Send } from "lucid
 import MultiStepForm from "@/components/pages/multiStep";
 import CardStackGridSection from "@/components/pages/cardStack";
 import Component from "@/components/pages/partnerSlider";
+import Image from "next/image";
+import Link from "next/link";
 
 const ApplicationForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -371,53 +373,50 @@ const HeroSection = () => {
   ];
   return (
     <>
-    <section className="mt-20 lg:mt-0">
-       
-          <img src="/anime/bg.jpg" alt="" className="h-full w-full" />
+      {/* <section className="mt-20 lg:mt-0">
 
-    </section>
-      <section
-        className="relative min-h-screen flex items-center bg-cover bg-center bg-no-repeat overflow-hidden"
-        style={{ backgroundImage: `url(/img/uk.webp)` }}
-      >
-        {/* Enhanced Gradient Overlay */}
-        <div
-          // style={{
-          //   background: "linear-gradient(135deg, hsl(221 83% 53% / 0.5) 0%, hsl(0 100% 50% / 0.5) 50%, hsl(221 100% 57% / 0.7) 100%)"
-          // }}
-          className="absolute inset-0"
-        ></div>
-        <div
-          style={{
-            background: "linear-gradient(to top, rgba(0, 0, 0, 0.3) 30%, transparent 100%, transparent 10%)"
-          }}
-          className="absolute inset-0"
-        ></div>
+        <img src="/anime/bg.jpg" alt="" className="h-full w-full" />
 
-        <div className="relative z-10 container-sm mx-auto px-4 pt-16 pb-12">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div
-              className="text-white space-y-8 animate-fade-in"
-            >
-              <div className="space-y-4">
-                <h1
-                  className="text-4xl lg:text-4xl font-bold leading-tight"
-                  style={{
-                    textShadow: "0 4px 20px rgba(0, 0, 0, 0.2)"
-                  }}
-                >
-                  Study in{" "}
-                  <span className="text-gradient py-2 inline-block"
-                  >
+      </section> */}
+
+      <section className="hero-gradient pt-6 py-12 flex items-center relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-28 left-10 w-4 h-4 bg-red-500 rounded-full animate-bounce-slow"></div>
+          <div className="absolute top-32 left-16 w-2 h-2 bg-red-500 rounded-full animate-pulse-slow animate-stagger-1"></div>
+          <div className="absolute top-44 left-12 w-2 h-2 bg-red-500 rounded-full animate-pulse-slow animate-stagger-2"></div>
+          <div className="absolute top-56 left-18 w-2 h-2 bg-red-500 rounded-full animate-pulse-slow animate-stagger-3"></div>
+          <div className="absolute top-68 left-14 w-2 h-2 bg-red-500 rounded-full animate-pulse-slow animate-stagger-4"></div>
+
+          <div className="absolute top-20 right-20 w-20 h-20 border-2 border-red-300 rounded-full animate-rotate-slow"></div>
+          <div className="absolute bottom-40 left-20 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[30px] border-b-red-300 animate-float"></div>
+
+          {/* Additional floating elements */}
+          <div className="absolute top-1/4 right-1/4 w-6 h-6 bg-pink-400 rounded-full animate-float animate-stagger-2"></div>
+          {/* <div className="absolute bottom-1/3 right-1/3 w-8 h-8 bg-yellow-400 rounded-full animate-bounce-slow animate-stagger-3"></div> */}
+        </div>
+
+        <div className="container-sm mx-auto px-12 py-28 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 items-center">
+            {/* Left Content with staggered animations */}
+            <div className="space-y-3">
+              <div className="">
+                <h1 className="text-3xl lg:text-[2.6rem] font-bold text-black leading-tight">
+                  <span className="">Study in {" "}</span>
+                  <span className="text-red-600 py-2">
                     UK
-                  </span> <br />
-                  Explore the Best Ways to Success
+                  </span>
+                  <br />
+                  <span>Explore the Best Ways to </span>
+                  <span className="text-red-600 py-2">
+                    Success
+                  </span>
                 </h1>
                 <p
-                  className="text-base lg:text-lg leading-relaxed"
+                  className="text-base lg:text-base leading-relaxed"
                   style={{
-                    color: "rgba(255, 255, 255, 0.9)",
-                    textShadow: "0 2px 8px rgba(0, 0, 0, 0.6)"
+                    color: "rgba(0, 0, 0, 0.9)",
+                    textShadow: "0 2px 8px rgba(255, 255, 255, 0.6)"
                   }}
                 >
                   Unlock your potential with world-class education in the United Kingdom.
@@ -425,175 +424,72 @@ const HeroSection = () => {
                 </p>
               </div>
 
+<div className="flex gap-2 pt-4 overflow-x-auto md:overflow-visible">
+  {/* Card 1 */}
+  <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+    <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+      50K<span className="text-red-600">+</span>
+    </h3>
+    <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Students Placed</p>
+  </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Card 1: Students Placed */}
-                <div
-                  className="flex items-center gap-3 
-      p-2 
-      border-2 border-blue-300 
-      shadow-lg 
-      rounded-2xl 
-      bg-gradient-to-br from-indigo-100/30 to-indigo-100/10 
-      backdrop-blur-[2px] 
-      hover:backdrop-blur-sm 
-      hover:border-blue-600 
-      transition-all duration-300 
-      relative 
-      overflow-hidden 
-      group
-      hover:shadow-blue-200/20 hover:shadow-2xl
-      animate-slide-up"
-                  style={{ animationDelay: '0.3s' }}
-                >
-                  {/* Text Content */}
-                  <div className="text-left flex-1">
-                    <div className="text-2xl font-bold 
-        text-transparent bg-clip-text 
-        bg-gradient-to-b from-white via-blue-50 to-cyan-100 
-        drop-shadow-md group-hover:drop-shadow-lg
-      ">
-                      50K+
-                    </div>
-                    <div className="text-xs text-white/90 tracking-wide drop-shadow-sm">
-                      Students Placed
-                    </div>
-                  </div>
+  {/* Card 2 */}
+  <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+    <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+      200<span className="text-red-600">+</span>
+    </h3>
+    <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Universities</p>
+  </div>
 
-                  {/* Anime Character */}
-                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
-                    <img src="/anime/a1.png" alt="Student" className="w-full h-full object-contain" />
-                  </div>
+  {/* Card 3 */}
+  <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+    <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+      15<span className="text-red-600">+</span>
+    </h3>
+    <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Cities</p>
+  </div>
+</div>
 
-                  {/* Glow Overlay */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-200/5 to-pink-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                </div>
-
-                {/* Card 2: Universities */}
-                <div
-                  className="flex items-center gap-3 
-      p-2 
-      border-2 border-violet-300 
-      shadow-lg 
-      rounded-2xl 
-      bg-gradient-to-br from-violet-100/30 to-violet-100/10 
-      backdrop-blur-[2px] 
-      hover:backdrop-blur-sm 
-      hover:border-violet-600 
-      transition-all duration-300 
-      relative 
-      overflow-hidden 
-      group
-      hover:shadow-violet-200/20 hover:shadow-2xl
-      animate-slide-up"
-                  style={{ animationDelay: '0.5s' }}
-                >
-                  {/* Text Content */}
-                  <div className="text-left flex-1">
-                    <div className="text-2xl font-bold 
-        text-transparent bg-clip-text 
-        bg-gradient-to-b from-white via-violet-50 to-purple-100 
-        drop-shadow-md group-hover:drop-shadow-lg
-      ">
-                      200+
-                    </div>
-                    <div className="text-xs text-white/90 tracking-wide drop-shadow-xl">
-                      Universities
-                    </div>
-                  </div>
-
-                  {/* Anime Character - Maybe a Grad Cap or Mascot? */}
-                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
-                    <img src="/anime/a1.png" alt="University" className="w-full h-full object-contain" />
-                  </div>
-
-                  {/* Glow Overlay */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-200/5 to-purple-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                </div>
-
-                {/* Card 3: Cities */}
-                <div
-                  className="flex items-center gap-3 
-      p-2 
-      border-2 border-emerald-100 
-      shadow-lg 
-      rounded-2xl 
-      bg-gradient-to-br from-emerald-100/30 to-emerald-100/10 
-      backdrop-blur-[2px] 
-      hover:backdrop-blur-sm 
-      hover:border-emerald-400 
-      transition-all duration-300 
-      relative 
-      overflow-hidden 
-      group
-      hover:shadow-emerald-200/20 hover:shadow-2xl
-      animate-slide-up"
-                  style={{ animationDelay: '0.7s' }}
-                >
-                  {/* Text Content */}
-                  <div className="text-left flex-1">
-                    <div className="text-2xl font-bold 
-        text-transparent bg-clip-text 
-        bg-gradient-to-b from-white via-emerald-50 to-emerald-100 
-        drop-shadow-md group-hover:drop-shadow-lg
-      ">
-                      15+
-                    </div>
-                    <div className="text-xs text-white/90 tracking-wide drop-shadow-sm">
-                      Cities
-                    </div>
-                  </div>
-
-                  {/* Anime Character - Traveler or Explorer */}
-                  <div className="flex-shrink-0 w-24 h-24 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
-                    <img src="/anime/a1.png" alt="City Explorer" className="w-full h-full object-contain" />
-                  </div>
-
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-emerald-200/5 to-teal-200/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                </div>
-              </div>
-
-              {/* CTA Buttons */}
-              <div
-                className="flex flex-col sm:flex-row gap-4 animate-scale-in"
-                style={{
-                  animationDelay: "0.6s"
-                }}
-              >
-                <Button
-                  size="lg"
-                  className="btn-primary text-center border group"
-                >
-                  Start Your Journey
-                  <ArrowRight
-                    className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                </Button>
+              <div className="flex flex-col sm:flex-row gap-4 mt-4 animate-stagger-4">
+                <Link href="/contact" className="btn-primary inline-block text-center group">
+                  <span className="relative z-10">Get Started Today</span>
+                </Link>
               </div>
             </div>
 
-            <div className="flex justify-center lg:justify-end" >
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-xl blur-2xl transform transition-transform duration-500"></div>
-                <img
-                  src={'https://www.gatewayabroadeducations.com/lp/uk_new_page/map_mobile.svg'}
-                  alt="UK Map"
-                  className="relative w-full max-w-md lg:max-w-xl h-auto drop-shadow-4xl filter brightness-120 contrast-110 transition-transform duration-500"
+            {/* Right Illustration with floating animation */}
+            <div className="relative animate-fadeInRight mx-auto">
+              <div className="relative z-10 mx-auto">
+                <Image
+                  src={'/anime/map.png'}
+                  alt="Study Abroad Illustration"
+                  width={500}
+                  height={470}
+                  className="drop-shadow-2xl"
+                  priority
                 />
-                <div className="w-full text-center mt-8">
-                  <p className="text-white text-base md:text-base font-medium bg-black/20 backdrop-blur-sm rounded-lg px-4 py-2 inline-block">
-                    🎓 Top UK Universities Across 15+ Cities
-                  </p>
-                </div>
               </div>
 
+              {/* Background circle with pulse animation */}
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white bg-opacity-30 rounded-full animate-pulse-slow -z-10"></div>
+
+              {/* Additional decorative elements */}
+              <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-bounce-slow"></div>
+              <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse-slow"></div>
             </div>
           </div>
         </div>
-      </section>
-          <MultiStepForm />
 
-      <section className="py-20 bg-background">
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
+          </div>
+        </div>
+      </section>
+      <MultiStepForm />
+
+      <section className="py-14 faq-section">
         <div className="container-sm mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="heading text-center d-block mb-2">
@@ -610,13 +506,13 @@ const HeroSection = () => {
               <div key={index}
                 className="flex items-start gap-3 
       p-4 
-      border-2 border-blue-300 
+      border-1 border-black-300 
       shadow-lg 
       rounded-2xl 
-      bg-gradient-to-br from-red-300/30 to-indigo-200/30 
+      bg-white
       backdrop-blur-[2px] 
       hover:backdrop-blur-sm 
-      hover:border-blue-600 
+      hover:border-black 
       transition-all duration-300 
       relative 
       overflow-hidden 
@@ -651,8 +547,10 @@ const HeroSection = () => {
         </div>
       </section>
 
-      <CardStackGridSection/>
-      <Component/>
+      <Component />
+
+      
+      <CardStackGridSection />
 
       {/* <ApplicationForm /> */}
     </>

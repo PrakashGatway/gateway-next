@@ -35,27 +35,27 @@ export default function EnhancedMultiStepForm() {
   }
 
   return (
-    <section className="relative bg-pink-100 py-12 overflow-hidden">
+    <section className="relative bg-white py-12 mx-2 overflow-hidden">
       {/* Background blur effect */}
-      <div className="absolute inset-0 bg-pink-200 backdrop-blur-sm opacity-40"></div>
+      <div className="absolute inset-0 backdrop-blr-sm opacity-40"></div>
 
       <div className="relative z-10">
-        <h3 className="sub-heading mx-auto font-semibold !text-center mb-8 px-4">
+        <h3 className="sub-heading mx-auto font-semibold !text-center mb-16 pb-6 px-4">
           Let's calculate your chances of getting into your dream University
         </h3>
 
         {/* Inner container with background image and glassmorphism */}
         <div
-          className="relative mx-auto max-w-7xl px-4 py-8 backdrop-blur-md bg-white/20 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
+          className="relative mx-auto max-w-7xl sm:px-6 lg:px-6 py-8 backdrop-blu bg-white/20 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
           style={{
-            backgroundImage: `url('https://www.wallpaperflare.com/static/930/175/684/circles-highlights-background-form-wallpaper.jpg')`,
+            backgroundImage: `url('/anime/form.jpg')`,
             backgroundRepeat: "no-repeat",
-            backgroundPosition: "right center",
+            backgroundPosition: "bottom center",
             backgroundSize: "cover",
           }}
         >
           {/* Glassmorphism overlay */}
-          <div className="absolute inset-0 backdrop-blur-sm bg-white/10"></div>
+          <div className="absolute inset-0 backdrop-blur-[0px] bg-white/10"></div>
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-6 gap-8 items-center">
             {/* Form: 4.5 out of 6 columns = 75% */}
@@ -94,7 +94,7 @@ export default function EnhancedMultiStepForm() {
               </div>
 
               {/* Form Content with Glassmorphism */}
-              <div className="backdrop-blur-lg bg-white/10 rounded-2xl p-6 border border-white/20 shadow-3xl">
+              <div className="backdrop-blur-[1px] bg-red-600/30 rounded-2xl p-6 border border-white/20 shadow-3xl">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <AnimatePresence mode="wait">
                     <motion.div
