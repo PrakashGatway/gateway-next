@@ -11,14 +11,10 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
-  // Retrieve token from local storage
   const token = localStorage.getItem('token');
-
-  // Add token to the headers if available
   if (token) {
     config.headers['Authorization'] = `Bearer ${token}`;
   }
-
   return config;
 });
 

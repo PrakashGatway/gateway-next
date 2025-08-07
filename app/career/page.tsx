@@ -1,22 +1,21 @@
 import CareerPage from "@/components/pages/career";
 
 export async function generateMetadata() {
-  const seoData = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          title: "Thank You about us- Gateway Abroad",
-          description: "Thank you about for contacting Gateway Abroad! Our experts will reach out to you soon.",
-          keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad",
-          ogTitle: "Thank You about us - Gateway Abroad",
-          ogDescription: "We about appreciate your interest in Gateway Abroad. Stay tuned for updates!",
-          ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
-        }),
-      500 
-    )
-  ) as any;
+  const seoData = {
+    title: "Join Gateway Abroad education Team | counselor, trainer, visa expert, Coach",
+    description: "Launch your career in study abroad! Join Gateway Abroad Education as a counselor, IELTS trainer, or visa expert. Grow with industry leaders & empower student dreams.",
+    keywords: "Career Gateway Abroad jaipur, counselor, trainer, visa expert, coach",
+    ogTitle: "Join Gateway Abroad education Team | counselor, trainer, visa expert, Coach",
+    ogDescription: "Launch your career in study abroad! Join Gateway Abroad Education as a counselor, IELTS trainer, or visa expert. Grow with industry leaders & empower student dreams",
+    ogImage: "/img/ga-logo.svg",
+    twitterTitle: "Work at Gateway Abroad - Career Opportunities",
+    twitterDescription: "Join our team of education experts and help students achieve their global dreams.",
+    twitterImage: "/img/ga-logo.svg",
+    canonical: "https://www.gatewayabroadeducations.com/career"
+  };
 
   return {
+    metadataBase: new URL('https://www.gatewayabroadeducations.com'),
     title: seoData.title,
     description: seoData.description,
     keywords: seoData.keywords,
@@ -24,16 +23,24 @@ export async function generateMetadata() {
       title: seoData.ogTitle,
       description: seoData.ogDescription,
       images: [seoData.ogImage],
-      url: "https://www.gatewayabroadeducations.com/about",
+      url: seoData.canonical,
+      type: "website",
+      site_name: "Gateway Abroad Education",
     },
-    alternates: { canonical: "https://www.gatewayabroadeducations.com/about" },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.twitterTitle,
+      description: seoData.twitterDescription,
+      images: [seoData.twitterImage],
+    },
+    alternates: { canonical: seoData.canonical },
   };
 }
 
 function Career() {
 
   return (
-    <CareerPage/>
+    <CareerPage />
   );
 }
 

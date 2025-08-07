@@ -202,10 +202,10 @@ export const Footer = () => {
                           <Link href={`https://api.whatsapp.com/send?phone=${encodeURIComponent(contactData.contectOne)}`}>
                             {contactData.contectOne}
                           </Link>
-                        )}
+                        )} {' '}
                         {contactData.contectTwo && (
                           <Link href={`tel:${contactData.contectTwo}`}> {contactData.contectTwo}</Link>
-                        )}
+                        )} {' '}
                         {contactData.contectThree && (
                           <Link href={`tel:${contactData.contectThree}`}> {contactData.contectThree}</Link>
                         )}

@@ -3,6 +3,7 @@ import requests from "./httpService";
 const PageServices = {
 
 
+
     // About Page 
 
     getAboutPageById: async (id) => {
@@ -320,6 +321,9 @@ const PageServices = {
     },
     getAllPreferences: async () => {
         return await requests.get(`/preferences`)
+    },
+    newPreferences: async (data) => {
+        return await requests.post(`/preferences`,data)
     },
     GetAllUserList: async () => {
         return await requests.get(`/users/all`)

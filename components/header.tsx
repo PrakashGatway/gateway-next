@@ -15,6 +15,8 @@ import {
   LogOut,
   Menu,
   X,
+  PhoneOutgoing,
+  ImageDownIcon,
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import useAsync from "@/hooks/useAsync"
@@ -37,7 +39,7 @@ const Header = () => {
     name: "Prakash Jangid",
     email: "Prakash@example.com",
     avatar: "/placeholder-user.jpg",
-    isLoggedIn: true,
+    isLoggedIn: false,
   }
 
   useEffect(() => {
@@ -291,8 +293,8 @@ const Header = () => {
               </div>
             ) : (
               <Link
-                href="/login"
-                className="hidden lg:flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-[#E83A3A] to-[#FF6B6B] text-white rounded-lg hover:from-[#D12F2F] hover:to-[#E83A3A] transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] text-sm xl:text-base"
+                href="/auth"
+                className="hidden lg:flex items-center space-x-2 px-3 py-2 btn-primary"
               >
                 <User className="h-4 w-4" />
                 <span>Login</span>
@@ -455,6 +457,14 @@ const Header = () => {
                 <Award className="h-5 w-5" />
                 <span>Career</span>
               </Link>
+                 <Link
+                href="/gallary"
+                className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <ImageDownIcon className="h-5 w-5" />
+                <span>Gallery</span>
+              </Link>
               <Link
                 href="/contact"
                 className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
@@ -509,8 +519,8 @@ const Header = () => {
               {/* Mobile Login Button */}
               {!user.isLoggedIn && (
                 <Link
-                  href="/login"
-                  className="flex items-center justify-center space-x-2 mt-2 px-4 py-3 bg-gradient-to-r from-[#E83A3A] to-[#FF6B6B] text-white rounded-lg hover:from-[#D12F2F] hover:to-[#E83A3A] transition-all duration-300 shadow-md hover:shadow-lg"
+                  href="/auth"
+                  className="flex items-center justify-center btn-primary"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <User className="h-5 w-5" />

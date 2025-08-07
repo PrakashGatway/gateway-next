@@ -8,46 +8,30 @@ import "keen-slider/keen-slider.min.css"
 
 // Dummy logo data
 const dummyLogos = [
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Abertay University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Auburn University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Bishop Grosseteste University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Brunel University London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Caltech" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Chester" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "City University London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Cleveland State University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "De Montfort University Leicester" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Drexel University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Imperial College London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of the Incarnate Word" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "La Trobe University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Leicester" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Liverpool" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "London Metropolitan University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Loughborough University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Macquarie University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Massachusetts Institute of Technology" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Newcastle University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Oxford" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Plymouth" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "PNW University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Queen's University Belfast" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Queen Mary University of London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Ravensbourne University London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Roehampton London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Sheffield" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "Sonoma State University" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "The University of Manchester" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Aberdeen" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Birmingham" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Cambridge" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Cumbria" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Dayton" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Hertfordshire" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of London" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "The University of Nottingham" },
-  { src: "https://www.gradding.com/_next/image?url=%2Fhomepage%2Funiversity%2FImperial-College-London.png&w=256&q=75", alt: "University of Portsmouth" },
-]
+  { src: "/anime/p1.svg", alt: "Abertay University" },
+  { src: "/anime/p2.svg", alt: "University of Aberdeen" },
+  { src: "/anime/p3.svg", alt: "Aston University" },
+  { src: "/anime/p4.svg", alt: "University of Bath" },
+  { src: "/anime/p5.svg", alt: "University of Birmingham" },
+  { src: "/anime/p6.svg", alt: "University of Bristol" },
+  { src: "/anime/p7.svg", alt: "University of Cambridge" },
+  { src: "/anime/p8.svg", alt: "University of Edinburgh" },
+  { src: "/anime/p9.svg", alt: "Imperial College London" },
+  { src: "/anime/p10.svg", alt: "University of Leeds" },
+  { src: "/anime/p11.svg", alt: "University of Manchester" },
+  { src: "/anime/p12.svg", alt: "Newcastle University" },
+  { src: "/anime/p13.svg", alt: "University of Nottingham" },
+  { src: "/anime/p14.svg", alt: "University of Oxford" },
+  { src: "/anime/p15.svg", alt: "University of Sheffield" },
+  { src: "/anime/p16.svg", alt: "University College London (UCL)" },
+  { src: "/anime/p17.svg", alt: "King's College London" },
+  { src: "/anime/p18.svg", alt: "University of Glasgow" },
+  { src: "/anime/p19.svg", alt: "University of Southampton" },
+  { src: "/anime/p20.svg", alt: "University of Warwick" },
+  { src: "/anime/p21.svg", alt: "University of York" },
+  { src: "/anime/p22.svg", alt: "Queen Mary University of London" },
+  { src: "/anime/p23.svg", alt: "University of London" }
+];
 
 interface Logo {
   src: string
@@ -61,16 +45,14 @@ interface SliderRowProps {
 }
 
 const SliderRow: React.FC<SliderRowProps> = ({ logos, direction, speed }) => {
-  const logoWidth = 150 // px
+  const logoWidth = 110 // px
   const logoHeight = 40 // px
-  const gap = 32 // px, for gap-x-8
+  const gap = 12 // px, for gap-x-8
 
   const duplicatedLogos = [...logos, ...logos, ...logos, ...logos]
 
-  // Calculate the total width of one full set of original logos plus their gaps
   const originalSetWidth = logos.length * logoWidth + (logos.length - 1) * gap
 
-  // Keen Slider setup (primarily for ref and potential future keen-slider features)
   const [sliderRef] = useKeenSlider<HTMLDivElement>({
     loop: true, // Keen-slider's loop, though framer-motion handles the continuous animation
     renderMode: "performance",
@@ -123,14 +105,18 @@ const SliderRow: React.FC<SliderRowProps> = ({ logos, direction, speed }) => {
 
 export default function Component() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-12">
+    <div className="flex flex-col items-center justify-center bg-pink-100 py-12">
       <div className="w-full px-4">
-        <h2 className="text-center text-3xl font-bold text-gray-800 mb-8">Our Partners</h2>
-        <div className="space-y-8">
-          <SliderRow logos={dummyLogos.slice(0, 20)} direction="right" speed={30} />
-          <SliderRow logos={dummyLogos.slice(10, 30)} direction="left" speed={35} />
-          <SliderRow logos={dummyLogos.slice(15, 30)} direction="right" speed={28} />
-          <SliderRow logos={dummyLogos.slice(20, 39)} direction="left" speed={32} />
+          <div className="text-center mb-16">
+            <h2 className="heading text-center d-block mb-2">
+              Our Partner Universities
+            </h2>
+            </div>
+        <div className="space-y-2">
+          <SliderRow logos={dummyLogos.slice(0, 10)} direction="right" speed={30} />
+          <SliderRow logos={dummyLogos.slice(10, 20)} direction="left" speed={35} />
+          <SliderRow logos={dummyLogos.slice(15, 23)} direction="right" speed={28} />
+          <SliderRow logos={dummyLogos.slice(0, 15)} direction="left" speed={32} />
         </div>
       </div>
     </div>

@@ -4,11 +4,13 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { AnimatePresence, motion } from "framer-motion"
 import { ChevronRight, ChevronLeft, Check, User, MapPin, Calendar, GraduationCap } from "lucide-react"
+import PageServices from "@/services/PageServices"
+import Swal from 'sweetalert2'
 
 const steps = ["course", "country", "intake", "details"]
-const courses = ["UG", "PG", "PHD", "MBBS"]
+const courses = ["UG", "PG", "PHD"]
 const countries = ["UK", "USA", "Canada", "Australia"]
-const intakes = ["Jan 2026", "May 2026", "September","Nov 2026"]
+const intakes = ["Jan 2026", "May 2026", "September", "Nov 2026"]
 
 const stepIcons = [GraduationCap, MapPin, Calendar, User]
 
@@ -20,6 +22,7 @@ export default function EnhancedMultiStepForm() {
     watch,
     trigger,
     formState: { errors },
+    reset
   } = useForm({ mode: "onChange" })
 
   const onNext = async () => {
@@ -29,9 +32,25 @@ export default function EnhancedMultiStepForm() {
 
   const onBack = () => setStep((prev) => prev - 1)
 
-  const onSubmit = (data: any) => {
-    console.log("Final Data Submitted:", data)
-    alert("Form Submitted Successfully!")
+  const onSubmit = async (data: any) => {
+    const formatData = {
+      name: data.name,
+      email: data.email,
+      phone: data.mobile,
+      program: data.course,
+      grade: null,
+      city: data.city,
+      perferedCountry: data.country,
+      study: data.intake,
+    }
+    let response = await PageServices.newPreferences(formatData)
+    Swal.fire({
+      title: "Thank You",
+      text: response.message,
+      icon: "success"
+    });
+    reset()
+    setStep(0)
   }
 
   return (
@@ -40,22 +59,22 @@ export default function EnhancedMultiStepForm() {
       <div className="absolute inset-0 backdrop-blr-sm opacity-40"></div>
 
       <div className="relative z-10">
-        <h3 className="sub-heading mx-auto font-semibold !text-center mb-16 pb-6 px-4">
+        <h3 className="sub-heading !text-black mx-auto font-semibold !text-center mb-16 pb-6 px-4">
           Let's calculate your chances of getting into your dream University
         </h3>
 
         {/* Inner container with background image and glassmorphism */}
         <div
-          className="relative mx-auto max-w-7xl sm:px-6 lg:px-6 py-8 backdrop-blu bg-white/20 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
+          className="relative mx-auto max-w-7xl sm:px-6 lg:px-6 py-8 backdrop-blu bg-white/40 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
           style={{
-            backgroundImage: `url('/anime/form.jpg')`,
+            backgroundImage: `url('/anime/form.webp')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "bottom center",
             backgroundSize: "cover",
           }}
         >
           {/* Glassmorphism overlay */}
-          <div className="absolute inset-0 backdrop-blur-[0px] bg-white/10"></div>
+          <div className="absolute inset-0 backdrop-blur-[0px] bg-white/0"></div>
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-6 gap-8 items-center">
             {/* Form: 4.5 out of 6 columns = 75% */}
@@ -70,11 +89,10 @@ export default function EnhancedMultiStepForm() {
                           initial={false}
                           animate={{
                             scale: step === index ? 1.05 : 1,
-                            backgroundColor: step >= index ? "#ec4899" : "#e5e7eb",
+                            backgroundColor: step >= index ? "#ec4899" : "#9ba3b3ff",
                           }}
-                          className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shadow-md ${
-                            step >= index ? "bg-pink-500" : "bg-gray-300"
-                          }`}
+                          className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shadow-md ${step >= index ? "bg-pink-500" : "bg-gray-300"
+                            }`}
                         >
                           {step > index ? <Check className="w-4 h-4" /> : <Icon className="w-4 h-4" />}
                         </motion.div>
@@ -94,7 +112,7 @@ export default function EnhancedMultiStepForm() {
               </div>
 
               {/* Form Content with Glassmorphism */}
-              <div className="backdrop-blur-[1px] bg-red-600/30 rounded-2xl p-6 border border-white/20 shadow-3xl">
+              <div className="backdrop-blur-[1px] bg-white/70 rounded-2xl p-6 border border-white/20 shadow-3xl">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -106,7 +124,7 @@ export default function EnhancedMultiStepForm() {
                     >
                       {step === 0 && (
                         <div className="space-y-4">
-                          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+                          <h2 className="text-xl font-semibold mb-4 !text-black">
                             What is your desired academic course?
                           </h2>
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -118,11 +136,10 @@ export default function EnhancedMultiStepForm() {
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
-                                  watch("course") === course
-                                    ? "bg-pink-500/80 border-pink-400 text-white shadow-lg"
-                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
-                                }`}
+                                className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("course") === course
+                                  ? "bg-pink-500/80 border-pink-400 text-white shadow-lg"
+                                  : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
+                                  }`}
                               >
                                 <input
                                   type="radio"
@@ -130,7 +147,7 @@ export default function EnhancedMultiStepForm() {
                                   {...register("course", { required: "Course is required" })}
                                   className="hidden"
                                 />
-                                <div className="font-medium">{course}</div>
+                                <div className="font-medium text-lg">{course}</div>
                               </motion.label>
                             ))}
                           </div>
@@ -154,11 +171,10 @@ export default function EnhancedMultiStepForm() {
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
-                                  watch("country") === country
-                                    ? "bg-green-500/80 border-green-400 text-white shadow-lg"
-                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
-                                }`}
+                                className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("country") === country
+                                  ? "bg-pink-500/80 border-green-400 text-white shadow-lg"
+                                  : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
+                                  }`}
                               >
                                 <input
                                   type="radio"
@@ -188,11 +204,10 @@ export default function EnhancedMultiStepForm() {
                                 transition={{ delay: index * 0.05 }}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className={`group relative p-4 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${
-                                  watch("intake") === month
-                                    ? "bg-purple-500/80 border-purple-400 text-white shadow-lg"
-                                    : "bg-white/40 border-white/30 hover:bg-white/60 hover:shadow-md"
-                                }`}
+                                className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("intake") === month
+                                  ? "bg-pink-500/80 border-purple-400 text-white shadow-lg"
+                                  : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
+                                  }`}
                               >
                                 <input
                                   type="radio"
@@ -212,7 +227,7 @@ export default function EnhancedMultiStepForm() {
 
                       {step === 3 && (
                         <div className="space-y-4">
-                          <h2 className="text-xl font-semibold mb-4 text-gray-800">Basic Details</h2>
+                          <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                             {[
                               {
@@ -252,16 +267,16 @@ export default function EnhancedMultiStepForm() {
                                 transition={{ delay: index * 0.05 }}
                                 className=""
                               >
-                                <label className="block text-sm font-medium text-gray-700 mb-1">{field.label}</label>
+                                <label className="block text-sm font-medium  mb-1">{field.label}</label>
                                 <input
                                   type={field.type}
                                   {...register(field.name, field.validation)}
-                                  className="w-full p-2 rounded-xl px-3 backdrop-blur-sm bg-white/80 focus:bg-white/60 focus:border-pink-400 focus:outline-none transition-all duration-200 shadow-xl"
+                                  className="w-full p-2 rounded-lg px-3 backdrop-blur-sm bg-white/90 focus:bg-white/80 border border-pink-400 focus:outline-none focus:border-pink-400 transition-all duration-200 shadow"
                                   placeholder={`Enter your ${field.label.toLowerCase()}`}
                                 />
-                                {errors[field.name] && (
+                                {/* {errors[field.name] && (
                                   <p className="text-red-600 text-xs">{errors[field.name].message}</p>
-                                )}
+                                )} */}
                               </motion.div>
                             ))}
                           </div>
@@ -314,17 +329,21 @@ export default function EnhancedMultiStepForm() {
               </div>
             </div>
 
-            {/* Image: 1.5 out of 6 columns = 25% */}
-            <div className="md:col-span-2 hidden md:flex justify-center">
+            <div className="md:col-span-2 hidden md:flex justify-center relative">
+              <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+                <div className="w-[260px] h-full bg-white opacity-20 blur-2xl rounded-full"></div>
+              </div>
+
               <motion.img
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
                 src="/anime/a2.png"
                 alt="University Illustration"
-                className="max-w-[240px] h-auto object-contain drop-shadow-xl"
+                className="max-w-[240px] h-auto object-contain drop-shadow-xl relative z-10"
               />
             </div>
+
           </div>
         </div>
       </div>

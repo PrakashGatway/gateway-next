@@ -1,22 +1,21 @@
 import SpokenEnglish from "@/components/pages/spokenEnglish";
 
 export async function generateMetadata() {
-  const seoData = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          title: "Thank You home us- Gateway Abroad",
-          description: "Thank you home for contacting Gateway Abroad! Our experts will reach out to you soon.",
-          keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad",
-          ogTitle: "Thank You home us - Gateway Abroad",
-          ogDescription: "We home appreciate your interest in Gateway Abroad. Stay tuned for updates!",
-          ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
-        }),
-      500 
-    )
-  ) as any;
+  const seoData = {
+    title: "Best Spoken English Classes in Jaipur | English Speaking class",
+    description: "Master fluent English for study abroad! Join top spoken English class in Jaipur with personalized training and English Speaking class. Free demo class.",
+    keywords: "spoken english classes in jaipur, spoken english coaching, english speaking class, english spoken, personality development class, english expert coach, free spoken english demo class",
+    ogTitle: "Best Spoken English Classes in Jaipur | English Speaking class",
+    ogDescription: "Master fluent English for study abroad! Join top spoken English class in Jaipur with personalized training and English Speaking class. Free demo class",
+    ogImage: "/img/ga-logo.svg",
+    twitterTitle: "Spoken English Classes in Jaipur - Gateway Abroad",
+    twitterDescription: "Improve your fluency with expert-led spoken English coaching in Jaipur. Free demo available.",
+    twitterImage: "/img/ga-logo.svg",
+    canonical: "https://www.gatewayabroadeducations.com/spoken-english"
+  };
 
   return {
+    metadataBase: new URL('https://www.gatewayabroadeducations.com'),
     title: seoData.title,
     description: seoData.description,
     keywords: seoData.keywords,
@@ -24,9 +23,17 @@ export async function generateMetadata() {
       title: seoData.ogTitle,
       description: seoData.ogDescription,
       images: [seoData.ogImage],
-      url: "https://www.gatewayabroadeducations.com",
+      url: seoData.canonical,
+      type: "website",
+      site_name: "Gateway Abroad Education",
     },
-    alternates: { canonical: "https://www.gatewayabroadeducations.com/" },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.twitterTitle,
+      description: seoData.twitterDescription,
+      images: [seoData.twitterImage],
+    },
+    alternates: { canonical: seoData.canonical },
   };
 }
 

@@ -1,41 +1,83 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
+import axios from "axios";
 
-export async function generateMetadata({params}) {
-  let {slug} = params;
-  console.log(slug)
-  const seoData = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          title: "Thank You about us- Gateway Abroad",
-          description: "Thank you about for contacting Gateway Abroad! Our experts will reach out to you soon.",
-          keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad",
-          ogTitle: "Thank You about us - Gateway Abroad",
-          ogDescription: "We about appreciate your interest in Gateway Abroad. Stay tuned for updates!",
-          ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
-        }),
-      500 
-    )
-  );
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  try {
+    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
 
-  return {
-    title: seoData.title,
-    description: seoData.description,
-    keywords: seoData.keywords,
-    openGraph: {
-      title: seoData.ogTitle,
-      description: seoData.ogDescription,
-      images: [seoData.ogImage],
-      url: "https://www.gatewayabroadeducations.com/about",
-    },
-    alternates: { canonical: "https://www.gatewayabroadeducations.com/about" },
-  };
+    const seoData = response?.data?.data?.blog;
+
+    const defaultTitle = "Blog - Gateway Abroad | Study Abroad Tips & Updates";
+    const defaultDescription = "Stay updated with the latest study abroad news, visa updates, test prep tips, and student success stories from Gateway Abroad.";
+    const defaultImage = "https://www.gatewayabroadeducations.com/assets/img/ga-logo.svg"; // Fallback image
+    const canonicalBaseUrl = "https://www.gatewayabroadeducations.com/blog";
+    const title = seoData?.blogTitle || defaultTitle;
+    const description = seoData?.descriptions || defaultDescription;
+    const keywords = seoData?.keyword || "study abroad blog, IELTS tips, student visa updates, university admissions, abroad education news, Gateway Abroad blog";
+    const ogImage = seoData?.image ? `https://www.gatewayabroadeducations.com/uploads/${seoData.image}` : defaultImage;
+    const canonical = `${canonicalBaseUrl}/${slug}`;
+
+    return {
+      metadataBase: new URL('https://www.gatewayabroadeducations.com'),
+      title: title,
+      description: description,
+      keywords: keywords,
+      openGraph: {
+        title: title,
+        description: description,
+        images: [ogImage],
+        url: canonical,
+        type: "article",
+        site_name: "Gateway Abroad Education",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: title,
+        description: description,
+        images: [ogImage],
+      },
+      alternates: {
+        canonical: canonical,
+      },
+    };
+
+  } catch (error) {
+    const fallbackTitle = "Blog Post - Gateway Abroad";
+    const fallbackDescription = "Read insightful articles on studying abroad, test preparation, and visa guidance.";
+    const fallbackImage = "https://www.gatewayabroadeducations.com/assets/img/ga-logo.svg";
+    const fallbackCanonical = `https://www.gatewayabroadeducations.com/blog/${slug}`;
+
+    return {
+      metadataBase: new URL('https://www.gatewayabroadeducations.com'),
+      title: fallbackTitle,
+      description: fallbackDescription,
+      keywords: "study abroad blog, Gateway Abroad",
+      openGraph: {
+        title: fallbackTitle,
+        description: fallbackDescription,
+        images: [fallbackImage],
+        url: fallbackCanonical,
+        type: "article",
+        site_name: "Gateway Abroad Education",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: fallbackTitle,
+        description: fallbackDescription,
+        images: [fallbackImage],
+      },
+      alternates: {
+        canonical: fallbackCanonical,
+      },
+    };
+  }
 }
 
 function SingleBlog() {
 
   return (
-    <SingleBlogPage/>
+    <SingleBlogPage />
   );
 }
 

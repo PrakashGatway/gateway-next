@@ -1,24 +1,21 @@
 import Link from 'next/link';
 import { constant } from '@/constant/index.constant.js'; // Adjust path as needed
-
 export async function generateMetadata() {
-  // ✅ Simulate API Delay
-  const seoData = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          title: "Thank You Prakash jangid- Gateway Abroad",
-          description: "Thank you for contacting Gateway Abroad! Our experts will reach out to you soon.",
-          keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad",
-          ogTitle: "Thank You - Gateway Abroad",
-          ogDescription: "We appreciate your interest in Gateway Abroad. Stay tuned for updates!",
-          ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
-        }),
-      1000 // 0.5s delay
-    )
-  );
+  const seoData = {
+    title: "Thank You - Gateway Abroad",
+    description: "Thank you for contacting Gateway Abroad! Our experts will reach out to you soon.",
+    keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad, thank you page",
+    ogTitle: "Thank You - Gateway Abroad",
+    ogDescription: "We appreciate your interest in Gateway Abroad. Stay tuned for updates!",
+    ogImage: "/img/og-about.jpg",
+    twitterTitle: "Thank You - Gateway Abroad",
+    twitterDescription: "Thanks for getting in touch! Our team will contact you shortly.",
+    twitterImage: "/img/og-about.jpg",
+    canonical: "https://www.gatewayabroadeducations.com/thank-you"
+  };
 
   return {
+    metadataBase: new URL('https://www.gatewayabroadeducations.com'),
     title: seoData.title,
     description: seoData.description,
     keywords: seoData.keywords,
@@ -26,9 +23,17 @@ export async function generateMetadata() {
       title: seoData.ogTitle,
       description: seoData.ogDescription,
       images: [seoData.ogImage],
-      url: "https://gatewayabroad.com/thankyou",
+      url: seoData.canonical,
+      type: "website",
+      site_name: "Gateway Abroad Education",
     },
-    alternates: { canonical: "https://gatewayabroad.com/thankyou" },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.twitterTitle,
+      description: seoData.twitterDescription,
+      images: [seoData.twitterImage],
+    },
+    alternates: { canonical: seoData.canonical },
   };
 }
 

@@ -1,22 +1,20 @@
 import AllBlogs from "@/components/pages/blogs";
-
 export async function generateMetadata() {
-  const seoData = await new Promise((resolve) =>
-    setTimeout(
-      () =>
-        resolve({
-          title: "Thank You about us- Gateway Abroad",
-          description: "Thank you about for contacting Gateway Abroad! Our experts will reach out to you soon.",
-          keywords: "Study Abroad, IELTS, TOEFL, Gateway Abroad",
-          ogTitle: "Thank You about us - Gateway Abroad",
-          ogDescription: "We about appreciate your interest in Gateway Abroad. Stay tuned for updates!",
-          ogImage: "https://via.placeholder.com/600x400.png?text=Gateway+Abroad",
-        }),
-      500 
-    )
-  ) as any;
+  const seoData = {
+    title: "Blog - Gateway Abroad | Study Abroad Tips & Updates",
+    description: "Stay updated with the latest study abroad news, visa updates, test prep tips, and student success stories from Gateway Abroad.",
+    keywords: "study abroad blog, IELTS tips, student visa updates, university admissions, abroad education news, Gateway Abroad blog",
+    ogTitle: "Blog - Gateway Abroad | Expert Study Abroad Advice",
+    ogDescription: "Expert insights on studying abroad, test preparation, and visa guidance. Your go-to resource for global education updates.",
+    ogImage: "/img/ga-logo.svg",
+    twitterTitle: "Blog - Gateway Abroad Education",
+    twitterDescription: "Latest tips and news on IELTS, GRE, GMAT, and studying abroad from Gateway Abroad experts.",
+    twitterImage: "/img/ga-logo.svg",
+    canonical: "https://www.gatewayabroadeducations.com/blog"
+  };
 
   return {
+    metadataBase: new URL('https://www.gatewayabroadeducations.com'),
     title: seoData.title,
     description: seoData.description,
     keywords: seoData.keywords,
@@ -24,9 +22,17 @@ export async function generateMetadata() {
       title: seoData.ogTitle,
       description: seoData.ogDescription,
       images: [seoData.ogImage],
-      url: "https://www.gatewayabroadeducations.com/about",
+      url: seoData.canonical,
+      type: "website",
+      site_name: "Gateway Abroad Education",
     },
-    alternates: { canonical: "https://www.gatewayabroadeducations.com/about" },
+    twitter: {
+      card: "summary_large_image",
+      title: seoData.twitterTitle,
+      description: seoData.twitterDescription,
+      images: [seoData.twitterImage],
+    },
+    alternates: { canonical: seoData.canonical },
   };
 }
 
