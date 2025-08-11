@@ -26,10 +26,10 @@ const HeroSection = ({type ,title,description,image}:any) => {
           <div className="space-y-3">
             <div className="">
               <h1 className="text-3xl lg:text-[2.6rem] font-bold leading-tight">
-                <span className="inline-block">{title?.split(';')[0]}</span>
+                <span className="inline-block">{title?.split(';')[0] || "Gateway"}</span>
                 <br />
               { type != "about" &&<> <span className="text-gradient py-2 inline-block">
-                  {title?.split(';')?.slice(1, title?.split(';')?.length)?.join(" ")}
+                  {title?.split(';')?.slice(1, title?.split(';')?.length)?.join(" ") || "Abroad Jaipur"}
                 </span>
                 <br /> </>}
               </h1>
@@ -75,7 +75,7 @@ const HeroSection = ({type ,title,description,image}:any) => {
           <div className="relative animate-fadeInRight mx-auto">
             <div className="relative z-10 animate-float mx-auto">
               <Image
-                src={image}
+                src={title ? image : "/placeholder.svg"}
                 alt="Study Abroad Illustration"
                 width={type == "about" ? 490 :430}
                 height={470}

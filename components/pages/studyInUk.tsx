@@ -54,6 +54,44 @@ const StudyInUk = () => {
         "From documentation to interview prep, we handle every aspect of the visa process. With a high success rate, Gateway Abroad Jaipur makes the student visa journey stress-free and efficient."
     }
   ];
+
+  const steps = [
+    {
+      title: 'Free Evaluation of Your Study Abroad Profile',
+      description: 'Identify the best-fit universities and courses based on your profile, academic background, and career goals with the help of our experts.',
+      imageSrc: '/images/step1.svg', // Replace with actual image path
+    },
+    {
+      title: 'Application Assistance',
+      description: 'Get guidance on the entire application process and increase your chances of acceptance.',
+      imageSrc: '/images/step2.svg',
+    },
+    {
+      title: 'Personalized Counseling',
+      description: 'Get personalized counseling sessions with our experts, where you can discuss your concerns and get customized solutions.',
+      imageSrc: '/images/step3.svg',
+    },
+    {
+      title: 'Test Prep',
+      description: 'Ace your study abroad entrance exams with our exclusive test prep materials and strategies.',
+      imageSrc: '/images/step4.svg',
+    },
+    {
+      title: 'Loan Guidance',
+      description: 'Get guidance on various loan options from our financial experts and choose the one that suits your needs and budget.',
+      imageSrc: '/images/step5.svg',
+    },
+    {
+      title: 'Real-Time Interaction with Experts',
+      description: 'Grab the chance to interact with experts from different fields and gain insights into the latest trends and developments in the study abroad industry.',
+      imageSrc: '/images/step6.svg',
+    },
+    {
+      title: 'Premium Demo of AI-Based Tools',
+      description: 'Try SchoolConnect’s cutting-edge AI-based tools that simplify the study abroad process, making your journey more efficient and effective.',
+      imageSrc: '/images/step7.svg',
+    },
+  ];
   const [form, setform] = useState([]);
   const { teamMembers: member, youtubeVideo: videoStudednt, } = useGlobal();
   const [blogData, setBlogData] = useState([]);
@@ -253,13 +291,55 @@ const StudyInUk = () => {
         </div>
       </section>
       <section className="container-sm py-20 lg:mt-0">
-        {/* <div className="text-center">
-          <h2 className="heading text-center d-block mb-[-100px]">
-            Study in USA – The Roadmap
+        <div className="text-center">
+          <h2 className="heading text-center d-block pb-10">
+            Study in UK – The Roadmap
             With Gateway Abroad
           </h2>
+        </div>
+
+        {/* Desktop Image (shown on lg and above) */}
+        <img
+          src="/anime/road.svg"
+          alt="Study in UK Roadmap - Desktop"
+          className="hidden md:block h-full w-full"
+        />
+
+        {/* Mobile Image (shown on sm to lg- screens) */}
+        <img
+          src="/anime/mobileRoad.svg"
+          alt="Study in UK Roadmap - Mobile"
+          className="block md:hidden h-full w-full"
+        />
+        {/* <div className="container mx-auto px-4 py-10">
+          <h2 className="text-2xl font-bold mb-8 text-center">Our Working Process</h2>
+          <div className="flex flex-col space-y-8">
+            {steps.map((step, index) => (
+              <div
+                key={index}
+                className={`flex flex-row items-center gap-4 ${index % 2 === 0 ? 'flex-row-reverse' : ''
+                  }`}
+              >
+                <div className="w-1/2 p-1 flex justify-center">
+                  <Image
+                    src={'https://cdn4.iconfinder.com/data/icons/ios7-active-strategy/512/route_sign_road_direction-512.png'}
+                    alt={step.title}
+                    width={200}
+                    height={180}
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+
+                <div className="w-1/2 p-1">
+                  <h3 className="text-base font-bold mb-2">{step.title}</h3>
+                  <p className="text-gray-600 text-sm">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div> */}
-        <img src="/anime/road.jpeg" alt="" className="h-full w-full" />
+
       </section>
       <Component />
       <section className="people-behind-us-section py-70">
