@@ -125,7 +125,7 @@ const StudyInUk = () => {
 
   return (
     <>
-      <section className="hero-gradient pt-6 py-12 flex items-center relative overflow-hidden">
+      <section className="hero-gradient pt-12 py-1 md:py-12 flex items-center relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-28 left-10 w-4 h-4 bg-red-500 rounded-full animate-bounce-slow"></div>
@@ -170,26 +170,26 @@ const StudyInUk = () => {
                 </p>
               </div>
 
-              <div className="flex gap-2 pt-4 overflow-x-auto md:overflow-visible">
+              <div className="flex gap-0 md:gap-2 pt-4 overflow-x-auto md:overflow-visible">
                 {/* Card 1 */}
-                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[90px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+                  <h3 className="text-lg sm:text-2xl md:text-3xl text-black font-semibold mb-0">
                     {<CounterUp end={50000} />}<span className="text-red-600">+</span>
                   </h3>
                   <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Students Placed</p>
                 </div>
 
                 {/* Card 2 */}
-                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[90px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+                  <h3 className="text-lg sm:text-2xl md:text-3xl text-black font-semibold mb-0">
                     <CounterUp end={200} /><span className="text-red-600">+</span>
                   </h3>
                   <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Universities</p>
                 </div>
 
                 {/* Card 3 */}
-                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[110px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl text-black font-semibold mb-0">
+                <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[90px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
+                  <h3 className="text-lg sm:text-2xl md:text-3xl text-black font-semibold mb-0">
                     <CounterUp end={15} /><span className="text-red-600">+</span>
                   </h3>
                   <p className="text-black font-semibold text-xs sm:text-sm md:text-sm mb-0">Cities</p>
@@ -307,38 +307,10 @@ const StudyInUk = () => {
 
         {/* Mobile Image (shown on sm to lg- screens) */}
         <img
-          src="/anime/mobileRoad.svg"
+          src="/anime/mobileRoad.png"
           alt="Study in UK Roadmap - Mobile"
           className="block md:hidden h-full w-full"
         />
-        {/* <div className="container mx-auto px-4 py-10">
-          <h2 className="text-2xl font-bold mb-8 text-center">Our Working Process</h2>
-          <div className="flex flex-col space-y-8">
-            {steps.map((step, index) => (
-              <div
-                key={index}
-                className={`flex flex-row items-center gap-4 ${index % 2 === 0 ? 'flex-row-reverse' : ''
-                  }`}
-              >
-                <div className="w-1/2 p-1 flex justify-center">
-                  <Image
-                    src={'https://cdn4.iconfinder.com/data/icons/ios7-active-strategy/512/route_sign_road_direction-512.png'}
-                    alt={step.title}
-                    width={200}
-                    height={180}
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-
-                <div className="w-1/2 p-1">
-                  <h3 className="text-base font-bold mb-2">{step.title}</h3>
-                  <p className="text-gray-600 text-sm">{step.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div> */}
 
       </section>
       <Component />

@@ -8,12 +8,10 @@ import Slider from 'react-slick';
 import { slider2settings, settings, youtubeSlider, blogSlider, testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import PageServices from '@/services/PageServices'; // Ensure path is correct
 import { constant } from '@/constant/index.constant.js'; // Ensure path is correct
-import Head from 'next/head'; // For managing head tags
 import HeroSection from '../hero-section';
 import AboutSection from '../about-section';
 import TestPreparation from '../TestPreparationSection';
 import { useGlobal } from '@/hooks/AppStateContext';
-import BecomePartnerSection from '../pages/becomePartner';
 import PartnerSection from '../pages/partnerSection';
 
 function Index() {

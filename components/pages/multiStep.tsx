@@ -56,7 +56,7 @@ export default function EnhancedMultiStepForm() {
   return (
     <section className="relative bg-white py-12 mx-2 overflow-hidden">
       {/* Background blur effect */}
-      <div className="absolute inset-0 backdrop-blr-sm opacity-40"></div>
+      {/* <div className="absolute inset-0 backdrop-blr-sm opacity-40"></div> */}
 
       <div className="relative z-10">
         <h3 className="sub-heading !text-black mx-auto font-semibold !text-center mb-16 pb-6 px-4">
@@ -65,22 +65,22 @@ export default function EnhancedMultiStepForm() {
 
         {/* Inner container with background image and glassmorphism */}
         <div
-          className="relative mx-auto max-w-7xl sm:px-6 lg:px-6 py-8 backdrop-blu bg-white/40 rounded-3xl shadow-lg border border-white/30 overflow-hidden"
+          className="bg-pink-100 relative mx-auto max-w-7xl sm:px-6 lg:px-6 py-8 backdrop-blu rounded-3xl  border border-white/30 overflow-hidden"
           style={{
-            backgroundImage: `url('/anime/form.webp')`,
+            // backgroundImage: `url('/anime/form.webp')`,
             backgroundRepeat: "no-repeat",
             backgroundPosition: "bottom center",
             backgroundSize: "cover",
           }}
         >
           {/* Glassmorphism overlay */}
-          <div className="absolute inset-0 backdrop-blur-[0px] bg-white/0"></div>
+          {/* <div className="absolute inset-0 backdrop-blur-[0px] bg-white/0"></div> */}
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-6 gap-8 items-center">
             {/* Form: 4.5 out of 6 columns = 75% */}
             <div className="md:col-span-4">
-              <div className="mb-6">
-                <div className="flex mb-3 justify-center">
+              <div className="mb-1">
+                <div className="flex mb-1 justify-center">
                   {steps.map((_, index) => {
                     const Icon = stepIcons[index]
                     return (
@@ -89,7 +89,7 @@ export default function EnhancedMultiStepForm() {
                           initial={false}
                           animate={{
                             scale: step === index ? 1.05 : 1,
-                            backgroundColor: step >= index ? "#ec4899" : "#9ba3b3ff",
+                            backgroundColor: step >= index ? "#D71635" : "#D71635",
                           }}
                           className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold shadow-md ${step >= index ? "bg-pink-500" : "bg-gray-300"
                             }`}
@@ -100,9 +100,9 @@ export default function EnhancedMultiStepForm() {
                           <motion.div
                             initial={false}
                             animate={{
-                              backgroundColor: step > index ? "#ec4899" : "#e5e7eb",
+                              backgroundColor: step > index ? "#ec4848ff" : "#c9b29eff",
                             }}
-                            className="w-12 h-0.5 mx-2 rounded-full"
+                            className="w-4 md:w-12 h-0.5 mx-2 rounded-full"
                           />
                         )}
                       </div>
@@ -112,7 +112,7 @@ export default function EnhancedMultiStepForm() {
               </div>
 
               {/* Form Content with Glassmorphism */}
-              <div className="backdrop-blur-[1px] bg-white/70 rounded-2xl p-6 border border-white/20 shadow-3xl">
+              <div className="backdrop-blur-[1px] bg-white/0 rounded-2xl p-6  border-white/0 shadow-3xl">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <AnimatePresence mode="wait">
                     <motion.div
@@ -137,23 +137,20 @@ export default function EnhancedMultiStepForm() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("course") === course
-                                  ? "bg-pink-500/80 border-pink-400 text-white shadow-lg"
-                                  : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
+                                  ? "bg-[#D71635] border-red-600 text-white shadow-lg"
+                                  : "bg-white/80 border-black hover:bg-white/80 hover:shadow-md"
                                   }`}
                               >
                                 <input
                                   type="radio"
                                   value={course}
-                                  {...register("course", { required: "Course is required" })}
+                                  {...register("course")}
                                   className="hidden"
                                 />
                                 <div className="font-medium text-lg">{course}</div>
                               </motion.label>
                             ))}
                           </div>
-                          {errors.course && (
-                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.course.message}</p>
-                          )}
                         </div>
                       )}
 
@@ -172,23 +169,20 @@ export default function EnhancedMultiStepForm() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("country") === country
-                                  ? "bg-pink-500/80 border-green-400 text-white shadow-lg"
+                                  ? "bg-[#D71635] border-red-600 text-white shadow-lg"
                                   : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
                                   }`}
                               >
                                 <input
                                   type="radio"
                                   value={country}
-                                  {...register("country", { required: "Country is required" })}
+                                  {...register("country")}
                                   className="hidden"
                                 />
                                 <div className="font-medium">{country}</div>
                               </motion.label>
                             ))}
                           </div>
-                          {errors.country && (
-                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.country.message}</p>
-                          )}
                         </div>
                       )}
 
@@ -205,23 +199,20 @@ export default function EnhancedMultiStepForm() {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className={`group relative p-3 border rounded-lg text-center cursor-pointer transition-all duration-200 backdrop-blur-sm ${watch("intake") === month
-                                  ? "bg-pink-500/80 border-purple-400 text-white shadow-lg"
+                                  ? "bg-[#D71635] border-red-600 text-white shadow-lg"
                                   : "bg-white/80 border-black hover:bg-white/60 hover:shadow-md"
                                   }`}
                               >
                                 <input
                                   type="radio"
                                   value={month}
-                                  {...register("intake", { required: "Intake month is required" })}
+                                  {...register("intake")}
                                   className="hidden"
                                 />
                                 <div className="font-medium">{month}</div>
                               </motion.label>
                             ))}
                           </div>
-                          {errors.intake && (
-                            <p className="text-red-600 mt-2 text-sm font-medium">{errors.intake.message}</p>
-                          )}
                         </div>
                       )}
 
@@ -293,7 +284,7 @@ export default function EnhancedMultiStepForm() {
                         whileTap={{ scale: 0.98 }}
                         type="button"
                         onClick={onBack}
-                        className="flex items-center px-6 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 transition-colors duration-200"
+                        className="flex items-center px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
                       >
                         <ChevronLeft className="w-4 h-4 mr-1" />
                         Back
@@ -308,7 +299,7 @@ export default function EnhancedMultiStepForm() {
                         whileTap={{ scale: 0.98 }}
                         type="button"
                         onClick={onNext}
-                        className="flex items-center ml-auto px-6 py-2 bg-pink-600 text-white rounded hover:bg-pink-700 transition-colors duration-200"
+                        className="flex items-center ml-auto px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
                       >
                         Next
                         <ChevronRight className="w-4 h-4 ml-1" />
@@ -318,7 +309,7 @@ export default function EnhancedMultiStepForm() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type="submit"
-                        className="flex items-center ml-auto px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors duration-200"
+                        className="flex items-center ml-auto px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
                       >
                         Submit
                         <Check className="w-4 h-4 ml-1" />
@@ -338,9 +329,9 @@ export default function EnhancedMultiStepForm() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
-                src="/anime/a2.png"
+                src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXc2rkfWuj17uz2YbPb3q6kKVAsYiIkTnA8JSfQ7-mSwjCVQVHunOsBk1lKHcBe79oe9IuTiQNDOslCLbVbcEnCfjYYELhNre6W_eRf-GWxZ7z36Uc8S2PulOslDVfPBK1rRy0Y?key=-N8uPlDA8J8fS1MmGTzwZJEc"
                 alt="University Illustration"
-                className="max-w-[240px] h-auto object-contain drop-shadow-xl relative z-10"
+                className="max-w-[280px] h-auto object-contain drop-shadow-xl relative z-10"
               />
             </div>
 
