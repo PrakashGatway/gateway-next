@@ -22,6 +22,7 @@ import ReadMoreSection from "@/components/sections/content";
 import CardLayout from "@/components/sections/whyus";
 import DegreesSection from "@/components/sections/degreeSection";
 import ProcessRoadmap from "@/components/sections/processRoad";
+import PageServices from "@/services/PageServices";
 
 
 
@@ -95,6 +96,8 @@ const StudyAbroad = () => {
 
     const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
+    const [faqData, setFaqData] = useState([]);
+
 
     const [sliderRef, instanceRef] = useKeenSlider<any>(
         {
@@ -144,6 +147,23 @@ const StudyAbroad = () => {
             },
         ],
     )
+
+    const getAllfaqData = async (value) => {
+        try {
+            const response = await PageServices.getAllFaq();
+            if (response.status === 'success') {
+                setFaqData(response.data.faq || [])
+            } else {
+                console.log('something went wrong');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        getAllfaqData(null)
+    }, [])
 
     return (
         <>
@@ -223,8 +243,8 @@ const StudyAbroad = () => {
                                                                 <div
                                                                     key={tag}
                                                                     className={`bg-white/95 backdrop-blur-sm text-red-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg transform transition-all duration-700 ease-out ${currentSlide === index
-                                                                            ? "translate-y-0 opacity-100 scale-100"
-                                                                            : "translate-y-6 opacity-0 scale-90"
+                                                                        ? "translate-y-0 opacity-100 scale-100"
+                                                                        : "translate-y-6 opacity-0 scale-90"
                                                                         }`}
                                                                     style={{
                                                                         transitionDelay: currentSlide === index ? `${tagIndex * 200 + 300}ms` : "0ms",
@@ -280,13 +300,29 @@ const StudyAbroad = () => {
             </section>
             <EnhancedMultiStepForm />
             <DestinationSection />
-            <ReadMoreSection/>
-            <CardLayout/>
-            <DegreesSection/>
-            <ProcessRoadmap/>
-
+            <DegreesSection />
+            <CardLayout />
+            <ProcessRoadmap />
             <Component />
-
+            <ReadMoreSection />
+            <section className="faq-section py-70 mb-0">
+                <div className="container">
+                    <div className="title text-center mb-5">
+                        <h2 className="heading mb-2">Frequently asked questions</h2>
+                        <p className="descp text-center">Can't find the answer you are looking for?</p>
+                    </div>
+                    <div className="max-w-5xl mx-auto">
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqData.map((f: any, index: number) => (
+                                <AccordionItem value={`item-${index}`} key={index}>
+                                    <AccordionTrigger className="text-lg font-semibold text-left py-3">{f.title}</AccordionTrigger>
+                                    <AccordionContent className="text-gray-700 pb-3">{f.content}</AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </div>
+                </div>
+            </section>
         </>
     );
 };

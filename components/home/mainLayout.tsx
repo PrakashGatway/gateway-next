@@ -6,12 +6,13 @@ import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
 import { usePathname } from "next/navigation";
+import Loader from "../loader";
 
 const hideLayoutOnPaths = ['/thank-you'];
 
 function LoaderWrapper({ children }: { children: ReactNode }) {
   const { loading } = useGlobal();
-  return <>{children}{/* {loading && <Loader />} */}</>;
+  return <>{children} {loading && <Loader />}</>;
 }
 
 export default function ClientLayout({ children }: { children: ReactNode }) {

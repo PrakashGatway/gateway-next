@@ -80,10 +80,10 @@ export default function DegreesSection() {
     const [sliderRef, instanceRef] = useKeenSlider({
         initial: 0,
         loop: true,
-        mode: "free-snap",
+        mode: "free",
         slides: {
-            perView: 1.2,
-            spacing: 0,
+            perView: 1,
+            spacing: 2,
         },
         breakpoints: {
             "(min-width: 640px)": {
@@ -105,24 +105,58 @@ export default function DegreesSection() {
         created() {
             setLoaded(true)
         },
-    })
+    },
+        [
+            (slider) => {
+                let timeout: ReturnType<typeof setTimeout>
+                let mouseOver = false
 
-    // Auto-play functionality
-    useEffect(() => {
-        if (!instanceRef.current) return
+                function clearNextTimeout() {
+                    clearTimeout(timeout)
+                }
 
-        const interval = setInterval(() => {
-            instanceRef.current?.next()
-        }, 8000)
+                function nextTimeout() {
+                    clearTimeout(timeout)
+                    if (mouseOver) return
+                    timeout = setTimeout(() => {
+                        slider.next()
+                    }, 5000)
+                }
 
-        return () => clearInterval(interval)
-    }, [instanceRef])
+                slider.on("created", () => {
+                    slider.container.addEventListener("mouseover", () => {
+                        mouseOver = true
+                        clearNextTimeout()
+                    })
+                    slider.container.addEventListener("mouseout", () => {
+                        mouseOver = false
+                        nextTimeout()
+                    })
+                    nextTimeout()
+                })
+
+                slider.on("dragStarted", clearNextTimeout)
+                slider.on("animationEnded", nextTimeout)
+                slider.on("updated", nextTimeout)
+            },
+        ],)
+
+    // // Auto-play functionality
+    // useEffect(() => {
+    //     if (!instanceRef.current) return
+
+    //     const interval = setInterval(() => {
+    //         instanceRef.current?.next()
+    //     }, 8000)
+
+    //     return () => clearInterval(interval)
+    // }, [instanceRef])
 
     return (
-        <section className="py-20 bg-gradient-to-b from-white to-gray-50 overflow-hidden">
+        <section className="py-20 bg-white overflow-hidden">
             <div className="container-sm mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-10">
                     <h2 className="heading text-center d-block mb-2">
                         Academic Programs
                     </h2>
@@ -138,22 +172,22 @@ export default function DegreesSection() {
                         {degrees.map((degree, index) => {
                             const IconComponent = degree.icon
                             return (
-                                <div key={degree.id} className="keen-slider__slide p-2">
+                                <div key={degree.id} className="keen-slider__slide p-2 overflow-hidden">
                                     <div
-                                        className={`group relative h-full ${degree.bgColor} rounded-2xl p-4 border border-gray-100 shadow-sm hover:border-red-700 transition-all duration-500 transform hover:-translate-y-2`}
+                                        className={`group relative h-full ${degree.bgColor} rounded-2xl p-4 border border-red-800 border-2 hover:border-red-700 transition-all duration-500 transform hover:-translate-y-2 overflow-hidden`}
                                     >
                                         {/* Background Pattern */}
-                                        {/* <div className="absolute inset-0 opacity-5">
-                                            <div className="absolute top-4 right-4 w-32 h-32 rounded-full bg-gradient-to-br from-red-400 to-rose-500 blur-3xl"></div>
-                                            <div className="absolute bottom-4 left-4 w-24 h-24 rounded-full bg-gradient-to-br from-orange-400 to-red-500 blur-2xl"></div>
-                                        </div> */}
+                                        <div className="absolute inset-0">
+                                            <div className="absolute top-8 right-4 w-32 h-32 rounded-full bg-gradient-to-br from-red-400 to-red-500 blur-3xl"></div>
+                                            <div className="absolute bottom-4 left-4 w-24 h-24 rounded-full bg-gradient-to-br from-red-400 to-red-500 blur-2xl"></div>
+                                        </div>
 
                                         {/* Content */}
                                         <div className="relative z-10">
                                             {/* Icon and Badge */}
                                             <div className="flex items-start justify-between mb-3">
                                                 <div
-                                                    className={`p-3 rounded-2xl bg-gradient-to-br ${degree.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                                                    className={`p-3 rounded-2xl bg-gradient-to-br ${degree.color} shadow-lg group-hover:scale-105 transition-transform duration-300`}
                                                 >
                                                     <IconComponent className="w-6 h-6 text-white" />
                                                 </div>
@@ -176,14 +210,14 @@ export default function DegreesSection() {
                                             </div>
 
                                             {/* Description */}
-                                            <p className="text-gray-600 text-base mb-2 leading-relaxed">{degree.description}</p>
+                                            <p className="text-gray-800 text-base mb-2 leading-relaxed">{degree.description}</p>
 
                                             {/* Features */}
                                             <div className="mb-3">
                                                 <h4 className="text-sm font-semibold text-gray-900 mb-2">Key Features:</h4>
                                                 <div className="space-y-2">
                                                     {degree.features.map((feature, idx) => (
-                                                        <div key={idx} className="flex items-center gap-2 text-sm text-gray-600">
+                                                        <div key={idx} className="flex items-center gap-2 text-sm text-gray-800">
                                                             <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
                                                             {feature}
                                                         </div>

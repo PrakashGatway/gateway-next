@@ -29,8 +29,6 @@ export function GlobalProvider({ children }) {
     useEffect(() => {
         async function fetchData() {
             try {
-                setLoading(true);
-
                 const [
                     aboutPage,
                     homePage,
@@ -84,12 +82,19 @@ export function GlobalProvider({ children }) {
                 });
             } catch (err) {
                 setError(err.message);
-            } finally {
-                setLoading(false);
             }
         }
-
         fetchData();
+    }, []);
+
+    useEffect(() => {
+        setLoading(true); // Start loading
+        const timer = setTimeout(() => {
+            setLoading(false); 
+        }, 1000);
+
+        // Cleanup timer if component unmounts
+        return () => clearTimeout(timer);
     }, []);
 
     const login = (userData) => setUser(userData);

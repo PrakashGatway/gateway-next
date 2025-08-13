@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'; // For App Router
 import PageServices from '../services/PageServices'; // Ensure path is correct
 import useAsync from '../hooks/useAsync'; // Ensure path is correct
 import { useForm } from 'react-hook-form';
+import { Router } from 'next/router';
 
 export const Footer = () => {
   const { data } = useAsync(PageServices.getSettingData);
@@ -66,18 +67,18 @@ export const Footer = () => {
         const modalEl = document.getElementById("getintouchModel");
         if (modalEl) {
 
-            const bootstrapModal = window.bootstrap?.Modal.getInstance(modalEl);
-            if (bootstrapModal) {
-                bootstrapModal.hide();
-            } else {
-                // Fallback if Bootstrap JS instance isn't available
-                modalEl.classList.remove("show");
-                modalEl.style.display = "none";
-                modalEl.setAttribute("aria-hidden", "true");
-                document.body.classList.remove("modal-open");
-                const backdrop = document.querySelector(".modal-backdrop");
-                if (backdrop) backdrop.remove();
-            }
+          const bootstrapModal = window.bootstrap?.Modal.getInstance(modalEl);
+          if (bootstrapModal) {
+            bootstrapModal.hide();
+          } else {
+            // Fallback if Bootstrap JS instance isn't available
+            modalEl.classList.remove("show");
+            modalEl.style.display = "none";
+            modalEl.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("modal-open");
+            const backdrop = document.querySelector(".modal-backdrop");
+            if (backdrop) backdrop.remove();
+          }
         }
         router.push('/thank-you'); // For App Router
       } else {
@@ -112,9 +113,9 @@ export const Footer = () => {
     <>
       <footer>
         <div className="footer-inner">
-          <div className="container">
+          <div className="container-sm">
             <div className="row">
-              <div className="col-lg-4 col-sm-6">
+              <div className="col-lg-3 col-sm-6">
                 <div className="footer-left">
                   <div className="logo-sec">
                     {/* Changed Link usage for Next.js */}
@@ -151,34 +152,57 @@ export const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 col-sm-6">
-                <div className="footer-middle ps-5">
+              <div className="col-lg-2 col-sm-6">
+                <div className="footer-middle pl-5">
+                  {/* Quick Links */}
                   <div className="footer-menu">
                     <h4 className="footer-title">Quick Links</h4>
                     <ul className="list-unstyled">
-                      {/* Changed Link usage for Next.js */}
                       <li><Link href="/">Home</Link></li>
                       <li><Link href="/about">About Us</Link></li>
                       <li><Link href="/spoken-english">Spoken English</Link></li>
                       <li><Link href="/blog">Blog</Link></li>
                       <li><Link href="/career">Career</Link></li>
-                      <li><Link href="/contact">Contact us</Link></li>
-                      {/* Note: Typo 'gallary' in original - consider correcting if it's a mistake */}
+                      <li><Link href="/contact">Contact Us</Link></li>
                       <li><Link href="/gallary">Gallery</Link></li>
                     </ul>
                   </div>
-                  <div className="footer-menu mt-4 test-pre-footer">
-                    <h4 className="footer-title">Test Preparation</h4>
+                </div>
+              </div>
+              <div className="col-lg-2 col-sm-6">
+                <div className="footer-middle ps-2">
+                  <div className="footer-menu mt-0">
+                    <h4 className="footer-title"><Link className='text-gray-800' href={'/study-abroad'}>Study Abroad</Link></h4>
                     <ul className="list-unstyled">
-                      {CourseData?.map((course) => (
-                        // Changed Link usage for Next.js - ensure pageName creates a valid URL
-                        <li key={course.pageName}><Link href={`/course/${course.pageName}`}>{course.pageName}</Link></li>
+                      {['UK', 'Ireland', 'USA', 'Canada', 'Australia', 'New Zealand'].map((country) => (
+                        <li key={country}>
+                          <Link href={`study-in-${country.toLowerCase().replace(' ', '-')}`}>
+                            Study in {country}
+                          </Link>
+                        </li>
                       ))}
                     </ul>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-8">
+              <div className="col-lg-2 col-sm-6">
+                <div className="footer-middle ps-2">
+                  {/* Study in Countries */}
+                  <div className="footer-menu mt-0">
+                    <h4 className="footer-title">Test Preparation</h4>
+                    <ul className="list-unstyled">
+                      {CourseData?.map((course) => (
+                        <li key={course.pageName}>
+                          <Link href={`/course/${course.pageName.toLowerCase()}`}>
+                            {course.pageName}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-8">
                 <div className="footer-right">
                   <div className="footer-contact">
                     <h4 className="footer-title">Contact us</h4>
@@ -250,9 +274,9 @@ export const Footer = () => {
         {/* Scroll to top functionality */}
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
-      <div style={{zIndex:'99999!important'}} className="get-in-touch-sidebar">
+      <div style={{ zIndex: '99999!important' }} className="get-in-touch-sidebar">
         {/* Trigger for Contact Modal */}
-        <button  data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
+        <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
       </div>
 
       {/* --- Updated Contact Us Modal Form using react-hook-form --- */}
