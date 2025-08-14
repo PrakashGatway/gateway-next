@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useRouter } from "next/navigation";
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, CheckCircle } from 'lucide-react';
+import axiosInstance from '@/services/axiosInstance';
 
 interface FormData {
   fullName: string;
@@ -45,9 +47,10 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   // Simulate API calls
-  const simulateAPI = (delay: number = 2000) => 
+  const simulateAPI = (delay: number = 2000) =>
     new Promise(resolve => setTimeout(resolve, delay));
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -60,7 +63,7 @@ const Auth = () => {
       });
       return;
     }
-    
+
     setLoading(true);
     try {
       await simulateAPI();
@@ -84,12 +87,8 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await simulateAPI();
-      toast({
-        title: "Login Successful",
-        description: "Welcome back!"
-      });
-      setMode('success');
+      let response = await axiosInstance.post("auth/send_otp", { email: loginData.email })
+      setMode('otp');
     } catch (error) {
       toast({
         title: "Login Failed",
@@ -101,26 +100,32 @@ const Auth = () => {
     }
   };
 
-  const handleOTPVerification = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await simulateAPI();
-      toast({
-        title: "Email Verified",
-        description: "Your account has been successfully created!"
-      });
-      setMode('success');
-    } catch (error) {
-      toast({
-        title: "Verification Failed",
-        description: "Invalid OTP. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
+const handleOTPVerification = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    const response = await axiosInstance.post("auth/verify_otp", {
+      email: loginData.email,
+      otp: otpData.otp
+    });
+
+    if (response.data) {
+      localStorage.setItem("accessToken", response.data.token);
     }
-  };
+    setMode("success");
+    router.push("/")
+  } catch (error) {
+    toast({
+      title: "Verification Failed",
+      description: "Invalid OTP. Please try again.",
+      variant: "destructive"
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -153,7 +158,7 @@ const Auth = () => {
       });
       return;
     }
-    
+
     setLoading(true);
     try {
       await simulateAPI();
@@ -174,10 +179,10 @@ const Auth = () => {
   };
 
   return (
-    <div  className="min-h-screen hero-gradient mt-12 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen hero-gradient mt-16 flex items-center justify-center p-4 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <motion.div 
+        <motion.div
           className="absolute top-20 left-10 w-4 h-4 bg-primary rounded-full"
           animate={{
             y: [0, -20, 0],
@@ -189,7 +194,7 @@ const Auth = () => {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-32 right-20 w-6 h-6 bg-secondary rounded-full"
           animate={{
             y: [0, -20, 0],
@@ -202,7 +207,7 @@ const Auth = () => {
             delay: 1
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute bottom-40 left-20 w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-b-[30px] border-b-accent"
           animate={{
             y: [0, -20, 0],
@@ -215,7 +220,7 @@ const Auth = () => {
             delay: 2
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute top-1/4 right-1/4 w-8 h-8 bg-muted rounded-full"
           animate={{
             y: [0, -20, 0],
@@ -254,7 +259,7 @@ const Auth = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleLogin} className="space-y-4">
-                    <div className="space-y-2">
+                    <div className="space-y-2 my-3">
                       <Label htmlFor="email" className="flex items-center gap-2">
                         <Mail className="w-4 h-4" />
                         Email
@@ -263,13 +268,13 @@ const Auth = () => {
                         id="email"
                         type="email"
                         value={loginData.email}
-                        onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                        onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
                         placeholder="Enter your email"
                         required
                         className="rounded-[20px] border-2 focus:border-primary"
                       />
                     </div>
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <Label htmlFor="password" className="flex items-center gap-2">
                         <Lock className="w-4 h-4" />
                         Password
@@ -292,7 +297,7 @@ const Auth = () => {
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                         </button>
                       </div>
-                    </div>
+                    </div> */}
                     <Button
                       type="submit"
                       variant="auth"
@@ -367,7 +372,7 @@ const Auth = () => {
                         id="email"
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="Enter your email"
                         required
                         className="rounded-[20px] border-2 focus:border-primary"
@@ -382,7 +387,7 @@ const Auth = () => {
                         id="mobile"
                         type="tel"
                         value={formData.mobile}
-                        onChange={(e) => setFormData({...formData, mobile: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
                         placeholder="Enter your mobile number"
                         required
                         className="rounded-[20px] border-2 focus:border-primary"
@@ -398,7 +403,7 @@ const Auth = () => {
                           id="password"
                           type={showPassword ? "text" : "password"}
                           value={formData.password}
-                          onChange={(e) => setFormData({...formData, password: e.target.value})}
+                          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                           placeholder="Create a password"
                           required
                           className="rounded-[20px] border-2 focus:border-primary pr-10"
@@ -418,7 +423,7 @@ const Auth = () => {
                         id="confirmPassword"
                         type="password"
                         value={formData.confirmPassword}
-                        onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                         placeholder="Confirm your password"
                         required
                         className="rounded-[20px] border-2 focus:border-primary"
@@ -531,7 +536,7 @@ const Auth = () => {
                         id="otp"
                         type="text"
                         value={otpData.otp}
-                        onChange={(e) => setOTPData({otp: e.target.value})}
+                        onChange={(e) => setOTPData({ otp: e.target.value })}
                         placeholder="Enter 6-digit code"
                         maxLength={6}
                         required

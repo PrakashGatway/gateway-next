@@ -22,7 +22,7 @@ export default function Loader() {
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          background: linear-gradient(135deg, white);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -50,7 +50,7 @@ export default function Loader() {
           justify-content: center;
           align-items: center;
           box-shadow: 0 4px 20px rgba(0, 86, 179, 0.15);
-          border: 2px solid #f0f0f0;
+          border: 2px solid #D41833;
           z-index: 2;
           animation: pulse 2s ease-in-out infinite;
         }
@@ -73,7 +73,7 @@ export default function Loader() {
           width: 100%;
           height: 100%;
           border: 4px solid transparent;
-          border-top: 4px solid #0056b3;
+          border-top: 4px solid #D41833;
           border-radius: 50%;
           animation: spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
           box-shadow: 0 0 15px rgba(0, 86, 179, 0.1);

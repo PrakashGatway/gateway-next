@@ -170,7 +170,7 @@ const StudyInUk = () => {
                 </p>
               </div>
 
-              <div className="flex gap-0 md:gap-2 pt-4 overflow-x-auto md:overflow-visible">
+              <div className="flex gap-0 md:gap-2 lg:space-x-2 pt-4 overflow-x-auto md:overflow-visible">
                 {/* Card 1 */}
                 <div className="bg-pink-300 rounded-[28px] px-3 py-2 min-w-[90px] sm:min-w-[130px] md:min-w-[150px] text-center flex-shrink-0">
                   <h3 className="text-lg sm:text-2xl md:text-3xl text-black font-semibold mb-0">
@@ -235,7 +235,7 @@ const StudyInUk = () => {
       </section>
       <MultiStepForm />
 
-      <section className="py-14 bg-pink-100">
+      <section className="py-14 bg-[#FAFBFF]">
         <div className="container-sm mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="heading text-center d-block mb-2">

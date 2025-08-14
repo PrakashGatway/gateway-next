@@ -23,6 +23,7 @@ import CardLayout from "@/components/sections/whyus";
 import DegreesSection from "@/components/sections/degreeSection";
 import ProcessRoadmap from "@/components/sections/processRoad";
 import PageServices from "@/services/PageServices";
+import LocationAvailability from "@/components/sections/cityLocation";
 
 
 
@@ -94,63 +95,63 @@ const heroImages = [
 
 const StudyAbroad = () => {
 
-    const [currentSlide, setCurrentSlide] = useState(0)
-    const [loaded, setLoaded] = useState(false)
+    // const [currentSlide, setCurrentSlide] = useState(0)
+    // const [loaded, setLoaded] = useState(false)
     const [faqData, setFaqData] = useState([]);
 
 
-    const [sliderRef, instanceRef] = useKeenSlider<any>(
-        {
-            loop: true,
-            slides: {
-                perView: 1,
-            },
-            slideChanged(slider) {
-                setCurrentSlide(slider.track.details.rel)
-            },
-            created() {
-                setLoaded(true)
-            },
-        },
-        [
-            (slider) => {
-                let timeout: ReturnType<typeof setTimeout>
-                let mouseOver = false
+    // const [sliderRef, instanceRef] = useKeenSlider<any>(
+    //     {
+    //         loop: true,
+    //         slides: {
+    //             perView: 1,
+    //         },
+    //         slideChanged(slider) {
+    //             setCurrentSlide(slider.track.details.rel)
+    //         },
+    //         created() {
+    //             setLoaded(true)
+    //         },
+    //     },
+    //     [
+    //         (slider) => {
+    //             let timeout: ReturnType<typeof setTimeout>
+    //             let mouseOver = false
 
-                function clearNextTimeout() {
-                    clearTimeout(timeout)
-                }
+    //             function clearNextTimeout() {
+    //                 clearTimeout(timeout)
+    //             }
 
-                function nextTimeout() {
-                    clearTimeout(timeout)
-                    if (mouseOver) return
-                    timeout = setTimeout(() => {
-                        slider.next()
-                    }, 4000)
-                }
+    //             function nextTimeout() {
+    //                 clearTimeout(timeout)
+    //                 if (mouseOver) return
+    //                 timeout = setTimeout(() => {
+    //                     slider.next()
+    //                 }, 4000)
+    //             }
 
-                slider.on("created", () => {
-                    slider.container.addEventListener("mouseover", () => {
-                        mouseOver = true
-                        clearNextTimeout()
-                    })
-                    slider.container.addEventListener("mouseout", () => {
-                        mouseOver = false
-                        nextTimeout()
-                    })
-                    nextTimeout()
-                })
+    //             slider.on("created", () => {
+    //                 slider.container.addEventListener("mouseover", () => {
+    //                     mouseOver = true
+    //                     clearNextTimeout()
+    //                 })
+    //                 slider.container.addEventListener("mouseout", () => {
+    //                     mouseOver = false
+    //                     nextTimeout()
+    //                 })
+    //                 nextTimeout()
+    //             })
 
-                slider.on("dragStarted", clearNextTimeout)
-                slider.on("animationEnded", nextTimeout)
-                slider.on("updated", nextTimeout)
-            },
-        ],
-    )
+    //             slider.on("dragStarted", clearNextTimeout)
+    //             slider.on("animationEnded", nextTimeout)
+    //             slider.on("updated", nextTimeout)
+    //         },
+    //     ],
+    // )
 
-    const getAllfaqData = async (value) => {
+    const getAllfaqData = async () => {
         try {
-            const response = await PageServices.getAllFaq();
+            const response = await PageServices.getAllFaqForFront('GMAT');
             if (response.status === 'success') {
                 setFaqData(response.data.faq || [])
             } else {
@@ -162,7 +163,7 @@ const StudyAbroad = () => {
     }
 
     useEffect(() => {
-        getAllfaqData(null)
+        getAllfaqData()
     }, [])
 
     return (
@@ -193,8 +194,8 @@ const StudyAbroad = () => {
                                 <h1 className="text-3xl lg:text-[2.5rem] font-bold leading-tight">
                                     <span className="inline-block">Study Abroad with</span>
                                     <br />
-                                    {<> <span className="text-gradient py-2 inline-block">
-                                        Gateway Abroad <br /> Jaipur
+                                    {<> <span className="text-[#D41833] py-2 inline-block">
+                                        Gateway Abroad Jaipur
                                     </span>
                                         <br /> </>}
                                 </h1>
@@ -218,9 +219,11 @@ const StudyAbroad = () => {
                         </div>
 
                         {/* Right Illustration with floating animation */}
-                        <div className="relative animate-fadeInRight mx-auto w-full max-w-lg lg:max-w-none">
+                        <div className="relative animate-fadeInRight mx-auto w-full max-w-xl lg:max-w-none">
                             <div className="relative z-10 mx-auto">
-                                <div
+                                <img src="/anime/bg01.png" alt="" height={'auto'} width={'auto'} />
+
+                                {/* <div
                                     ref={sliderRef}
                                     className="keen-slider rounded-[40px] overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20 relative"
                                     style={{ height: "450px", width: "98%" }}
@@ -263,7 +266,7 @@ const StudyAbroad = () => {
                                             </div>
                                         </div>
                                     ))}
-                                </div>
+                                </div> */}
 
                                 {/* {loaded && instanceRef.current && (
                                     <div className="flex justify-center mt-4 sm:mt-6 space-x-2">
@@ -289,8 +292,8 @@ const StudyAbroad = () => {
                             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-white bg-opacity-20 rounded-full animate-pulse-slow -z-10"></div>
 
                             <div className="absolute -top-2 sm:-top-4 -right-2 sm:-right-4 w-6 sm:w-8 h-6 sm:h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-bounce-slow"></div>
-                            <div className="absolute lg:-bottom-10 -bottom-12 lg:-left-10 left-0 z-10 border border-2 border-red-600 bg-white shadow-3xl rounded-xl p-2 sm:p-3">
-                                <h3 className="text-lg sm:text-xl m-0 font-bold text-center">98%</h3>
+                            <div className="absolute lg:-bottom-8 -bottom-12 lg:-left-0 left-0 z-10 border border-2 border-red-600 bg-white shadow-3xl rounded-xl p-2 sm:p-3">
+                                <h3 className="text-lg sm:text-xl m-0 font-bold text-center">99.99%</h3>
                                 <p className="text-xs sm:text-sm m-0 text-center">Success Rate</p>
                             </div>
                         </div>
@@ -311,11 +314,11 @@ const StudyAbroad = () => {
                         <h2 className="heading mb-2">Frequently asked questions</h2>
                         <p className="descp text-center">Can't find the answer you are looking for?</p>
                     </div>
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                         <Accordion type="single" collapsible className="w-full">
                             {faqData.map((f: any, index: number) => (
                                 <AccordionItem value={`item-${index}`} key={index}>
-                                    <AccordionTrigger className="text-lg font-semibold text-left py-3">{f.title}</AccordionTrigger>
+                                    <AccordionTrigger className="text-lg font-semibold text-left py-2">{f.title}</AccordionTrigger>
                                     <AccordionContent className="text-gray-700 pb-3">{f.content}</AccordionContent>
                                 </AccordionItem>
                             ))}
@@ -323,6 +326,30 @@ const StudyAbroad = () => {
                     </div>
                 </div>
             </section>
+
+            <section className="app-banner-section counselling-session-sec">
+                <div className="container-sm">
+                    <div className="app-banner-section-inner counselling-session-sec-inner">
+                        <div className="row align-items-center">
+                            <div className="col-lg-6">
+                                <div className="app-banner-content-left">
+                                    <h2 className="mb-3">Avail A Complementary Counselling Session</h2>
+                                    <p className="mb-4">Join thousand of instructors and earn money hassle free!</p>
+                                    {/* Changed Link import and usage for Next.js */}
+                                    <Link href='/contact' className='site-btn'>Contact us</Link>
+                                </div>
+                            </div>
+                            <div className="col-lg-6">
+                                <div className="app-banner-content-right text-center">
+                                    {/* Ensure image path is correct for Next.js public directory */}
+                                    <img className="mx-auto" src="/img/counselling-session.svg" alt="Counselling Session" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <LocationAvailability/>
         </>
     );
 };

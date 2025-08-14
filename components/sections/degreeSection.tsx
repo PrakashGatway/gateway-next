@@ -153,7 +153,7 @@ export default function DegreesSection() {
     // }, [instanceRef])
 
     return (
-        <section className="py-20 bg-white overflow-hidden">
+        <section className="py-20 bg-[#F3E0F2] overflow-hidden">
             <div className="container-sm mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Header */}
                 <div className="text-center mb-10">
@@ -174,13 +174,13 @@ export default function DegreesSection() {
                             return (
                                 <div key={degree.id} className="keen-slider__slide p-2 overflow-hidden">
                                     <div
-                                        className={`group relative h-full ${degree.bgColor} rounded-2xl p-4 border border-red-800 border-2 hover:border-red-700 transition-all duration-500 transform hover:-translate-y-2 overflow-hidden`}
+                                        className={`group relative h-full ${degree.bgColor} rounded-2xl p-4 bg-[#FAFBFF] border border-red-800 border-2 hover:border-red-700 transition-all duration-500 transform hover:-translate-y-2 overflow-hidden`}
                                     >
                                         {/* Background Pattern */}
-                                        <div className="absolute inset-0">
+                                        {/* <div className="absolute inset-0">
                                             <div className="absolute top-8 right-4 w-32 h-32 rounded-full bg-gradient-to-br from-red-400 to-red-500 blur-3xl"></div>
                                             <div className="absolute bottom-4 left-4 w-24 h-24 rounded-full bg-gradient-to-br from-red-400 to-red-500 blur-2xl"></div>
-                                        </div>
+                                        </div> */}
 
                                         {/* Content */}
                                         <div className="relative z-10">

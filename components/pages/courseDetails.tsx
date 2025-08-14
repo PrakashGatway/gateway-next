@@ -889,7 +889,7 @@ const Course = () => { // Receive params from Next.js
             <Accordion type="single" collapsible className="w-full">
               {faqData.map((f: any, index: number) => (
                 <AccordionItem value={`item-${index}`} key={index}>
-                  <AccordionTrigger className="text-lg font-semibold text-left py-3">{f.title}</AccordionTrigger>
+                  <AccordionTrigger className="text-lg font-semibold text-left py-2">{f.title}</AccordionTrigger>
                   <AccordionContent className="text-gray-700 pb-3">{f.content}</AccordionContent>
                 </AccordionItem>
               ))}

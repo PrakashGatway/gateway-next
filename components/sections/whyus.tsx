@@ -2,7 +2,7 @@ import { BookOpen, Award, Clock, Laptop } from "lucide-react";
 
 export default function CardLayout() {
     return (
-        <section className=" py-8 bg-pink-100">
+        <section className=" py-8 bg-[#FAFBFF]">
              <div className="text-center mb-10">
                 <h2 className="heading text-center d-block mb-2">
                     Why Choose Our Study Platform?
@@ -56,7 +56,7 @@ export default function CardLayout() {
             </div>
 
             {/* Right Column - single tall card */}
-            <div className="bg-[#d71635] text-white rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+            <div className="bg-black/70 text-white rounded-2xl p-6 flex flex-col justify-between shadow-lg">
                 <div>
                     <Clock className="w-10 h-10 text-white mb-3" />
                     <h3 className="sub-heading !text-white font-bold mb-2">Flexible Learning Schedules</h3>

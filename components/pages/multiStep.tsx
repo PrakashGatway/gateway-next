@@ -284,7 +284,7 @@ export default function EnhancedMultiStepForm() {
                         whileTap={{ scale: 0.98 }}
                         type="button"
                         onClick={onBack}
-                        className="flex items-center px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
+                        className="flex items-center px-6 py-2 btn-secondary transition-colors duration-200"
                       >
                         <ChevronLeft className="w-4 h-4 mr-1" />
                         Back
@@ -299,7 +299,7 @@ export default function EnhancedMultiStepForm() {
                         whileTap={{ scale: 0.98 }}
                         type="button"
                         onClick={onNext}
-                        className="flex items-center ml-auto px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
+                        className="flex items-center ml-auto px-6 py-2 btn-primary transition-colors duration-200"
                       >
                         Next
                         <ChevronRight className="w-4 h-4 ml-1" />
@@ -309,7 +309,7 @@ export default function EnhancedMultiStepForm() {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type="submit"
-                        className="flex items-center ml-auto px-6 py-2 bg-[#D71635] text-white rounded hover:bg-[#FF1D45] transition-colors duration-200"
+                        className="flex items-center ml-auto px-6 py-2 btn-primary transition-colors duration-200"
                       >
                         Submit
                         <Check className="w-4 h-4 ml-1" />
@@ -329,9 +329,9 @@ export default function EnhancedMultiStepForm() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
-                src="https://lh7-rt.googleusercontent.com/docsz/AD_4nXc2rkfWuj17uz2YbPb3q6kKVAsYiIkTnA8JSfQ7-mSwjCVQVHunOsBk1lKHcBe79oe9IuTiQNDOslCLbVbcEnCfjYYELhNre6W_eRf-GWxZ7z36Uc8S2PulOslDVfPBK1rRy0Y?key=-N8uPlDA8J8fS1MmGTzwZJEc"
+                src="/anime/formsid.png"
                 alt="University Illustration"
-                className="max-w-[280px] h-auto object-contain drop-shadow-xl relative z-10"
+                className="max-w-[460px] h-auto object-contain drop-shadow-xl relative z-10"
               />
             </div>
 

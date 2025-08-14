@@ -5,6 +5,7 @@ import { CheckCircle, Users, GraduationCap, FileText, Plane, MapPin, Home } from
 
 const ProcessRoadmap = () => {
   const [visibleSteps, setVisibleSteps] = useState<number[]>([])
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const steps = [
@@ -83,6 +84,11 @@ const ProcessRoadmap = () => {
     return () => observer.disconnect()
   }, [])
 
+  const getGlowProgress = () => {
+    if (!hoveredStep) return 0
+    return (hoveredStep / steps.length) * 100
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -97,9 +103,9 @@ const ProcessRoadmap = () => {
       <div className="container-sm mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+          <h2 className="heading mb-3">
             Your Study Abroad
-            <span className="bg-gradient-to-r from-red-600 to-rose-600 bg-clip-text text-transparent"> Journey</span>
+            <span className="text-[#D71635]"> Journey</span>
           </h2>
           <p className="text-base text-gray-600 max-w-xl mx-auto">
             Follow our proven 6-step process to make your dream of studying abroad a reality.
@@ -108,36 +114,43 @@ const ProcessRoadmap = () => {
 
         {/* Horizontal Timeline for Desktop */}
         <div className="hidden md:block">
-          <div className="relative max-w-6xl mx-auto">
+          <div className="relative mx-auto">
             {/* Horizontal Timeline Line */}
-            <div className="absolute top-16 left-0 right-0 h-0.5 bg-gradient-to-r from-red-200 via-rose-300 to-red-400"></div>
+            <div className="absolute top-5 left-0 right-0 h-0.5 bg-gradient-to-r from-red-200 via-rose-300 to-red-400"></div>
 
-            {/* Steps Grid */}
-            <div className="grid grid-cols-6 gap-2 lg:gap-4">
+            <div
+              className="absolute top-5 left-0 h-1 bg-gradient-to-r from-red-500 via-rose-500 to-red-600 shadow-lg transition-all duration-500 ease-out"
+              style={{
+                width: `${getGlowProgress()-7}%`,
+                boxShadow: hoveredStep ? "0 0 20px rgba(220, 38, 38, 0.6), 0 0 40px rgba(220, 38, 38, 0.3)" : "none",
+                opacity: hoveredStep ? 1 : 0,
+              }}
+            ></div>
+
+            <div className="grid grid-cols-6 gap-2 lg:gap-4 items-stretch">
               {steps.map((step, index) => (
                 <div
                   key={step.id}
                   data-step={step.id}
-                  className={`relative ${
-                    visibleSteps.includes(step.id) ? "animate-slide-up opacity-100" : "opacity-0 translate-y-4"
-                  } transition-all duration-700`}
+                  className={`relative flex flex-col ${visibleSteps.includes(step.id) ? "animate-slide-up opacity-100" : "opacity-0 translate-y-4"
+                    } transition-all duration-700`}
                   style={{ animationDelay: `${index * 100}ms` }}
+                  onMouseEnter={() => setHoveredStep(step.id)}
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
                   {/* Timeline Node */}
                   <div className="flex justify-center mb-4">
                     <div
-                      className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.color} border-2 border-white shadow-lg flex items-center justify-center relative z-10 ${
-                        visibleSteps.includes(step.id) ? "animate-bounce" : ""
-                      }`}
+                      className={`w-10 h-10 rounded-full bg-gradient-to-r ${step.color} border-2 border-white shadow-lg flex items-center justify-center relative z-10 transition-all duration-300 ${visibleSteps.includes(step.id) ? "" : ""
+                        } ${hoveredStep && step.id <= hoveredStep ? "scale-[1.1] shadow-2xl" : ""}`}
                     >
-                      <step.icon className="w-4 h-4 text-white" />
+                      <step.icon className="w-5 h-5 text-white" />
                     </div>
                   </div>
 
-                  {/* Step Card */}
-                  <div className="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 group hover:-translate-y-1">
+                  <div className="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:scale-[1.1] hover:z-10 group hover:-translate-y-1 flex-1 flex flex-col">
                     {/* Step Number & Title */}
-                    <div className="text-center mb-2">
+                    <div className="text-center mb-1">
                       <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">Step {step.id}</span>
                       <h3 className="text-sm font-bold text-gray-900 group-hover:text-red-600 transition-colors duration-300 leading-tight">
                         {step.title}
@@ -145,7 +158,7 @@ const ProcessRoadmap = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-xs mb-3 leading-relaxed">{step.description}</p>
+                    <p className="text-gray-700 text-xs mb-1 leading-relaxed flex-1">{step.description}</p>
 
                     {/* Details */}
                     <div className="space-y-1 mb-3">
@@ -156,15 +169,6 @@ const ProcessRoadmap = () => {
                         </div>
                       ))}
                     </div>
-
-                    {/* Duration */}
-                    <div className="text-center">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${step.color} text-white`}
-                      >
-                        {step.duration}
-                      </span>
-                    </div>
                   </div>
                 </div>
               ))}
@@ -173,35 +177,44 @@ const ProcessRoadmap = () => {
         </div>
 
         <div className="md:hidden">
-          <div className="relative max-w-sm mx-auto">
+          <div className="relative max-w-full mx-auto">
             {/* Vertical Timeline Line */}
-            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-200 via-rose-300 to-red-400"></div>
+            <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-200 via-rose-300 to-red-400"></div>
+
+            <div
+              className="absolute left-5 top-0 w-1 bg-[#D71635] shadow-lg transition-all duration-500 ease-out"
+              style={{
+                height: `${getGlowProgress()}%`,
+                boxShadow: hoveredStep ? "0 0 20px rgba(220, 38, 38, 0.6), 0 0 40px rgba(220, 38, 38, 0.3)" : "none",
+                opacity: hoveredStep ? 1 : 1,
+              }}
+            ></div>
 
             {/* Steps */}
-            <div className="space-y-6">
+            <div className="space-y-3">
               {steps.map((step, index) => (
                 <div
                   key={step.id}
                   data-step={step.id}
-                  className={`relative flex items-start ${
-                    visibleSteps.includes(step.id) ? "animate-slide-in-left opacity-100" : "opacity-0 translate-x-4"
-                  } transition-all duration-700`}
+                  className={`relative flex items-start ${visibleSteps.includes(step.id) ? "animate-slide-in-left opacity-100" : "opacity-0 translate-x-4"
+                    } transition-all duration-700`}
                   style={{ animationDelay: `${index * 100}ms` }}
+                  onTouchStart={() => setHoveredStep(step.id)}
+                  onTouchEnd={() => setHoveredStep(null)}
                 >
                   {/* Timeline Node */}
                   <div className="flex-shrink-0 relative z-10">
                     <div
-                      className={`w-12 h-12 rounded-full bg-gradient-to-r ${step.color} border-2 border-white shadow-lg flex items-center justify-center ${
-                        visibleSteps.includes(step.id) ? "animate-pulse" : ""
-                      }`}
+                      className={`w-10 h-10 rounded-full bg-gradient-to-r ${step.color} border-2 border-white shadow-lg flex items-center justify-center transition-all duration-300 ${visibleSteps.includes(step.id) ? "" : ""
+                        } ${hoveredStep && step.id <= hoveredStep ? "scale-110 shadow-2xl" : ""}`}
                     >
                       <step.icon className="w-5 h-5 text-white" />
                     </div>
                   </div>
 
                   {/* Step Content */}
-                  <div className="ml-4 flex-1">
-                    <div className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
+                  <div className="ml-2 flex-1">
+                    <div className="bg-white rounded-lg p-3 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
                       {/* Step Number & Title */}
                       <div className="mb-2">
                         <span className="text-xs font-semibold text-red-600 uppercase tracking-wide">
@@ -222,15 +235,6 @@ const ProcessRoadmap = () => {
                           </div>
                         ))}
                       </div>
-
-                      {/* Duration */}
-                      <div>
-                        <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${step.color} text-white`}
-                        >
-                          {step.duration}
-                        </span>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -239,35 +243,6 @@ const ProcessRoadmap = () => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes slide-in-left {
-          from {
-            opacity: 0;
-            transform: translateX(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-slide-in-left {
-          animation: slide-in-left 0.7s ease-out forwards;
-        }
-        .animate-slide-up {
-          animation: slide-up 0.7s ease-out forwards;
-        }
-      `}</style>
     </section>
   )
 }

@@ -105,7 +105,7 @@ const SliderRow: React.FC<SliderRowProps> = ({ logos, direction, speed }) => {
 
 export default function Component() {
   return (
-    <div className="flex flex-col items-center justify-center bg-pink-100 py-12">
+    <div className="flex flex-col items-center justify-center bg-[#FAFBFF] py-12">
       <div className="w-full px-4">
           <div className="text-center mb-16">
             <h2 className="heading text-center d-block mb-2">

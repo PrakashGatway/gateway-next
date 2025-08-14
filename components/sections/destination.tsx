@@ -144,7 +144,7 @@ export default function DestinationsSection() {
     )
 
     return (
-        <section className="py-20 bg-pink-100 relative overflow-hidden">
+        <section className="py-20 bg-[#FAFBFF] relative overflow-hidden">
             {/* Enhanced Background Effects */}
             <div className="absolute inset-0">
                 {/* Floating Particles */}
@@ -176,7 +176,7 @@ export default function DestinationsSection() {
                         {destinations.map((destination, index) => (
                             <div key={destination.id} className="keen-slider__slide px-1 py-6">
                                 <div
-                                    className="destination-card bg-white/90 backdrop-blur-sm rounded-2xl transition-all duration-700 overflow-hidden group border border-white/50 shadow-xl animate-slide-up hover:shadow-2xl hover:-translate-y-4 hover:rotate-1 hover:border-red-200 hover:shadow-red-100/50 hover:bg-white"
+                                    className="destination-card bg-white backdrop-blur-sm rounded-2xl transition-all duration-700 overflow-hidden group border border-white/50 animate-slide-up hover:shadow-2xl hover:-translate-y-4 hover:rotate-1 hover:border-red-200 hover:shadow-red-100/50 hover:bg-white"
                                     style={{ animationDelay: `${index * 150}ms` }}
                                     onMouseEnter={() => setHoveredCard(destination.id)}
                                     onMouseLeave={() => setHoveredCard(null)}
