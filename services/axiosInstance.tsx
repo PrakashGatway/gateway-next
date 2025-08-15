@@ -1,18 +1,17 @@
 import axios from "axios";
 
-// Create Axios instance
 const axiosInstance = axios.create({
     baseURL: "https://portal-backend-tczk.onrender.com/api/v1/",
     timeout: 60000, // 10 seconds timeout
     headers: {
         "Content-Type": "application/json"
-    }
+    },
+    withCredentials: true
 });
 
-// Request Interceptor
 axiosInstance.interceptors.request.use(
     (config) => {
-        const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+        const token = localStorage.getItem("accessToken") || null;
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -23,17 +22,13 @@ axiosInstance.interceptors.request.use(
     }
 );
 
-// Response Interceptor
 axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response) {
-            // Token expired or unauthorized
             if (error.response.status === 401) {
-                localStorage.removeItem("token");
-                if (typeof window !== "undefined") {
-                    window.location.href = "/auth";
-                }
+                localStorage.removeItem("accessToken");
+                // window.location.href = "/auth";
             }
         }
         return Promise.reject(error);

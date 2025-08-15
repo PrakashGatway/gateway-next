@@ -7,12 +7,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
 import { usePathname } from "next/navigation";
 import Loader from "../loader";
+import AuthDrawer from "../auth/drawer";
 
 const hideLayoutOnPaths = ['/thank-you'];
 
 function LoaderWrapper({ children }: { children: ReactNode }) {
-  const { loading } = useGlobal();
-  return <>{children} {loading && <Loader />}</>;
+
+  const { loading, drawer, setDrawer } = useGlobal();
+  return <>{children} {loading && <Loader />} <AuthDrawer isOpen={drawer} setIsOpen={setDrawer} /></>;
 }
 
 export default function ClientLayout({ children }: { children: ReactNode }) {

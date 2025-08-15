@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import PageServices from '@/services/PageServices'; // adjust path
+import axiosInstance from '@/services/axiosInstance';
 
 const GlobalContext = createContext();
 
 export function GlobalProvider({ children }) {
     const [user, setUser] = useState(null);
+    const [drawer, setDrawer] = useState(false)
     const [globalData, setGlobalData] = useState({
         aboutPage: null,
         homePage: null,
@@ -90,25 +92,48 @@ export function GlobalProvider({ children }) {
     useEffect(() => {
         setLoading(true); // Start loading
         const timer = setTimeout(() => {
-            setLoading(false); 
+            setLoading(false);
         }, 1000);
-
-        // Cleanup timer if component unmounts
         return () => clearTimeout(timer);
     }, []);
 
-    const login = (userData) => setUser(userData);
-    const logout = () => setUser(null);
+    const userInfo = async () => {
+        try {
+            const response = await axiosInstance.get("auth/me", {
+                withCredentials: true
+            });
+            setUser(response.data?.data)
+        } catch (error) {
+
+        }
+    };
+
+    const logout = async () => {
+        try {
+            const response = await axiosInstance.get("auth/logout");
+            setUser(null)
+            localStorage.removeItem("accessToken")
+        } catch (error) {
+            console.error("Error fetching user info:", error);
+        }
+    };
+
+    useEffect(() => {
+        let token = localStorage.getItem("accessToken");
+        if (token) {
+            userInfo()
+        }
+    }, [])
 
     return (
         <GlobalContext.Provider
             value={{
                 user,
-                login,
+                userInfo,
                 logout,
                 ...globalData,
                 loading,
-                error,
+                error, drawer, setDrawer
             }}
         >
             {children}

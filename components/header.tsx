@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ThemeToggle } from "./theme-toggle"
 import {
   ChevronDown,
   GraduationCap,
@@ -13,15 +12,12 @@ import {
   Settings,
   LayoutDashboard,
   LogOut,
-  Menu,
-  X,
-  PhoneOutgoing,
   ImageDownIcon,
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import useAsync from "@/hooks/useAsync"
-import PageServices from "@/services/PageServices"
 import { constant } from "@/constant/index.constant"
+import { useGlobal } from "@/hooks/AppStateContext"
+import AuthDrawer from "./auth/drawer"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -31,20 +27,12 @@ const Header = () => {
   const testPrepRef = useRef(null)
   const userMenuRef = useRef(null)
 
-  const { data: course } = useAsync(PageServices.getCourse)
+  const { user, course, logout, drawer, setDrawer } = useGlobal()
   const [CourseData, setCourseData] = useState([])
 
-  // Mock user data
-  const user = {
-    name: "Prakash Jangid",
-    email: "Prakash@example.com",
-    avatar: "/placeholder-user.jpg",
-    isLoggedIn: false,
-  }
-
   useEffect(() => {
-    if (course?.data?.page) {
-      setCourseData(course.data.page)
+    if (course?.page) {
+      setCourseData(course.page)
     }
   }, [course])
 
@@ -202,7 +190,7 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 sm:space-x-3">
-            {user.isLoggedIn ? (
+            {user?.email ? (
               <div
                 className="relative"
                 ref={userMenuRef}
@@ -211,11 +199,11 @@ const Header = () => {
               >
                 <button
                   onClick={() => handleClick("userMenu")}
-                  className="flex items-center space-x-2 p-1 rounded-full hover:bg-red-50 dark:hover:bg-slate-800 transition-all duration-300 group"
+                  className="flex items-center space-x-2 p-1 rounded-full bg-red-50 hover:bg-red-100 dark:hover:bg-slate-800 transition-all duration-300 group"
                 >
                   <Image
                     src="/placeholder-user.jpg"
-                    alt={user.name}
+                    alt={user?.name || "User"}
                     width={36}
                     height={36}
                     className="rounded-full border-2 border-gray-200 dark:border-gray-700 group-hover:border-[#E83A3A] dark:group-hover:border-[#FF6B6B] transition-all duration-300"
@@ -235,17 +223,17 @@ const Header = () => {
                       className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl py-2 z-50 border border-gray-100 dark:border-gray-700"
                     >
                       <div className="px-3 py-3 border-b border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center space-x-3">
+                        <div className="flex items-center space-x-2">
                           <Image
-                            src={user.avatar || "/placeholder.svg"}
-                            alt={user.name}
-                            width={48}
-                            height={48}
+                            src={"/placeholder-user.jpg"}
+                            alt={user?.name || "User"}
+                            width={40}
+                            height={40}
                             className="rounded-full border-2 border-gray-200 dark:border-gray-600"
                           />
                           <div>
-                            <p className="font-semibold text-gray-900 dark:text-white m-0 p-0">{user.name}</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 m-0 p-0">{user.email}</p>
+                            <p className="font-semibold text-gray-900 dark:text-white m-0 p-0">{user?.name || "User"}</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 m-0 p-0">{user?.email}</p>
                           </div>
                         </div>
                       </div>
@@ -280,7 +268,7 @@ const Header = () => {
                           className="flex items-center space-x-3 px-4 py-2 w-full text-left text-[#E83A3A] dark:text-[#FF6B6B] hover:bg-red-50 dark:hover:bg-slate-700 transition-all duration-300"
                           onClick={() => {
                             setOpenMenu(null)
-                            console.log("Logout clicked")
+                            logout()
                           }}
                         >
                           <LogOut className="h-5 w-5" />
@@ -292,13 +280,13 @@ const Header = () => {
                 </AnimatePresence>
               </div>
             ) : (
-              <Link
-                href="/auth"
-                className="hidden lg:flex items-center space-x-2 px-3 py-2 btn-primary"
+              <button
+                className="flex lg:flex hidden items-center justify-center py-2 space-x-2 btn-primary"
+                onClick={() => setDrawer(!drawer)}
               >
-                <User className="h-4 w-4" />
+                <User className="h-5 w-5" />
                 <span>Login</span>
-              </Link>
+              </button>
             )}
 
             {/* Mobile Menu Button (Animated Hamburger) */}
@@ -352,19 +340,19 @@ const Header = () => {
 
           <nav className="py-4 mt-2 border-t border-gray-100 dark:border-gray-700">
             {/* Mobile User Info */}
-            {user.isLoggedIn && (
+            {user?.email && (
               <div className="mb-2 px-2">
-                <div className="flex items-center space-x-3 px-3 py-2 bg-gradient-to-r from-red-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 rounded-lg">
+                <div className="flex items-center space-x-2 px-3 py-3 bg-gradient-to-r from-red-50 to-pink-50 dark:from-slate-800 dark:to-slate-700 rounded-lg">
                   <Image
-                    src={user.avatar || "/placeholder.svg"}
-                    alt={user.name}
+                    src={"/placeholder-user.jpg"}
+                    alt={user?.name || "User"}
                     width={40}
                     height={40}
                     className="rounded-full border-2 border-[#E83A3A] dark:border-[#FF6B6B]"
                   />
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-white m-0 p-1">{user.name}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 m-0 p-1">{user.email}</p>
+                    <p className="font-semibold text-gray-900 dark:text-white m-0 p-0 mb-0">{user?.name || "User"}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 m-0 p-0">{user?.email}</p>
                   </div>
                 </div>
               </div>
@@ -457,7 +445,7 @@ const Header = () => {
                 <Award className="h-5 w-5" />
                 <span>Career</span>
               </Link>
-                 <Link
+              <Link
                 href="/gallary"
                 className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
                 onClick={() => setIsMenuOpen(false)}
@@ -475,12 +463,12 @@ const Header = () => {
               </Link>
 
               {/* User Menu Items for Mobile */}
-              {user.isLoggedIn && (
+              {user?.email && (
                 <>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                   <Link
                     href="/profile"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
+                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <User className="h-5 w-5" />
@@ -507,7 +495,7 @@ const Header = () => {
                     className="flex items-center space-x-3 text-red-600 dark:text-red-400 font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800 w-full text-left"
                     onClick={() => {
                       setIsMenuOpen(false)
-                      console.log("Logout clicked")
+                      logout()
                     }}
                   >
                     <LogOut className="h-5 w-5" />
@@ -517,15 +505,14 @@ const Header = () => {
               )}
 
               {/* Mobile Login Button */}
-              {!user.isLoggedIn && (
-                <Link
-                  href="/auth"
-                  className="flex items-center justify-center btn-primary"
-                  onClick={() => setIsMenuOpen(false)}
+              {!user?.email && (
+                <button
+                  className="flex items-center py-2 justify-center btn-primary"
+                  onClick={() => setDrawer(!drawer)}
                 >
                   <User className="h-5 w-5" />
                   <span>Login</span>
-                </Link>
+                </button>
               )}
             </div>
           </nav>

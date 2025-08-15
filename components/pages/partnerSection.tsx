@@ -139,12 +139,6 @@ export default function PartnerSection() {
     }
   };
 
-  // Initialize Bootstrap modal on component mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      import('bootstrap'); // Load Bootstrap JS dynamically
-    }
-  }, []);
 
   return (
     <section className="app-banner-section">

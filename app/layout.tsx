@@ -344,7 +344,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           `}
         </Script>
       </head>
-      <body className={`${inter.className}`}>
+      <body suppressHydrationWarning className={`${inter.className}`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KBCB5JV7"

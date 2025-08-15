@@ -56,17 +56,17 @@ export default function CardLayout() {
             </div>
 
             {/* Right Column - single tall card */}
-            <div className="bg-black/70 text-white rounded-2xl p-6 flex flex-col justify-between shadow-lg">
+            <div className="bg-[#FBE7EA] text-white rounded-2xl p-6 flex flex-col justify-between shadow-lg">
                 <div>
-                    <Clock className="w-10 h-10 text-white mb-3" />
-                    <h3 className="sub-heading !text-white font-bold mb-2">Flexible Learning Schedules</h3>
-                    <p className="text-blue-100 text-base">
+                    <Clock className="w-10 h-10 text-[#DC2626] mb-3" />
+                    <h3 className="sub-heading !text-[#D71635] font-bold mb-2">Flexible Learning Schedules</h3>
+                    <p className="text-[#1F2937] text-base">
                         Whether you prefer to study in the early mornings or late nights,
                         our flexible online platform allows you to learn at your own pace,
                         anywhere in the world. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem voluptate ipsa incidunt eum labore assumenda minus nesciunt et ut. Facere similique velit molestias quas iste dolorem, ducimus mollitia ut amet?
                     </p>
                 </div>
-                <button className="mt-6 btn-secondary border border-white py-2 px-4">
+                <button className="mt-6 btn-primary border border-white py-2 px-4">
                     Start Your Journey →
                 </button>
             </div>
