@@ -22,7 +22,7 @@ const cities = [
 
 export default function LocationAvailability() {
   return (
-    <section className="bg-[#F7E3E7] pb-2 pt-12">
+    <section className="pb-8">
       <div className="container-sm">
         <div className="row">
           <div className="col-12">

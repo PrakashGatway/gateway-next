@@ -349,7 +349,6 @@ const StudyAbroad = () => {
                     </div>
                 </div>
             </section>
-            <LocationAvailability/>
         </>
     );
 };

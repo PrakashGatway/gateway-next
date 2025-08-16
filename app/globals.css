@@ -328,6 +328,9 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+.swal-zindex {
+  z-index: 9999999 !important;
+}
 
 [data-theme="dark"] .text-gradient {
   background: linear-gradient(135deg, #f43f5e 0%, #ec4899 100%);

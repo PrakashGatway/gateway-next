@@ -1,7 +1,9 @@
 import axios from "axios";
 
+let mode = "defffv"
+
 const axiosInstance = axios.create({
-    baseURL: "https://portal-backend-tczk.onrender.com/api/v1/",
+    baseURL: mode == "dev" ? "http://localhost:5000/api/v1/" : "https://portal-backend-tczk.onrender.com/api/v1/",
     timeout: 60000, // 10 seconds timeout
     headers: {
         "Content-Type": "application/json"

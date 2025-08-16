@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // For App Router
+import { usePathname, useRouter } from 'next/navigation'; // For App Router
 import PageServices from '../services/PageServices'; // Ensure path is correct
 import useAsync from '../hooks/useAsync'; // Ensure path is correct
 import { useForm } from 'react-hook-form';
 import { Router } from 'next/router';
+import LocationAvailability from './sections/cityLocation';
 
 export const Footer = () => {
   const { data } = useAsync(PageServices.getSettingData);
@@ -14,7 +15,7 @@ export const Footer = () => {
   const [CourseData, setCourseData] = useState([]);
   const router = useRouter(); // For App Router
   const [contactData, setContactData] = useState([]);
-
+  const pathname = usePathname();
   const {
     register: registerContact,
     handleSubmit: handleSubmitContact,
@@ -113,6 +114,7 @@ export const Footer = () => {
     <>
       <footer>
         <div className="footer-inner">
+          {pathname.includes("study-abroad") && <LocationAvailability />}
           <div className="container-sm">
             <div className="row">
               <div className="col-lg-3 col-sm-6">
@@ -274,7 +276,7 @@ export const Footer = () => {
         {/* Scroll to top functionality */}
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
-      <div style={{ zIndex: '99999!important' }} className="get-in-touch-sidebar">
+      <div style={{ zIndex: '999!important' }} className="get-in-touch-sidebar">
         {/* Trigger for Contact Modal */}
         <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
       </div>

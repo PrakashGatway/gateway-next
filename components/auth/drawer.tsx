@@ -5,7 +5,7 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { X, User, LogIn } from "lucide-react"
-import Auth from "@/app/auth/page"
+import Auth from "./auth"
 
 const AuthDrawer = ({ isOpen, setIsOpen }:any) => {
     const toggleDrawer = () => setIsOpen(!isOpen)
@@ -39,16 +39,16 @@ const AuthDrawer = ({ isOpen, setIsOpen }:any) => {
                             damping: 30,
                             duration: 0.4,
                         }}
-                        style={{zIndex:"99999"}}
+                        style={{zIndex:"999"}}
                         className="fixed top-0 right-0 h-full w-full max-w-md header-gradient shadow-2xl overflow-y-auto"
                     >
                         {/* Close Button */}
                         <Button
                             onClick={toggleDrawer}
                             variant="ghost"
-                            className="absolute top-4 p-3 right-4 z-10 rounded-full hover:bg-gray-100"
+                            className="absolute top-4 p-3 border right-4 z-10 rounded-full hover:bg-gray-100"
                         >
-                            <X className="w-8 h-8" />
+                            <X className="w-12 h-12 font-bold" />
                         </Button>
 
                         <div className="absolute inset-0 overflow-hidden">
