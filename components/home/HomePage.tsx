@@ -35,7 +35,7 @@ function Index() {
 
   useEffect(() => {
     fetchBlogs();
-  }, [fetchBlogs]);
+  }, []);
 
   useEffect(() => {
     if (videoStudednt?.media) {

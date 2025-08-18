@@ -9,7 +9,7 @@ import CounterUp from "@/components/CounterUp";
 import { useGlobal } from "@/hooks/AppStateContext";
 import { useCallback, useEffect, useState } from "react";
 import Slider from 'react-slick';
-import { blogSlider } from '@/custom/custom'; // Ensure path is correct
+import { blogSlider,testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import { useRouter } from "next/navigation";
 import PageServices from "@/services/PageServices";
 import { constant } from "@/constant/index.constant";
@@ -111,7 +111,7 @@ const StudyInUk = () => {
 
   useEffect(() => {
     fetchBlogs();
-  }, [fetchBlogs]);
+  }, [Slider]);
 
 
   useEffect(() => {
@@ -345,20 +345,20 @@ const StudyInUk = () => {
         <div className="container">
           <div className="title d-flex justify-content-between align-items-center mb-4">
             <h2 className="heading bottom-divider mb-0">Important Facts &amp; Information</h2>
-            <Link href="/blog" className="ms-4 btn-primary">Go to blog</Link>
+            {/* Changed Link usage for Next.js */}
+            <Link href="/blog" className="ms-4 site-btn">Go to blog</Link>
           </div>
           <div className="blog-section-inner">
             <Slider {...blogSlider} className="blog-section-slider">
-              {blogData.map((blog) => (
+              {blogData?.length >1 ? blogData : [...blogData,...blogData].map((blog) => (
                 <div
                   onClick={() => router.push(`/blog-description/${blog.Slug}`)} // For App Router
-                  className="blog-section-slider-inner cursor-pointer p-2 "
-                  key={blog._id}
+                  className="blog-section-slider-inner cursor-pointer p-2"
+                  key={blog.id}
                 >
-                  <div className="blog-card border-2">
-                    <div className="card ">
+                  <div className="blog-card">
+                    <div className="card">
                       <div className="card-img-top">
-                        {/* Ensure image path is correct for Next.js public directory */}
                         <img src={`${constant.REACT_APP_URL}/uploads/${blog.image}`} alt="blog-img" />
                       </div>
                       <div className="card-body ps-0 pb-0">

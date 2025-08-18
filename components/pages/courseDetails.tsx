@@ -333,8 +333,9 @@ const Course = () => { // Receive params from Next.js
                 {courseName === "GRE" && <img src="/img/country-gre_480.png" alt="GRE Countries" />}
                 {courseName === "IELTS" && <img src="/img/country-ielts_480.png" alt="IELTS Countries" />}
                 {courseName === "TOEFL" && <img src="/img/country-toefl_480.png" alt="TOEFL Countries" />}
+                {courseName === "DUOLINGO" && <img src="https://www.gatewayabroadeducations.com/uploads/1f3013da2ed4.jpg" alt="TOEFL Countries" />}
                 {/* Optional: Default image if none match */}
-                {!["GMAT", "PTE", "SAT", "GRE", "IELTS", "TOEFL"].includes(courseName) && (
+                {!["GMAT", "PTE", "SAT", "GRE", "IELTS", "TOEFL","DUOLINGO"].includes(courseName) && (
                   <img src="/img/default-countries.png" alt="Countries" />
                 )}
               </div>
