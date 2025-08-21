@@ -178,7 +178,7 @@ export const Footer = () => {
                     <ul className="list-unstyled">
                       {['UK', 'Ireland', 'USA', 'Canada', 'Australia', 'New Zealand'].map((country) => (
                         <li key={country}>
-                          <Link href={`study-in-${country.toLowerCase().replace(' ', '-')}`}>
+                          <Link href={`/study-in-${country.toLowerCase().replace(' ', '-')}`}>
                             Study in {country}
                           </Link>
                         </li>

@@ -9,7 +9,7 @@ import CounterUp from "@/components/CounterUp";
 import { useGlobal } from "@/hooks/AppStateContext";
 import { useCallback, useEffect, useState } from "react";
 import Slider from 'react-slick';
-import { blogSlider,testimonialSlider } from '@/custom/custom'; // Ensure path is correct
+import { blogSlider, testimonialSlider } from '@/custom/custom'; // Ensure path is correct
 import { useRouter } from "next/navigation";
 import PageServices from "@/services/PageServices";
 import { constant } from "@/constant/index.constant";
@@ -350,11 +350,11 @@ const StudyInUk = () => {
           </div>
           <div className="blog-section-inner">
             <Slider {...blogSlider} className="blog-section-slider">
-              {blogData?.length >1 ? blogData : [...blogData,...blogData].map((blog) => (
+              {blogData && blogData.map((blog, index) => (
                 <div
                   onClick={() => router.push(`/blog-description/${blog.Slug}`)} // For App Router
                   className="blog-section-slider-inner cursor-pointer p-2"
-                  key={blog.id}
+                  key={index}
                 >
                   <div className="blog-card">
                     <div className="card">

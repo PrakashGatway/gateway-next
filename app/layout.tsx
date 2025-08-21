@@ -12,6 +12,8 @@ import ClientLayout from "@/components/home/mainLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const revalidate = 60 * 60 * 1;
+
 export const metadata = {
   title: "Gateway Abroad | Study Abroad Consultants",
   description: "Discover the best consultant for studying abroad..."
