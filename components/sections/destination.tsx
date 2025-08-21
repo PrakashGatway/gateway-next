@@ -73,7 +73,7 @@ const destinations = [
     },
 ]
 
-export default function DestinationsSection() {
+export default function DestinationsSection({ content }) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
     const [hoveredCard, setHoveredCard] = useState<number | null>(null)
@@ -162,11 +162,10 @@ export default function DestinationsSection() {
                 {/* Enhanced Section Header */}
                 <div className="text-center mb-10 animate-fade-in">
                     <h2 className="heading mb-1">
-                        Study Destinations
+                        {content?.title || "Study Destinations"}
                     </h2>
                     <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-                        Explore world-class education opportunities across the globe. Choose your dream destination and start your
-                        journey to academic excellence.
+                       {content?.subTitle || "Explore world-class education opportunities across the globe. Choose your dream destination and start your journey to academic excellence."}
                     </p>
                 </div>
 

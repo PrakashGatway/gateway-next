@@ -12,62 +12,16 @@ import CardLayout from "@/components/sections/whyus";
 import DegreesSection from "@/components/sections/degreeSection";
 import ProcessRoadmap from "@/components/sections/processRoad";
 import PageServices from "@/services/PageServices";
+import Loader from "../loader";
 
-const StudyAbroad = () => {
+const StudyAbroadPage = ({ content }) => {
 
-    // const [currentSlide, setCurrentSlide] = useState(0)
-    // const [loaded, setLoaded] = useState(false)
+
+    if (!content) {
+        return <Loader />;
+    }
+
     const [faqData, setFaqData] = useState([]);
-
-
-    // const [sliderRef, instanceRef] = useKeenSlider<any>(
-    //     {
-    //         loop: true,
-    //         slides: {
-    //             perView: 1,
-    //         },
-    //         slideChanged(slider) {
-    //             setCurrentSlide(slider.track.details.rel)
-    //         },
-    //         created() {
-    //             setLoaded(true)
-    //         },
-    //     },
-    //     [
-    //         (slider) => {
-    //             let timeout: ReturnType<typeof setTimeout>
-    //             let mouseOver = false
-
-    //             function clearNextTimeout() {
-    //                 clearTimeout(timeout)
-    //             }
-
-    //             function nextTimeout() {
-    //                 clearTimeout(timeout)
-    //                 if (mouseOver) return
-    //                 timeout = setTimeout(() => {
-    //                     slider.next()
-    //                 }, 4000)
-    //             }
-
-    //             slider.on("created", () => {
-    //                 slider.container.addEventListener("mouseover", () => {
-    //                     mouseOver = true
-    //                     clearNextTimeout()
-    //                 })
-    //                 slider.container.addEventListener("mouseout", () => {
-    //                     mouseOver = false
-    //                     nextTimeout()
-    //                 })
-    //                 nextTimeout()
-    //             })
-
-    //             slider.on("dragStarted", clearNextTimeout)
-    //             slider.on("animationEnded", nextTimeout)
-    //             slider.on("updated", nextTimeout)
-    //         },
-    //     ],
-    // )
 
     const getAllfaqData = async () => {
         try {
@@ -81,6 +35,12 @@ const StudyAbroad = () => {
             console.error('Error fetching data:', error);
         }
     }
+
+    function getContentByType(type) {
+        const item = content && content.sections.find(obj => obj.type === type);
+        return item ? item.content : undefined; // Return undefined if not found
+    }
+
 
     useEffect(() => {
         getAllfaqData()
@@ -112,17 +72,16 @@ const StudyAbroad = () => {
                         <div className="space-y-3">
                             <div className="">
                                 <h1 className="text-3xl lg:text-[2.5rem] font-bold leading-tight">
-                                    <span className="inline-block">Study Abroad with</span>
+                                    <span className="inline-block">{content?.title}</span>
                                     <br />
                                     {<> <span className="text-[#D41833] py-2 inline-block">
-                                        Gateway Abroad Jaipur
                                     </span>
                                         <br /> </>}
                                 </h1>
                             </div>
 
                             <div className="mb-3">
-                                <div className="text-gray-800 text-base leading-relaxed max-w-2xl" >Complete your overseas education dreams with expert guidance. From test preparation to visa assistance, we make your journey to studying abroad seamless and stress-free. </div>
+                                <div className="text-gray-800 text-base leading-relaxed max-w-2xl" >{content?.subTitle} </div>
                             </div>
 
                             <div className="flex flex-col sm:flex-row gap-4 animate-stagger-4">
@@ -142,70 +101,6 @@ const StudyAbroad = () => {
                         <div className="relative animate-fadeInRight mx-auto w-full max-w-xl lg:max-w-none">
                             <div className="relative z-10 mx-auto">
                                 <img src="/anime/bg01.png" alt="" height={'auto'} width={'auto'} />
-
-                                {/* <div
-                                    ref={sliderRef}
-                                    className="keen-slider rounded-[40px] overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm border border-white/20 relative"
-                                    style={{ height: "450px", width: "98%" }}
-                                >
-                                    {heroImages.map((image, index) => (
-                                        <div key={image.id} className="keen-slider__slide relative">
-                                            <div className="w-full h-full relative">
-                                                <Image
-                                                    src={image.src || "/placeholder.svg"}
-                                                    alt={image.alt}
-                                                    fill
-                                                    className="object-cover transition-all duration-1000 ease-in-out"
-                                                    priority={index === 0}
-                                                />
-
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                                                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                                                        <div className="flex flex-wrap gap-2">
-                                                            {image.tags.map((tag, tagIndex) => (
-                                                                <div
-                                                                    key={tag}
-                                                                    className={`bg-white/95 backdrop-blur-sm text-red-600 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg transform transition-all duration-700 ease-out ${currentSlide === index
-                                                                        ? "translate-y-0 opacity-100 scale-100"
-                                                                        : "translate-y-6 opacity-0 scale-90"
-                                                                        }`}
-                                                                    style={{
-                                                                        transitionDelay: currentSlide === index ? `${tagIndex * 200 + 300}ms` : "0ms",
-                                                                    }}
-                                                                >
-                                                                    {tag}
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-white/95 backdrop-blur-sm rounded-full px-2 sm:px-3 py-1 text-red-600 font-bold text-xs sm:text-sm shadow-lg">
-                                                    {index + 1}/{heroImages.length}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div> */}
-
-                                {/* {loaded && instanceRef.current && (
-                                    <div className="flex justify-center mt-4 sm:mt-6 space-x-2">
-                                        {heroImages.map((_, idx) => (
-                                            <button
-                                                key={idx}
-                                                className={`transition-all duration-500 ease-out transform hover:scale-110 ${currentSlide === idx
-                                                        ? "w-6 sm:w-8 h-2 sm:h-3 bg-gradient-to-r from-red-600 to-rose-600 rounded-full shadow-lg"
-                                                        : "w-2 sm:w-3 h-2 sm:h-3 bg-white/60 hover:bg-red-300 rounded-full"
-                                                    }`}
-                                                onClick={() => instanceRef.current?.moveToIdx(idx)}
-                                            >
-                                                {currentSlide === idx && (
-                                                    <div className="w-full h-full bg-gradient-to-r from-red-600 to-rose-600 rounded-full animate-pulse-gentle"></div>
-                                                )}
-                                            </button>
-                                        ))}
-                                    </div>
-                                )} */}
                             </div>
 
                             {/* Background circle with pulse animation */}
@@ -222,7 +117,7 @@ const StudyAbroad = () => {
 
             </section>
             <EnhancedMultiStepForm />
-            <DestinationSection />
+            <DestinationSection content={getContentByType('StudyDestinations')} />
             <DegreesSection />
             <CardLayout />
             <ProcessRoadmap />
@@ -273,4 +168,4 @@ const StudyAbroad = () => {
     );
 };
 
-export default StudyAbroad;
+export default StudyAbroadPage;
