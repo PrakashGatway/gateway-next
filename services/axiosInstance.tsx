@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let mode = "dev"
+let mode = "degggv"
 
 export const serverInstance = axios.create({
     baseURL: mode == "dev" ? "http://localhost:5000/api/v1/" : "https://portal-backend-tczk.onrender.com/api/v1/",
