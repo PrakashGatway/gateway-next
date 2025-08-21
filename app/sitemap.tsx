@@ -1,11 +1,11 @@
 // app/sitemap.ts
 import type { MetadataRoute } from "next";
 
-export const revalidate = 60 * 60 * 6;
+export const revalidate = 21600;
 
 async function getBlogs() {
   const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true", {
-    next: { revalidate: 60 * 60 * 6 },
+    next: { revalidate: 21600 },
   });
   const data = await res.json();
   return data?.data?.blog || [];
