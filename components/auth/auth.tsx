@@ -13,6 +13,7 @@ import axiosInstance from '@/services/axiosInstance';
 import Swal from 'sweetalert2'
 import { useGlobal } from '@/hooks/AppStateContext';
 import { Checkbox } from '../ui/checkbox';
+import axios from 'axios';
 
 interface FormData {
     fullName: string;
@@ -59,7 +60,7 @@ const Auth = ({ toggleDrawer }) => {
 
         setLoading(true);
         try {
-            let response = await axiosInstance.post("auth/send_otp", { email: loginData.email })
+            let response = await axios.post("https://portal-backend-tczk.onrender.com/api/v1/auth/send_otp", { email: loginData.email })
             setOTPData({ otp: "" })
             Swal.fire({
                 title: "Success",
