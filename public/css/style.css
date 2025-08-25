@@ -1206,7 +1206,7 @@ footer .social-media-sec ul li a:hover {
     position: fixed;
     top: 50%;
     right: -70px;
-    z-index: 9;
+    z-index: 99;
     transform: rotate(-90deg);
 }
 

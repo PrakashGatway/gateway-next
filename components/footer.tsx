@@ -54,7 +54,6 @@ export const Footer = () => {
 
   async function getPageData(type, setState) {
     const response = await axiosInstance.get(`/page/list/type?type=${type}`);
-    console.log(response.data);
     if (response.data?.data) {
       setState(response.data.data);
     }
@@ -114,7 +113,6 @@ export const Footer = () => {
       });
       if (createJob.status === 'success') {
         resetNewsletterForm(); // Reset the newsletter form field
-        console.log('Newsletter subscription successful');
       } else {
         console.error('Newsletter subscription failed:', createJob);
       }
@@ -289,7 +287,7 @@ export const Footer = () => {
         {/* Scroll to top functionality */}
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
-      <div style={{ zIndex: '999!important' }} className="get-in-touch-sidebar">
+      <div style={{ zIndex: '99!important' }} className="get-in-touch-sidebar">
         {/* Trigger for Contact Modal */}
         <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
       </div>

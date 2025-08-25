@@ -135,7 +135,6 @@ const Course = () => { // Receive params from Next.js
           getAllfaqData(response.data.page.pageName);
           getAllTestimonial(response.data.page.pageName);
         } else {
-          console.log('something went wrong');
           router.push(`/`); // Redirect on error
         }
       } catch (error) {

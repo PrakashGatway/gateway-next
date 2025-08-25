@@ -20,8 +20,6 @@ const ProcessRoadmap = ({ content }: any) => {
   const sectionRef = useRef<HTMLDivElement>(null)
 
   const steps = content?.steps || []
-  console.log(content)
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
