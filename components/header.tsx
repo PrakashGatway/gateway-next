@@ -17,7 +17,6 @@ import {
 import { motion, AnimatePresence } from "framer-motion"
 import { constant } from "@/constant/index.constant"
 import { useGlobal } from "@/hooks/AppStateContext"
-import AuthDrawer from "./auth/drawer"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)

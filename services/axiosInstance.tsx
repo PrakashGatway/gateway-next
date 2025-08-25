@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let mode = "degggv"
+let mode = "devfgfg"
 
 export const serverInstance = axios.create({
     baseURL: mode == "dev" ? "http://localhost:5000/api/v1/" : "https://uat.gatewayabroadeducations.com/api/v1/",
@@ -10,6 +10,8 @@ export const serverInstance = axios.create({
     },
     withCredentials: true
 });
+
+export const baseUrl = mode == "dev" ? "http://localhost:5000" : "https://uat.gatewayabroadeducations.com";
 
 const axiosInstance = axios.create({
     baseURL: mode == "dev" ? "http://localhost:5000/api/v1/" : "https://uat.gatewayabroadeducations.com/api/v1/",

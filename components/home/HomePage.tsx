@@ -13,6 +13,7 @@ import AboutSection from '../about-section';
 import TestPreparation from '../TestPreparationSection';
 import { useGlobal } from '@/hooks/AppStateContext';
 import PartnerSection from '../pages/partnerSection';
+import Swal from 'sweetalert2';
 
 function Index() {
   const router = useRouter(); // For App Router
@@ -80,7 +81,14 @@ function Index() {
       });
       if (createJob.status === 'success') {
         resetRegisterForm();
-        router.push('/thank-you'); // For App Router
+        Swal.fire({
+          title: "Success",
+          text: "Thanks for registering!",
+          icon: "success",
+          customClass: {
+            popup: "swal-zindex"
+          }
+        });
       } else {
         alert('Something went wrong');
       }
@@ -113,14 +121,11 @@ function Index() {
   });
 
   const handleUpdate2 = async (data) => { // 'data' now contains validated form values
-    // Destructure data if needed, or use data directly
     const {
       name, lastName, email, mobile, whatsappNo, age, city,
       occupation, adress, howDidyouKnow, qualifications, query
     } = data;
-
     try {
-      // Make an API call to update the data
       const createJob = await PageServices.createForme({
         name,
         email,
@@ -137,24 +142,23 @@ function Index() {
         type: 'partner'
       });
 
-
-
       if (createJob.status === 'success') {
-        // Reset the form fields to their default values
         resetPartnerForm();
-
         const modalEl = document.getElementById("partnerModal");
-
-        // Manually hide the modal
         modalEl.classList.remove("show");
         modalEl.style.display = "none";
         modalEl.setAttribute("aria-hidden", "true");
         document.body.classList.remove("modal-open");
-
-        // Remove backdrop
         const backdrop = document.querySelector(".modal-backdrop");
         if (backdrop) backdrop.remove();// ✅ safer method
-        navigate('/thank-you');
+        Swal.fire({
+          title: "Success",
+          text: 'thanks for your submission!',
+          icon: "success",
+          customClass: {
+            popup: "swal-zindex"
+          }
+        });
       } else {
         alert('Something went wrong');
       }
@@ -333,7 +337,7 @@ function Index() {
         </Slider>
       </section>
 
-      <marquee 
+      <marquee
         ref={marqueeRef}
         className="marquee-product"
         behavior="alternate"
@@ -614,7 +618,7 @@ function Index() {
           </div>
         </div>
       </section>
-      <PartnerSection/>
+      {/* <PartnerSection/> */}
       <section className="app-banner-section">
         <div className="container">
           <div className="app-banner-section-inner">
@@ -635,6 +639,186 @@ function Index() {
           </div>
         </div>
       </section>
+      <div className="modal right fade" id="partnerModal" tabIndex={-1} aria-labelledby="partnerModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="partnerModalLabel">Become A Partner</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+            </div>
+            <div className="modal-body">
+              <div className="get-in-touch-form">
+                {/* --- Updated Partner Form --- */}
+                <form onSubmit={handleSubmitPartner(handleUpdate2)}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("name", { required: "First Name is required" })}
+                          className={`form-control ${partnerErrors.name ? 'is-invalid' : ''}`}
+                          placeholder="First Name"
+                        />
+                        {partnerErrors.name && <div className="invalid-feedback">{partnerErrors.name.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("lastName", { required: "Last Name is required" })}
+                          className={`form-control ${partnerErrors.lastName ? 'is-invalid' : ''}`}
+                          placeholder="Last Name"
+                        />
+                        {partnerErrors.lastName && <div className="invalid-feedback">{partnerErrors.lastName.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="email"
+                          {...registerPartner("email", {
+                            required: "Email is required",
+                            pattern: {
+                              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                              message: "Invalid email address"
+                            }
+                          })}
+                          className={`form-control ${partnerErrors.email ? 'is-invalid' : ''}`}
+                          placeholder="Email"
+                        />
+                        {partnerErrors.email && <div className="invalid-feedback">{partnerErrors.email.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("mobile", {
+                            required: "Mobile No. is required",
+                            pattern: {
+                              value: /^\d{10,15}$/, // Adjust pattern as needed
+                              message: "Invalid phone number"
+                            }
+                          })}
+                          className={`form-control ${partnerErrors.mobile ? 'is-invalid' : ''}`}
+                          placeholder="Mobile No."
+                        />
+                        {partnerErrors.mobile && <div className="invalid-feedback">{partnerErrors.mobile.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("whatsappNo", {
+                          })}
+                          className={`form-control ${partnerErrors.whatsappNo ? 'is-invalid' : ''}`}
+                          placeholder="WhatsApp No."
+                        />
+                        {partnerErrors.whatsappNo && <div className="invalid-feedback">{partnerErrors.whatsappNo.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="number"
+                          {...registerPartner("age", { min: 0, max: 120 })} // Optional: Add min/max
+                          className="form-control"
+                          placeholder="Age"
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("city", { required: "City is required" })}
+                          className={`form-control ${partnerErrors.city ? 'is-invalid' : ''}`}
+                          placeholder="City"
+                        />
+                        {partnerErrors.city && <div className="invalid-feedback">{partnerErrors.city.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="input-field">
+                        <input
+                          type="text"
+                          {...registerPartner("occupation", { required: "Occupation is required" })}
+                          className={`form-control ${partnerErrors.occupation ? 'is-invalid' : ''}`}
+                          placeholder="What is your current Occupation?"
+                        />
+                        {partnerErrors.occupation && <div className="invalid-feedback">{partnerErrors.occupation.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="input-field type-file-field">
+                        <textarea
+                          {...registerPartner("adress", { required: "Address is required" })}
+                          className={`form-control ${partnerErrors.adress ? 'is-invalid' : ''}`} // Keep typo for consistency
+                          id="yourAddress"
+                          rows={2}
+                          placeholder="Your Address"
+                        ></textarea>
+                        {partnerErrors.adress && <div className="invalid-feedback">{partnerErrors.adress.message}</div>} {/* Keep typo for consistency */}
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="input-field">
+                        <select
+                          {...registerPartner("howDidyouKnow", { required: "Please select how you know about us" })}
+                          className={`form-control ${partnerErrors.howDidyouKnow ? 'is-invalid' : ''}`}
+                          aria-label="Default select example"
+                        >
+                          <option value="">How did you come to know about Gateway Abroad?</option>
+                          <option value='google'>Google Ad</option>
+                          <option value='facebook'>Facebook Ad</option>
+                          <option value='email'>Email Campaign</option>
+                          <option value='sms' >SMS Campaign</option>
+                          <option value='whatsapp'>WhatsApp</option>
+                          <option value='linkedin'>Linkedin</option>
+                          <option value='reference'>Reference</option>
+                          <option value='newspaper'>Newspaper</option>
+                          <option value='website' >Website</option>
+                          <option value='call'>Call</option>
+                          <option value='instagram'>Instagram</option>
+                          <option value='other'>Other</option>
+                        </select>
+                        {partnerErrors.howDidyouKnow && <div className="invalid-feedback">{partnerErrors.howDidyouKnow.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="input-field type-file-field">
+                        <textarea
+                          {...registerPartner("qualifications", { required: "Qualifications are required" })}
+                          className={`form-control ${partnerErrors.qualifications ? 'is-invalid' : ''}`}
+                          id="qualifications"
+                          rows={2}
+                          placeholder="What are your Educational Qualifications?"
+                        ></textarea>
+                        {partnerErrors.qualifications && <div className="invalid-feedback">{partnerErrors.qualifications.message}</div>}
+                      </div>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="input-field type-file-field">
+                        <textarea
+                          {...registerPartner("query", { required: "Introduction is required" })}
+                          className={`form-control ${partnerErrors.query ? 'is-invalid' : ''}`}
+                          id="introduction"
+                          rows={2}
+                          placeholder="Please provide a Brief Introduction about yourself"
+                        ></textarea>
+                        {partnerErrors.query && <div className="invalid-feedback">{partnerErrors.query.message}</div>}
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" className="btn btn-primary">SUBMIT</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

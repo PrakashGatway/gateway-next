@@ -13,9 +13,9 @@ import DegreesSection from "@/components/sections/degreeSection";
 import ProcessRoadmap from "@/components/sections/processRoad";
 import PageServices from "@/services/PageServices";
 import Loader from "../loader";
+import { baseUrl } from "@/services/axiosInstance";
 
-const StudyAbroadPage = ({ content }) => {
-
+const StudyAbroadPage = ({ content }: any) => {
 
     if (!content) {
         return <Loader />;
@@ -40,7 +40,6 @@ const StudyAbroadPage = ({ content }) => {
         const item = content && content.sections.find(obj => obj.type === type);
         return item ? item.content : undefined; // Return undefined if not found
     }
-
 
     useEffect(() => {
         getAllfaqData()
@@ -72,9 +71,10 @@ const StudyAbroadPage = ({ content }) => {
                         <div className="space-y-3">
                             <div className="">
                                 <h1 className="text-3xl lg:text-[2.5rem] font-bold leading-tight">
-                                    <span className="inline-block">{content?.title}</span>
+                                    <span className="inline-block">{content?.title.split(" ").slice(0, 3).join(" ")}</span>
                                     <br />
                                     {<> <span className="text-[#D41833] py-2 inline-block">
+                                        {content?.title.split(" ").slice(3).join(" ")}
                                     </span>
                                         <br /> </>}
                                 </h1>
@@ -99,8 +99,8 @@ const StudyAbroadPage = ({ content }) => {
 
                         {/* Right Illustration with floating animation */}
                         <div className="relative animate-fadeInRight mx-auto w-full max-w-xl lg:max-w-none">
-                            <div className="relative z-10 mx-auto">
-                                <img src="/anime/bg01.png" alt="" height={'auto'} width={'auto'} />
+                            <div className="relative z-10 mx-auto ">
+                                <img className="max-h-[80vh]" src={content?.pageContent?.heroImage ? `${baseUrl}/uploads/${content?.pageContent?.heroImage}` : "/anime/bg01.png"} alt="" height={'auto'} width={'auto'} />
                             </div>
 
                             {/* Background circle with pulse animation */}
@@ -118,11 +118,11 @@ const StudyAbroadPage = ({ content }) => {
             </section>
             <EnhancedMultiStepForm />
             <DestinationSection content={getContentByType('StudyDestinations')} />
-            <DegreesSection />
-            <CardLayout />
-            <ProcessRoadmap />
+            <DegreesSection content={getContentByType('AcademicPrograms')} />
+            <CardLayout content={getContentByType('WhyChooseUs')} />
+            <ProcessRoadmap content={getContentByType('roadmap')} />
             <Component />
-            <ReadMoreSection />
+            <ReadMoreSection content={getContentByType('content')} />
             <section className="faq-section py-70 mb-0">
                 <div className="container">
                     <div className="title text-center mb-5">

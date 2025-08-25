@@ -1,26 +1,6 @@
-"use client"
+import Link from "next/link";
 
-const cities = [
-  "DELHI",
-  "BANGALORE",
-  "MUMBAI",
-  "CHENNAI",
-  "CHANDIGARH",
-  "GURGAON",
-  "HYDERABAD",
-  "JAIPUR",
-  "INDORE",
-  "THANE",
-  "NEPAL",
-  "LUCKNOW",
-  "PUNE",
-  "KOLKATA",
-  "FARIDABAD",
-  "NOIDA",
-  "NAVI MUMBAI",
-]
-
-export default function LocationAvailability() {
+export default function LocationAvailability({cities}) {
   return (
     <section className="pb-8">
       <div className="container-sm">
@@ -34,7 +14,7 @@ export default function LocationAvailability() {
               {cities.map((city, index) => (
                 <div key={index} className="col-lg-2 col-md-3 col-sm-4 col-6 mb-1">
                   <div className="city-item">
-                    <span className="city-link text-dark d-block position-relative">{city}</span>
+                    <Link href={`/study-abroad/${city?.slug}`} className="city-link duration-200 hover:!translate-x-[6px] capitalize text-dark d-block position-relative">{city?.slug}</Link>
                   </div>
                 </div>
               ))}

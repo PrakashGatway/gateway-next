@@ -6,8 +6,8 @@ import { usePathname, useRouter } from 'next/navigation'; // For App Router
 import PageServices from '../services/PageServices'; // Ensure path is correct
 import useAsync from '../hooks/useAsync'; // Ensure path is correct
 import { useForm } from 'react-hook-form';
-import { Router } from 'next/router';
 import LocationAvailability from './sections/cityLocation';
+import axiosInstance from '@/services/axiosInstance';
 
 export const Footer = () => {
   const { data } = useAsync(PageServices.getSettingData);
@@ -15,6 +15,8 @@ export const Footer = () => {
   const [CourseData, setCourseData] = useState([]);
   const router = useRouter(); // For App Router
   const [contactData, setContactData] = useState([]);
+  const [cityPage, setCityPage] = useState([]);
+  const [countryPage, setCountyPage] = useState([]);
   const pathname = usePathname();
   const {
     register: registerContact,
@@ -50,7 +52,19 @@ export const Footer = () => {
     }
   }, [data, course]);
 
-  // --- Updated Contact Us form submission handler ---
+  async function getPageData(type, setState) {
+    const response = await axiosInstance.get(`/page/list/type?type=${type}`);
+    console.log(response.data);
+    if (response.data?.data) {
+      setState(response.data.data);
+    }
+  }
+
+  useEffect(() => {
+    getPageData('city_page', setCityPage);
+    getPageData('country_page', setCountyPage);
+  }, []);
+
   const handleUpdate = async (formData) => { // Renamed 'data' to 'formData' for clarity
     const { name, email, mobile, city, message } = formData;
     try {
@@ -108,13 +122,12 @@ export const Footer = () => {
       console.error("Error subscribing to newsletter:", error);
     }
   };
-  // --- End updated Newsletter handler ---
 
   return (
     <>
       <footer>
         <div className="footer-inner">
-          {pathname.includes("study-abroad") && <LocationAvailability />}
+          {pathname.includes("study-abroad") && <LocationAvailability cities= {cityPage} />}
           <div className="container-sm">
             <div className="row">
               <div className="col-lg-3 col-sm-6">
@@ -176,10 +189,10 @@ export const Footer = () => {
                   <div className="footer-menu mt-0">
                     <h4 className="footer-title"><Link className='text-gray-800' href={'/study-abroad'}>Study Abroad</Link></h4>
                     <ul className="list-unstyled">
-                      {['UK', 'Ireland', 'USA', 'Canada', 'Australia', 'New Zealand'].map((country) => (
-                        <li key={country}>
-                          <Link href={`/study-in-${country.toLowerCase().replace(' ', '-')}`}>
-                            Study in {country}
+                      {countryPage.map((country,index) => (
+                        <li key={index}>
+                          <Link href={`/study-in-${country?.slug.toLowerCase().replace(' ', '-')}`} className='duration-200 hover:!translate-x-[6px] capitalize'>
+                            Study in {country?.slug}
                           </Link>
                         </li>
                       ))}

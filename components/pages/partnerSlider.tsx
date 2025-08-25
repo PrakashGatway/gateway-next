@@ -97,8 +97,8 @@ const SliderRow: React.FC<SliderRowProps> = ({ logos, direction, speed }) => {
           ))}
         </motion.div>
       </div>
-      <div className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-gray-100 to-transparent backdrop-blur-[1px] pointer-events-none z-10" />
-      <div className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-gray-100 to-transparent backdrop-blur-[1px] pointer-events-none z-10" />
+      <div className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-gray-100 to-transparent backdrop-blur-[1px] pointer-events-none z-4" />
+      <div className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-gray-100 to-transparent backdrop-blur-[1px] pointer-events-none z-4" />
     </div>
   )
 }

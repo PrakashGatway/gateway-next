@@ -1,19 +1,19 @@
-import StudyAbroadPage from "@/components/pages/studyAbroad";
+import NotFound from "@/app/not-found";
+import StudyInUk from "@/components/pages/studyInUk";
 import { serverInstance } from "@/services/axiosInstance";
 
-const pageContentPromise = async () => {
+const pageContentPromise = async ({ country }) => {
     try {
-        const response = await serverInstance.get(`/page/${"main"}?type=city_page`);
+        const response = await serverInstance.get(`/page/${country}?type=country_page`);
         return response.data?.data;
     } catch (error) {
-        console.error("Error fetching data:", error);
         return null; // or handle the error as needed
     }
 }
 
-export async function generateMetadata() {
-    const pageContent = await pageContentPromise();
-
+export async function generateMetadata({ params }) {
+    const { country } = await params;
+    const pageContent = await pageContentPromise({ country });
     return {
         metadataBase: new URL('https://www.gatewayabroadeducations.com'),
         title: pageContent?.metaTitle || "Default Study Abroad Title",
@@ -24,12 +24,11 @@ export async function generateMetadata() {
             images: [
                 {
                     url: "img/ga-logo.svg",
+                    width: 1200,
+                    height: 630,
                     alt: pageContent?.metaTitle || "Study Abroad",
                 },
             ],
-            type: "website",
-            site_name: "Gateway Abroad Education",
-            url: pageContent?.canonicalUrl || "https://www.gatewayabroadeducations.com/study-abroad",
         },
         twitter: {
             card: "summary_large_image",
@@ -44,7 +43,16 @@ export async function generateMetadata() {
     };
 }
 
-export default async function StudyAbroad() {
-    const pageContent = await pageContentPromise();
-    return <StudyAbroadPage content={pageContent} />;
-}
+const UkPage = async ({ params }) => {
+    const { country } = await params;
+    const pageContent = await pageContentPromise({ country });
+    if (!pageContent) {
+        return <NotFound />;
+    }
+
+    return (
+        <StudyInUk content={pageContent} />
+    );
+};
+
+export default UkPage;
