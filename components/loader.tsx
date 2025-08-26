@@ -22,7 +22,7 @@ export default function Loader() {
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: linear-gradient(135deg, white);
+          background: linear-gradient(135deg, #ffffff5d);
           display: flex;
           justify-content: center;
           align-items: center;

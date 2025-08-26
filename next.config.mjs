@@ -13,20 +13,18 @@ const nextConfig = {
         hostname: '**',
       },
     ],
-    unoptimized: true
+    unoptimized: false
   },
   experimental: {
-    optimizePackageImports: ['lucide-react']
+    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
   },
-  async rewrites() {
-    return [
-      {
-        source: "/study-in-:country",   // pattern for incoming requests
-        destination: "/study-in/:country", // actual Next.js page
-      },
-    ];
+
+  compiler: {
+    removeConsole: true,
   },
-  // Fix for local development
+
+  compress: true,
+
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -35,6 +33,14 @@ const nextConfig = {
       };
     }
     return config;
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/study-in-:country",   // pattern for incoming requests
+        destination: "/study-in/:country", // actual Next.js page
+      },
+    ];
   },
 }
 

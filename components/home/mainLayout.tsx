@@ -14,10 +14,8 @@ const hideLayoutOnPaths = ['/thank-you'];
 function LoaderWrapper({ children }: { children: ReactNode }) {
 
   const { loading, drawer, setDrawer } = useGlobal();
-  
-  if(loading)return <Loader />;
 
-  return <>{children} <AuthDrawer isOpen={drawer} setIsOpen={setDrawer} /></>;
+  return <>{children} {loading && <Loader />} <AuthDrawer isOpen={drawer} setIsOpen={setDrawer} /></>;
 }
 
 export default function ClientLayout({ children }: { children: ReactNode }) {

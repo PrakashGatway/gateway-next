@@ -93,7 +93,7 @@ export function GlobalProvider({ children }) {
         setLoading(true); // Start loading
         const timer = setTimeout(() => {
             setLoading(false);
-        }, 800);
+        }, 500);
         return () => clearTimeout(timer);
     }, []);
 
