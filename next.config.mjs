@@ -16,7 +16,7 @@ const nextConfig = {
     unoptimized: false
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "@radix-ui/react-icons"],
+    optimizePackageImports: ["lucide-react", "framer-motion", "react-hook-form", "@radix-ui/react-*"],
   },
 
   compiler: {

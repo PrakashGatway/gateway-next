@@ -7,6 +7,7 @@ const GlobalContext = createContext();
 export function GlobalProvider({ children }) {
     const [user, setUser] = useState(null);
     const [drawer, setDrawer] = useState(false)
+    const [authToken, setAuthToken] = useState(null);
     const [globalData, setGlobalData] = useState({
         aboutPage: null,
         homePage: null,
@@ -119,9 +120,14 @@ export function GlobalProvider({ children }) {
     };
 
     useEffect(() => {
-        let token = localStorage.getItem("accessToken");
+        userInfo()
+    }, [authToken])
+
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        setAuthToken(token);
         if (token) {
-            userInfo()
+            axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
     }, [])
 

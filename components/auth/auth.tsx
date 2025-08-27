@@ -94,7 +94,7 @@ const Auth = ({ toggleDrawer }) => {
             });
 
             if (response.data) {
-                localStorage.setItem("accessToken", response.data.token);
+                // localStorage.setItem("accessToken", response.data.token);
                 userInfo()
             }
             setMode("success");
