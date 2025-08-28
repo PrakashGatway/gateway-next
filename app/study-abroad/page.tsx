@@ -3,10 +3,9 @@ import { serverInstance } from "@/services/axiosInstance";
 
 const pageContentPromise = async () => {
     try {
-        const response = await serverInstance.get(`/page/${"main"}?type=city_page`);
+        const response = await serverInstance.get(`/page/main?type=city_page`);
         return response.data?.data;
     } catch (error) {
-        console.error("Error fetching data:", error);
         return null; // or handle the error as needed
     }
 }

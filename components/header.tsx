@@ -237,30 +237,32 @@ const Header = () => {
                         </div>
                       </div>
                       <div className="py-2">
-                        <Link
-                          href="/profile"
+                        <a
+                          href="https://dashboard.gatewayabroadeducations.com/profile"
+                          rel="noopener noreferrer"
                           className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
                           onClick={() => setOpenMenu(null)}
                         >
                           <User className="h-5 w-5" />
                           <span>My Profile</span>
-                        </Link>
-                        <Link
-                          href="/dashboard"
+                        </a>
+                        <a
+                          href="https://dashboard.gatewayabroadeducations.com"
+                          rel="noopener noreferrer"
                           className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
                           onClick={() => setOpenMenu(null)}
                         >
                           <LayoutDashboard className="h-5 w-5" />
                           <span>Dashboard</span>
-                        </Link>
-                        <Link
-                          href="/settings"
+                        </a>
+                        <a
+                          href="https://dashboard.gatewayabroadeducations.com/profile"
                           className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
                           onClick={() => setOpenMenu(null)}
                         >
                           <Settings className="h-5 w-5" />
                           <span>Settings</span>
-                        </Link>
+                        </a>
                         <div className="border-t border-gray-100 dark:border-gray-700 my-2"></div>
 
                         <button
@@ -465,30 +467,32 @@ const Header = () => {
               {user?.email && (
                 <>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
-                  <Link
-                    href="/profile"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
-                    onClick={() => setIsMenuOpen(false)}
+                  <a
+                    href="https://dashboard.gatewayabroadeducations.com/profile"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
+                    onClick={() => setOpenMenu(null)}
                   >
                     <User className="h-5 w-5" />
                     <span>My Profile</span>
-                  </Link>
-                  <Link
-                    href="/dashboard"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
-                    onClick={() => setIsMenuOpen(false)}
+                  </a>
+                  <a
+                    href="https://dashboard.gatewayabroadeducations.com"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
+                    onClick={() => setOpenMenu(null)}
                   >
                     <LayoutDashboard className="h-5 w-5" />
                     <span>Dashboard</span>
-                  </Link>
-                  <Link
-                    href="/settings"
-                    className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800"
-                    onClick={() => setIsMenuOpen(false)}
+                  </a>
+                  <a
+                    href="https://dashboard.gatewayabroadeducations.com/profile"
+                    className="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-red-50 dark:hover:bg-slate-700 hover:text-[#E83A3A] dark:hover:text-[#FF6B6B] transition-all duration-300"
+                    onClick={() => setOpenMenu(null)}
                   >
                     <Settings className="h-5 w-5" />
                     <span>Settings</span>
-                  </Link>
+                  </a>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                   <button
                     className="flex items-center space-x-3 text-red-600 dark:text-red-400 font-medium transition-all duration-300 p-3 rounded-lg hover:bg-red-50 dark:hover:bg-slate-800 w-full text-left"

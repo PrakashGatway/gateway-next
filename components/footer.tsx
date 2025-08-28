@@ -53,7 +53,7 @@ export const Footer = () => {
   }, [data, course]);
 
   async function getPageData(type, setState) {
-    const response = await axiosInstance.get(`/page/list/type?type=${type}`);
+    const response = await axiosInstance.get(`/page/list/type?type=${type}&featured=true`);
     if (response.data?.data) {
       setState(response.data.data);
     }
