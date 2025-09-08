@@ -10,6 +10,8 @@ const pageContentPromise = async () => {
     }
 }
 
+export const revalidate = 21600; 
+
 export async function generateMetadata() {
     const pageContent = await pageContentPromise();
 
