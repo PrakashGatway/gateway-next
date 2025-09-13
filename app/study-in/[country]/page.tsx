@@ -51,7 +51,7 @@ const UkPage = async ({ params }) => {
     }
 
     return (
-        <StudyInUk content={pageContent} />
+        <StudyInUk country={country} content={pageContent} />
     );
 };
 

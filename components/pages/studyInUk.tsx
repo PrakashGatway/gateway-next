@@ -17,7 +17,7 @@ import { DynamicIcon } from "../sections/processRoad";
 import { baseUrl } from "@/services/axiosInstance";
 
 
-const StudyInUk = ({ content }) => {
+const StudyInUk = ({ content ,country}:any) => {
 
   const [form, setform] = useState([]);
   const { teamMembers: member, youtubeVideo: videoStudednt, } = useGlobal();
@@ -26,7 +26,7 @@ const StudyInUk = ({ content }) => {
   const [video, setVideo] = useState([]);
 
 
-  const fetchBlogs = useCallback(async (page = 1, category = 'UK', search = '') => {
+  const fetchBlogs = useCallback(async (page = 1, category = country.toUpperCase(), search = '') => {
     try {
       const res = await PageServices.getBlogData({ page, limit: 5, category, search });
       setBlogData(res.data.blog || []);
