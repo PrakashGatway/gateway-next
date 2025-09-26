@@ -60,7 +60,7 @@ const Auth = ({ toggleDrawer }) => {
 
         setLoading(true);
         try {
-            let response = await axios.post("https://portal-backend-tczk.onrender.com/api/v1/auth/send_otp", { email: loginData.email })
+            let response = await axios.post("https://backend-ten-sepia-34.vercel.app//api/v1/auth/send_otp", { email: loginData.email })
             setOTPData({ otp: "" })
             Swal.fire({
                 title: "Success",
