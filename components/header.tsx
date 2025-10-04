@@ -219,7 +219,7 @@ const Header = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-xl py-2 z-50 border border-gray-100 dark:border-gray-700"
+                      className="absolute top-full right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl overflow-hidden shadow-xl py-2 z-50 border border-gray-100 dark:border-gray-700"
                     >
                       <div className="px-3 py-3 border-b border-gray-100 dark:border-gray-700">
                         <div className="flex items-center space-x-2">
@@ -232,7 +232,15 @@ const Header = () => {
                           />
                           <div>
                             <p className="font-semibold text-gray-900 dark:text-white m-0 p-0">{user?.name || "User"}</p>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 m-0 p-0">{user?.email}</p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400 m-0 p-0 truncate" title={user?.email}>
+                              {user?.email ? (
+                                user.email.length > 25
+                                  ? `${user.email.substring(0, 24)}...`
+                                  : user.email
+                              ) : (
+                                "No email"
+                              )}
+                            </p>
                           </div>
                         </div>
                       </div>

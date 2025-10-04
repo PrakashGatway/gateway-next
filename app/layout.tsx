@@ -1,4 +1,3 @@
-// app/layout.tsx (Server Component)
 import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -318,7 +317,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
 
-        {/* ✅ Google Tag Manager */}
         <Script id="gtm-script" strategy="afterInteractive">
           {`
             (function(w,d,s,l,i){
@@ -333,7 +331,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           `}
         </Script>
 
-        {/* ✅ Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-6SL4VEMM29" />
         <Script id="ga-script" strategy="afterInteractive">
           {`
