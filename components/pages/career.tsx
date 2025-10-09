@@ -110,7 +110,7 @@ export default function CareerPage() {
             <div className="col-md-7">
               <div className="about-us-right-new ps-1 career-content-box">
                   <h2 className="heading">Culture of Success at <br />Gateway Abroad</h2>
-                  <p style={{textAlign:"left"}} className="descp">{pageTitle ? pageTitle : "We support the empowerment of everyone in our community. Join us if you enjoy exploring and want to learn more about schooling outside of India. We are seeking people who are ready to make a move to promote high-quality education. We are a group of driven and career-oriented people that are eager to develop by cooperating in a welcoming and goal- oriented environment. Gateway Abroad is spread across eight branches in India. Join us right away if you're seeking for a vibrant and welcoming environment that supports your growth."}</p>
+                  <p style={{textAlign:"left"}} className="descp !text-justify">{pageTitle ? pageTitle : "We support the empowerment of everyone in our community. Join us if you enjoy exploring and want to learn more about schooling outside of India. We are seeking people who are ready to make a move to promote high-quality education. We are a group of driven and career-oriented people that are eager to develop by cooperating in a welcoming and goal- oriented environment. Gateway Abroad is spread across eight branches in India. Join us right away if you're seeking for a vibrant and welcoming environment that supports your growth."}</p>
                 </div>
             </div>
           </div>
@@ -122,8 +122,8 @@ export default function CareerPage() {
               <div className="col-md-7">
                 <div className="about-us-right-new career-content-box pe-3">
                   <h2 className="heading">Working with Gateway Abroad</h2>
-                  <p style={{textAlign:"left"}} className="descp mb-3">{description ? description : "In a relatively short period of time, Gateway Abroad has assembled such a strong team. Staff members that are committed and diligent have made this possible. We make an effort to encourage and reward personnel on a regular basis. After all, what good is labour without praise? We seek people who can contribute to our team with innovative ideas and effectively interact with clients."}</p>
-                  <p style={{textAlign:"left"}} className="descp">Join us immediately if you're looking for opportunities to improve your talents and have excellent communication skills.</p>
+                  <p style={{textAlign:"left"}} className="descp !text-justify mb-2">{description ? description : "In a relatively short period of time, Gateway Abroad has assembled such a strong team. Staff members that are committed and diligent have made this possible. We make an effort to encourage and reward personnel on a regular basis. After all, what good is labour without praise? We seek people who can contribute to our team with innovative ideas and effectively interact with clients."}</p>
+                  <p style={{textAlign:"left"}} className="descp !text-justify">Join us immediately if you're looking for opportunities to improve your talents and have excellent communication skills.</p>
                 </div>
               </div>
               <div className="col-md-5">

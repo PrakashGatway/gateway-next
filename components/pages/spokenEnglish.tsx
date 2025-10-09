@@ -259,11 +259,11 @@ function SpokenEnglish() {
                         >
                           {activeTab === data.section && (
                             <div className="space-y-4 rounded-xl bg-gray-50 p-3 font-semibold shadow-sm">
-                              <p className="text-gray-700 leading-relaxed">{data.content}</p>
+                              <p className="text-gray-700 leading-relaxed !text-justify">{data.content}</p>
                               {data.components && data.components.length > 0 ? (
                                 <div className="mt-1 space-y-2">
                                   {data.components.map((innerData: any, idx: number) => (
-                                    <p key={`${innerData.name}-${idx}`} className="text-gray-700">
+                                    <p key={`${innerData.name}-${idx}`} className="text-gray-700 !text-justify">
                                       <strong className="font-semibold text-gray-800">{innerData.name}</strong>{" "}
                                       {innerData.description}
                                     </p>
