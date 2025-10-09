@@ -183,7 +183,7 @@ const Course = () => { // Receive params from Next.js
                   {courseData?.textFild}
                 </h1>
                 <h1> </h1>
-                <p className="text-base text-gray-600 leading-relaxed">
+                <p className="text-base text-justify text-gray-600 leading-relaxed">
                   {courseData.textFild2}
                 </p>
               </div>

@@ -77,7 +77,7 @@ function SpokenEnglish() {
                 <h1 className="text-3xl lg:text-[2.6rem] font-bold text-gray-900 mb-2">
                   {spokenEnglishDetails?.Title?.split(';')[0]} <span className="text-gradient">{spokenEnglishDetails?.Title?.split(';')?.slice(1, spokenEnglishDetails?.Title?.split(';')?.length)?.join(" ")}</span>
                 </h1>
-                <div className="text-base text-gray-600 leading-relaxed">
+                <div className="text-base text-gray-600 text-justify leading-relaxed">
                   {spokenEnglishDetails?.SubTitle ? spokenEnglishDetails?.SubTitle : ''}
                   <div dangerouslySetInnerHTML={sanitizedData()}></div>
                 </div>

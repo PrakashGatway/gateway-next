@@ -36,7 +36,7 @@ const HeroSection = ({type ,title,description,image}:any) => {
             </div>
 
             <div className="">
-              <div className="text-gray-600 text-base leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{__html :description}}></div>
+              <div className="text-gray-600 text-base text-justify leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{__html :description}}></div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-stagger-4">
@@ -73,12 +73,12 @@ const HeroSection = ({type ,title,description,image}:any) => {
 
           {/* Right Illustration with floating animation */}
           <div className="relative animate-fadeInRight mx-auto">
-            <div className="relative z-10 animate-float mx-auto">
+            <div className="relative z-10 animate-floa mx-auto">
               <Image
-                src={title ? image : "/placeholder.svg"}
+                src={title ? image : "https://www.gatewayabroadeducations.com/uploads/1725703170821-319524011.svg"}
                 alt="Study Abroad Illustration"
                 width={type == "about" ? 490 :430}
-                height={470}
+                height={400}
                 className="drop-shadow-2xl"
                 priority
               />

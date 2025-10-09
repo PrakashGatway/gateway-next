@@ -119,7 +119,7 @@ export default function SingleBlogPage() {
                   />
                 </div>
                 <div className="blog-content-section-left">
-                  <div className='blog_inside' dangerouslySetInnerHTML={sanitizeContent(singleBlogData?.blogDescription || '')}></div>
+                  <div className='blog_inside text-justify' dangerouslySetInnerHTML={sanitizeContent(singleBlogData?.blogDescription || '')}></div>
 
                   <div className="blog-navigation mb-4 d-flex justify-content-between">
                     {prevBlog ? (

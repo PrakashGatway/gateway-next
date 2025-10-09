@@ -203,9 +203,8 @@ const Blog = () => {
           )
         )}
         <li
-          className={`page-item ${
-            currentPage === totalPages ? "disabled" : ""
-          }`}
+          className={`page-item ${currentPage === totalPages ? "disabled" : ""
+            }`}
         >
           <button
             className="page-link p-0"
@@ -280,9 +279,8 @@ const Blog = () => {
               {constant.COURSE_MENU.map((cat) => (
                 <button
                   key={cat.name}
-                  className={`nav-link btn btn-outline-secondary flex-shrink-0 ${
-                    selectedCategory === cat.value ? "active" : ""
-                  }`}
+                  className={`nav-link btn btn-outline-secondary flex-shrink-0 ${selectedCategory === cat.value ? "active" : ""
+                    }`}
                   onClick={(e) => handleCategoryChange(e, cat.value)}
                 >
                   {cat.name}
@@ -303,50 +301,51 @@ const Blog = () => {
           <div className="blog-section-inner row gy-4">
             {loading
               ? Array.from({ length: 9 }).map((_, index) => (
-                  <BlogCardSkeleton key={index} />
-                ))
+                <BlogCardSkeleton key={index} />
+              ))
               : blogs.map((blog) => (
-                  <div key={blog.Slug} className="col-md-6 col-lg-4">
-                    <div
-                      onClick={() =>
-                        router.push(`/blog-description/${blog.Slug}`)
-                      }
-                      className="blog-card cursor-pointer"
-                    >
-                      <div className="blog-card-img-box">
-                        <Image
-                          src={`${constant.REACT_APP_URL}/uploads/${blog.image}`}
-                          alt={blog.image}
-                          width={400}
-                          height={250}
-                          layout="responsive"
-                        />
-                      </div>
-                      <div className="blog-card-content">
-                        <ul className="list-unstyled d-flex justify-content-between align-items-center">
-                          <li>
-                            <span>
-                              <Image
-                                src="/img/date-icon.svg"
-                                alt="calendar"
-                                width={16}
-                                height={16}
-                              />
-                            </span>
-                            <span>{formatDate(blog.createdAt)}</span>
-                          </li>
-                        </ul>
-                        <h5>{blog.blogTitle}</h5>
-                        <p
-                          className="sub_text_blog"
-                          dangerouslySetInnerHTML={sanitizedData(
-                            blog.blogDescription
-                          )}
-                        />
-                      </div>
+                <div key={blog.Slug} className="col-md-6 col-lg-4">
+                  <div
+                    onClick={() =>
+                      router.push(`/blog-description/${blog.Slug}`)
+                    }
+                    className="blog-card cursor-pointer"
+                  >
+                    <div className="blog-card-img-box max-h-[180px] mb-2">
+                      <Image
+                        src={`${constant.REACT_APP_URL}/uploads/${blog.image}`}
+                        alt={blog.image}
+                        className="object-cover"
+                        width={400}
+                        height={200}
+                        layout="responsive"
+                      />
+                    </div>
+                    <div className="blog-card-content mb-0 pb-0 px-2">
+                      <ul className="list-unstyled d-flex justify-content-between align-items-center mb-2">
+                        <li>
+                          <span>
+                            <Image
+                              src="/img/date-icon.svg"
+                              alt="calendar"
+                              width={16}
+                              height={16}
+                            />
+                          </span>
+                          <span>{formatDate(blog.createdAt)}</span>
+                        </li>
+                      </ul>
+                      <h5 className="text-lg">{blog.blogTitle}</h5>
+                      <p
+                        className="sub_text_blog"
+                        dangerouslySetInnerHTML={sanitizedData(
+                          blog.blogDescription
+                        )}
+                      />
                     </div>
                   </div>
-                ))}
+                </div>
+              ))}
           </div>
 
           {totalPages > 1 && <nav className="mt-4">{renderPagination()}</nav>}
@@ -357,8 +356,8 @@ const Blog = () => {
 };
 export default function AllBlogs() {
   return (
-    <Suspense fallback={<Loader/>}>
-      <Blog/>
+    <Suspense fallback={<Loader />}>
+      <Blog />
     </Suspense>
   );
 }
