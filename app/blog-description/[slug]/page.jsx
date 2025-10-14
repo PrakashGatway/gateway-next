@@ -11,12 +11,10 @@ export async function generateMetadata({ params }) {
     const defaultTitle = "Blog - Gateway Abroad | Study Abroad Tips & Updates";
     const defaultDescription = "Stay updated with the latest study abroad news, visa updates, test prep tips, and student success stories from Gateway Abroad.";
     const defaultImage = "https://www.gatewayabroadeducations.com/assets/img/ga-logo.svg"; // Fallback image
-    const canonicalBaseUrl = "https://www.gatewayabroadeducations.com/blog";
     const title = seoData?.blogTitle || defaultTitle;
     const description = seoData?.descriptions || defaultDescription;
     const keywords = seoData?.keyword || "study abroad blog, IELTS tips, student visa updates, university admissions, abroad education news, Gateway Abroad blog";
     const ogImage = seoData?.image ? `https://www.gatewayabroadeducations.com/uploads/${seoData.image}` : defaultImage;
-    const canonical = `${canonicalBaseUrl}/${slug}`;
 
     return {
       metadataBase: new URL('https://www.gatewayabroadeducations.com'),
@@ -27,7 +25,6 @@ export async function generateMetadata({ params }) {
         title: title,
         description: description,
         images: [ogImage],
-        url: canonical,
         type: "article",
         site_name: "Gateway Abroad Education",
       },
@@ -36,17 +33,13 @@ export async function generateMetadata({ params }) {
         title: title,
         description: description,
         images: [ogImage],
-      },
-      alternates: {
-        canonical: canonical,
-      },
+      }
     };
 
   } catch (error) {
     const fallbackTitle = "Blog Post - Gateway Abroad";
     const fallbackDescription = "Read insightful articles on studying abroad, test preparation, and visa guidance.";
     const fallbackImage = "https://www.gatewayabroadeducations.com/assets/img/ga-logo.svg";
-    const fallbackCanonical = `https://www.gatewayabroadeducations.com/blog/${slug}`;
 
     return {
       metadataBase: new URL('https://www.gatewayabroadeducations.com'),
@@ -57,7 +50,6 @@ export async function generateMetadata({ params }) {
         title: fallbackTitle,
         description: fallbackDescription,
         images: [fallbackImage],
-        url: fallbackCanonical,
         type: "article",
         site_name: "Gateway Abroad Education",
       },
@@ -66,10 +58,7 @@ export async function generateMetadata({ params }) {
         title: fallbackTitle,
         description: fallbackDescription,
         images: [fallbackImage],
-      },
-      alternates: {
-        canonical: fallbackCanonical,
-      },
+      }
     };
   }
 }
