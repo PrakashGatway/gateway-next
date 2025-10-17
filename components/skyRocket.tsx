@@ -163,7 +163,7 @@ const SkyRocketCelebration = () => {
                     if (rocket.y <= rocket.targetY) {
                         rocket.exploded = true;
                         createSparkle(rocket.x, rocket.y, rocket.color);
-                        playExplosionSound(); // 🔊 Play sound on explode
+                        // playExplosionSound(); // 🔊 Play sound on explode
                         rockets.splice(i, 1);
                     }
                 }
