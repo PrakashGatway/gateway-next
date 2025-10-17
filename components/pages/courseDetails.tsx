@@ -179,7 +179,7 @@ const Course = () => { // Receive params from Next.js
           <div className="grid grid-cols-1 lg:grid-cols-[60%_40%] gap-12 pt-12 items-center">
             <div className="space-y-6">
               <div className="animate-fadeInLeft">
-                <h1 className="text-gradient text-3xl lg:text-[2.6rem] font-bold pb-3">
+                <h1 className="text-gradient text-3xl lg:text-[2.6rem] font-bold pb-3 leading-[1.2]">
                   {courseData?.textFild}
                 </h1>
                 <h1> </h1>

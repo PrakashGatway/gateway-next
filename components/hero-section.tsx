@@ -20,15 +20,15 @@ const HeroSection = ({type ,title,description,image}:any) => {
         <div className="absolute bottom-1/3 right-1/3 w-8 h-8 bg-yellow-400 rounded-full animate-bounce-slow animate-stagger-3"></div>
       </div>
 
-      <div className="container-sm mx-auto px-12 py-28 relative z-10">
+      <div className="container-sm mx-auto px-12 sm:py-24 py-28 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content with staggered animations */}
           <div className="space-y-3">
             <div className="">
-              <h1 className="text-3xl lg:text-[2.6rem] font-bold leading-tight">
+              <h1 className="text-3xl lg:text-[2.6rem] font-bold leading-[1.2]">
                 <span className="inline-block">{title?.split(';')[0] || "Gateway"}</span>
                 <br />
-              { type != "about" &&<> <span className="text-gradient py-2 inline-block">
+              { type != "about" &&<> <span className="text-gradient py-1 inline-block">
                   {title?.split(';')?.slice(1, title?.split(';')?.length)?.join(" ") || "Abroad Jaipur"}
                 </span>
                 <br /> </>}

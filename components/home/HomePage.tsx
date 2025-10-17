@@ -14,6 +14,7 @@ import TestPreparation from '../TestPreparationSection';
 import { useGlobal } from '@/hooks/AppStateContext';
 import PartnerSection from '../pages/partnerSection';
 import Swal from 'sweetalert2';
+import SkyRocketCelebration from '../skyRocket';
 
 function Index() {
   const router = useRouter(); // For App Router
