@@ -8,8 +8,6 @@ import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
 import { usePathname } from "next/navigation";
 import Loader from "../loader";
 import AuthDrawer from "../auth/drawer";
-import SkyRocketCelebration from "../skyRocket";
-import TopRightImage from "../DewaliImage";
 
 const hideLayoutOnPaths = ['/thank-you'];
 
@@ -29,8 +27,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <GlobalProvider>
         <LoaderWrapper>
           {!shouldHideLayout && <Header />}
-      <SkyRocketCelebration/>
-      <TopRightImage/>
+      {/* <SkyRocketCelebration/> */}
+      {/* <TopRightImage/> */}
           <main>{children}</main>
           {!shouldHideLayout && <Footer />}
         </LoaderWrapper>
