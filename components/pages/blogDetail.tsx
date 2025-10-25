@@ -1,18 +1,18 @@
-'use client'; 
+'use client';
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation'; // Import Next.js router hooks
 import PageServices from '@/services/PageServices'; // Adjust path as needed
 import { constant } from '@/constant/index.constant'; // Adjust path as needed
-import DOMPurify from 'dompurify'; 
+import DOMPurify from 'dompurify';
 import Loader from '../loader';
 
 const sanitizeContent = (content) => {
   return { __html: DOMPurify.sanitize(content) };
 };
 
-export default function SingleBlogPage() {
+export default function SingleBlogPage({ data }) {
   const router = useRouter(); // Use useRouter for navigation
   const params = useParams(); // Get params using useParams
   const { slug: id } = params; // Extract 'slug' param (assuming dynamic route is [slug])
@@ -36,24 +36,23 @@ export default function SingleBlogPage() {
   const { prevBlog, nextBlog } = getAdjacentBlogs();
 
   useEffect(() => {
-    if (id) { 
-       fetchData();
+    setSingleBlogData(data);
+    if (id) {
+      fetchData();
     }
-  }, [id]); 
+  }, [id]);
 
   const fetchData = async () => {
     if (!id) return; // Guard clause
 
     try {
       setLoading(true);
-      const [allBlogsResponse, currentBlogResponse] = await Promise.all([
+      const [allBlogsResponse] = await Promise.all([
         PageServices.getBlogData({ page: 1, category: 'All' }),
-        PageServices.getBlogDataById(id)
       ]);
 
-      if (currentBlogResponse?.status === 'success') {
-        const currentBlog = currentBlogResponse?.data?.blog;
-        setSingleBlogData(currentBlog);
+      if (allBlogsResponse?.status === 'success') {
+        const currentBlog = data;
 
         const allBlogs = allBlogsResponse?.data?.blog || [];
         const filteredBlogs = allBlogs.filter(x => x.Slug !== currentBlog?.Slug);
@@ -65,8 +64,8 @@ export default function SingleBlogPage() {
           .slice(0, 3);
         setSimilarBlogs(similar);
       } else {
-         console.error("Failed to fetch current blog data");
-         router.push('/blog'); // Redirect on failure to fetch specific blog
+        console.error("Failed to fetch current blog data");
+        router.push('/blog'); // Redirect on failure to fetch specific blog
       }
     } catch (error) {
       console.error("Error fetching blog data:", error);
@@ -78,12 +77,12 @@ export default function SingleBlogPage() {
 
   if (loading) {
     return (
-      <Loader/>
+      <Loader />
     );
   }
 
   if (!singleBlogData || !singleBlogData.Slug) {
-     return (
+    return (
       <div className="container py-5 text-center">
         <h1>Blog Post Not Found</h1>
         <p>The requested blog post could not be found.</p>
@@ -97,7 +96,7 @@ export default function SingleBlogPage() {
 
       <div>
         <section>
-          <div style={{marginTop:"6rem"}} className="banner-sec new-banner-sec single-blog-banner">
+          <div style={{ marginTop: "6rem" }} className="banner-sec new-banner-sec single-blog-banner">
             <div className="container">
               <div className="banner-content text-left">
                 <h1 className="banner-heading">{singleBlogData?.blogTitle}</h1>

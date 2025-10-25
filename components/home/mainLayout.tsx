@@ -27,8 +27,8 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <GlobalProvider>
         <LoaderWrapper>
           {!shouldHideLayout && <Header />}
-      {/* <SkyRocketCelebration/> */}
-      {/* <TopRightImage/> */}
+          {/* <SkyRocketCelebration/> */}
+          {/* <TopRightImage/> */}
           <main>{children}</main>
           {!shouldHideLayout && <Footer />}
         </LoaderWrapper>

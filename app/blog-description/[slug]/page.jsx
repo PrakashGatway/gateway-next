@@ -1,10 +1,30 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
 import axios from "axios";
+export const dynamic = "force-dynamic";
+
+export async function generateStaticParams() {
+  try {
+    const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true", {
+      cache: "no-store",
+    });
+    const data = await res.json();
+
+    const blogs = data?.data?.blogs || [];
+    return blogs
+      .filter((b) => typeof b?.Slug === "string" && b.Slug.trim() !== "")
+      .map((b) => ({
+        slug: b.Slug,
+      }));
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
-    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
+    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { cache: "no-store" });
 
     const seoData = response?.data?.data?.blog;
 
@@ -63,11 +83,10 @@ export async function generateMetadata({ params }) {
   }
 }
 
-function SingleBlog() {
+export default async function SingleBlog({ params }) {
+  const { slug } = await params;
+  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { cache: "no-store" });
+  const data = await res.json();
 
-  return (
-    <SingleBlogPage />
-  );
+  return <SingleBlogPage data={data?.data?.blog} />;
 }
-
-export default SingleBlog;
