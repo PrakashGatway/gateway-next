@@ -1,6 +1,6 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
 import axios from "axios";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   try {

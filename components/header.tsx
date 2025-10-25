@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { useSearchParams } from "next/navigation"
+// import { useSearchParams } from "next/navigation"
 import {
   ChevronDown,
   GraduationCap,
@@ -30,15 +30,15 @@ const Header = () => {
   const { user, course, logout, drawer, setDrawer } = useGlobal()
   const [CourseData, setCourseData] = useState([])
 
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
   // Referral detection & auto drawer open
-  useEffect(() => {
-  const loginParam = searchParams.get("login")
-  if (loginParam === "true") {
-    setDrawer(true)
-  }
-}, [searchParams, setDrawer])
+//   useEffect(() => {
+//   const loginParam = searchParams.get("login")
+//   if (loginParam === "true") {
+//     setDrawer(true)
+//   }
+// }, [searchParams, setDrawer])
 
   useEffect(() => {
     if (course?.page) setCourseData(course.page)

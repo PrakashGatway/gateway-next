@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, CheckCircle, Mail, User, Phone, Key } from "lucide-react";
 import Swal from "sweetalert2";
@@ -13,8 +13,8 @@ import { useGlobal } from "@/hooks/AppStateContext";
 type AuthMode = "email" | "register" | "otp" | "success";
 
 export default function Auth({ toggleDrawer }: any) {
-    const searchParams = useSearchParams();
-    const ReferalFromUrl = searchParams.get("ref");
+    // const searchParams = useSearchParams();
+    // const ReferalFromUrl = searchParams.get("ref");
     const { userInfo } = useGlobal();
 
     const [mode, setMode] = useState<AuthMode>("email");
@@ -31,11 +31,11 @@ export default function Auth({ toggleDrawer }: any) {
         referCode: "",
     });
 
-    useEffect(() => {
-        if (ReferalFromUrl) {
-            setFormData((prev) => ({ ...prev, referCode: ReferalFromUrl }));
-        }
-    }, [ReferalFromUrl]);
+    // useEffect(() => {
+    //     if (ReferalFromUrl) {
+    //         setFormData((prev) => ({ ...prev, referCode: ReferalFromUrl }));
+    //     }
+    // }, [ReferalFromUrl]);
 
     const validatePhone = (value: string) => /^[6-9]\d{9}$/.test(value);
     const validateName = (value: string) => /^[A-Za-z ]{2,}$/.test(value);
