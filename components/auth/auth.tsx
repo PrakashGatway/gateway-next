@@ -1,411 +1,309 @@
-"use client"
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useRouter } from "next/navigation";
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, Mail, Lock, User, Phone, ArrowLeft, CheckCircle } from 'lucide-react';
-import axiosInstance from '@/services/axiosInstance';
-import Swal from 'sweetalert2'
-import { useGlobal } from '@/hooks/AppStateContext';
-import { Checkbox } from '../ui/checkbox';
-import axios from 'axios';
+"use client";
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useSearchParams } from "next/navigation";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, CheckCircle, Mail } from "lucide-react";
+import Swal from "sweetalert2";
+import axiosInstance from "@/services/axiosInstance";
+import { useGlobal } from "@/hooks/AppStateContext";
 
-interface FormData {
-    fullName: string;
-    email: string;
-    mobile: string;
-    password: string;
-    confirmPassword: string;
-}
+type AuthMode = "login" | "otp" | "register" | "success";
 
-interface LoginData {
-    email: string;
-    password: string;
-}
+export default function Auth({ toggleDrawer }: any) {
+  const searchParams = useSearchParams();
+  const ReferalFromUrl = searchParams.get("ref");
+  const { userInfo } = useGlobal();
 
-interface OTPData {
-    otp: string;
-}
+  const [mode, setMode] = useState<AuthMode>("login");
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [newaccount, setNewAccount] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(true); // ✅ Default checked
+  const [errors, setErrors] = useState<any>({});
 
-type AuthMode = 'login' | 'register' | 'forgot' | 'otp' | 'resetPassword' | 'success';
+  const [formData, setFormData] = useState({
+    name: "",
+    phoneNumber: "",
+    referCode: "",
+  });
 
-const Auth = ({ toggleDrawer }) => {
-    const [mode, setMode] = useState<AuthMode>('login');
-    const [formData, setFormData] = useState<FormData>({
-        fullName: '',
-        email: '',
-        mobile: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const [loginData, setLoginData] = useState<LoginData>({ email: '', password: '' });
-    const [otpData, setOTPData] = useState<OTPData>({ otp: '' });
-    const [resetEmail, setResetEmail] = useState('');
-    const [loading, setLoading] = useState(false);
-    const { toast } = useToast();
-    const router = useRouter();
-    const { userInfo } = useGlobal()
+  useEffect(() => {
+    if (ReferalFromUrl) {
+      setFormData((prev) => ({ ...prev, referCode: ReferalFromUrl }));
+    }
+  }, [ReferalFromUrl]);
 
-    // Simulate API calls
-    const simulateAPI = (delay: number = 2000) =>
-        new Promise(resolve => setTimeout(resolve, delay));
+  const validatePhone = (value: string) => /^[6-9]\d{9}$/.test(value);
+  const validateName = (value: string) => /^[A-Za-z ]+$/.test(value);
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
+  // ✅ LOGIN SUBMIT
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: any = {};
 
-        setLoading(true);
-        try {
-            let response = await axiosInstance.post("auth/send_otp", { email: loginData.email })
-            setOTPData({ otp: "" })
-            Swal.fire({
-                title: "Success",
-                text: response?.data?.message,
-                icon: response?.data?.success ? "success" : "error",
-                customClass: {
-                    popup: "swal-zindex"
-                }
-            });
-            setMode('otp');
+    if (!email) newErrors.email = "Email is required.";
 
-        } catch (error) {
-            Swal.fire({
-                title: "Error",
-                text: error?.message,
-                icon: "error",
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
-    const handleOTPVerification = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get(`/auth/verify_email?email=${email}`);
+      const exists = res?.data?.isExists;
 
-        try {
-            const response = await axiosInstance.post("auth/verify_otp", {
-                email: loginData.email,
-                otp: otpData.otp
-            });
+      if (exists) {
+        await sendOtp();
+        setMode("otp");
+      } else {
+        setNewAccount(true);
+        setMode("register");
+      }
+    } catch {
+      setErrors({ email: "Failed to verify email." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            if (response.data) {
-                // localStorage.setItem("accessToken", response.data.token);
-                userInfo()
-            }
-            setMode("success");
-            toggleDrawer()
-        } catch (error) {
-            Swal.fire({
-                title: "Message",
-                text: error.message,
-                icon: "error",
-            });
-        } finally {
-            setLoading(false);
-        }
-    };
+  // ✅ SEND OTP
+  const sendOtp = async () => {
+    try {
+      const res = await axiosInstance.post("/auth/send_otp", { email });
+      if (res?.data?.success)
+        Swal.fire("OTP Sent!", "Check your email.", "success");
+      else Swal.fire("Failed", "Unable to send OTP.", "error");
+    } catch {
+      setErrors({ otp: "Failed to send OTP." });
+    }
+  };
 
+  // ✅ VERIFY OTP
+  const handleVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const payload = newaccount ? { email, otp, ...formData } : { email, otp };
+      const res = await axiosInstance.post("/auth/verify_otp", payload);
+      if (res?.data?.success) {
+        userInfo();
+        setMode("success");
+        toggleDrawer();
+        window.location.href =
+          "https://dashboard.gatewayabroadeducations.com/";
+      } else setErrors({ otp: "Invalid OTP. Try again." });
+    } catch {
+      setErrors({ otp: "OTP verification failed." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleForgotPassword = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await simulateAPI();
+  // ✅ REGISTER
+  const handleCreateAccount = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const newErrors: any = {};
 
-            setMode('otp');
-        } catch (error) {
+    if (!validateName(formData.name))
+      newErrors.name = "Name should be valid.";
+    if (!validatePhone(formData.phoneNumber))
+      newErrors.phoneNumber = "Phone number should be valid.";
 
-        } finally {
-            setLoading(false);
-        }
-    };
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
 
-    return (
-        <div className="flex items-center justify-center p-2 mb-24 overflow-hidden ">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-xl relative z-10"
-            >
-                <div className='mx-auto'><img src="/img/ga-logo.svg" alt="" className='w-[70%] mx-auto mb-8' /></div>
-                <AnimatePresence mode="wait">
-                    {mode === 'login' && (
-                        <motion.div
-                            key="login"
-                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -50, scale: 0.95 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Card className="">
-                                <CardHeader className="text-center">
-                                    <CardTitle className="text-3xl font-bold text-red-800">Welcome Back</CardTitle>
-                                    <CardDescription className="text-muted-foreground">
-                                        Sign in to continue your journey
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <form onSubmit={handleLogin} className="space-y-4">
-                                        <div className="space-y-2 my-3">
-                                            <Label htmlFor="email" className="flex items-center gap-2 pb-2">
-                                                <Mail className="w-4 h-4" />
-                                                Email
-                                            </Label>
-                                            <Input
-                                                id="email"
-                                                type="email"
-                                                value={loginData.email}
-                                                onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                                                placeholder="Enter your email"
-                                                required
-                                                className="rounded-[20px] border-2 mb-2 focus:border-primary"
-                                            />
-                                        </div>
-                                        {/* <div className="space-y-2">
-                      <Label htmlFor="password" className="flex items-center gap-2">
-                        <Lock className="w-4 h-4" />
-                        Password
-                      </Label>
-                      <div className="relative">
-                        <Input
-                          id="password"
-                          type={showPassword ? "text" : "password"}
-                          value={loginData.password}
-                          onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                          placeholder="Enter your password"
-                          required
-                          className="rounded-[20px] border-2 focus:border-primary pr-10"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                        >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                        </button>
-                      </div>
-                    </div> */}
+    setLoading(true);
+    try {
+      await sendOtp();
+      setMode("otp");
+    } catch {
+      setErrors({ general: "Failed to send OTP." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                                        <div className="flex items-start space-x-2 my-3">
-                                            <Checkbox
-                                                id="terms"
-                                                checked={loginData.acceptTerms}
-                                                onCheckedChange={(checked) =>
-                                                    setLoginData({ ...loginData, acceptTerms: checked })
-                                                }
-                                                required
-                                            />
-                                            <label
-                                                htmlFor="terms"
-                                                className="text-sm text-muted-foreground leading-tight"
-                                            >
-                                                I agree to the{" "}
-                                                <a
-                                                    href="/terms"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-primary hover:underline font-medium"
-                                                >
-                                                    Terms of Service
-                                                </a>{" "}
-                                                and{" "}
-                                                <a
-                                                    href="/privacy"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-primary hover:underline font-medium"
-                                                >
-                                                    Privacy Policy
-                                                </a>
-                                            </label>
-                                        </div>
-                                        <Button
-                                            type="submit"
-                                            variant="auth"
-                                            className="w-full btn-primary"
-                                            disabled={loading}
-                                        >
-                                            {loading ? "Signing In..." : "Login"}
-                                        </Button>
-                                        <div className="text-center space-y-2">
-                                            {/* <button
-                        type="button"
-                        onClick={() => setMode('forgot')}
-                        className="text-primary hover:underline text-sm"
-                      >
-                        Forgot Password?
-                      </button> */}
-                                            {/* <div className="text-sm text-muted-foreground">
-                        Don't have an account?{' '}
-                        <button
-                          type="button"
-                          onClick={() => setMode('register')}
-                          className="text-primary hover:underline font-semibold"
-                        >
-                          Sign Up
-                        </button>
-                      </div> */}
-                                        </div>
-                                    </form>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    )}
-                    {mode === 'forgot' && (
-                        <motion.div
-                            key="forgot"
-                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -50, scale: 0.95 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Card className="card-gradient border-0 shadow-2xl">
-                                <CardHeader className="text-center">
-                                    <Button
-                                        variant="ghost"
-                                        onClick={() => setMode('login')}
-                                        className="absolute left-4 top-4 rounded-full"
-                                    >
-                                        <ArrowLeft className="w-4 h-4" />
-                                    </Button>
-                                    <CardTitle className="text-3xl font-bold text-primary">Reset Password</CardTitle>
-                                    <CardDescription className="text-muted-foreground">
-                                        Enter your email to receive a reset code
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <form onSubmit={handleForgotPassword} className="space-y-4">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="resetEmail" className="flex items-center gap-2">
-                                                <Mail className="w-4 h-4" />
-                                                Email
-                                            </Label>
-                                            <Input
-                                                id="resetEmail"
-                                                type="email"
-                                                value={resetEmail}
-                                                onChange={(e) => setResetEmail(e.target.value)}
-                                                placeholder="Enter your email"
-                                                required
-                                                className="rounded-[20px] border-2 focus:border-primary"
-                                            />
-                                        </div>
-                                        <Button
-                                            type="submit"
-                                            variant="auth"
-                                            className="w-full"
-                                            disabled={loading}
-                                        >
-                                            {loading ? "Sending..." : "Send Reset Code"}
-                                        </Button>
-                                    </form>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    )}
-
-                    {mode === 'otp' && (
-                        <motion.div
-                            key="otp"
-                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -50, scale: 0.95 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Card className="">
-                                <CardHeader className="text-center">
-
-                                    <CardTitle className="text-3xl relative font-bold text-red-800"><Button
-                                        variant="ghost"
-                                        onClick={() => setMode('login')}
-                                        className="border border-2 hover:shadow px-3 absolute -left-4 top-0 rounded-full"
-                                    >
-                                        <ArrowLeft className="w-10 h-10" />
-                                    </Button>Verify Email</CardTitle>
-                                    <CardDescription className="text-muted-foreground">
-                                        Enter the 6-digit code sent to your email
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <form onSubmit={handleOTPVerification} className="space-y-4">
-                                        <div className="space-y-4">
-                                            <Label htmlFor="otp">Verification Code</Label>
-                                            <Input
-                                                id="otp"
-                                                type="text"
-                                                value={otpData.otp}
-                                                onChange={(e) => setOTPData({ otp: e.target.value })}
-                                                placeholder="Enter 6-digit code"
-                                                maxLength={6}
-                                                required
-                                                className="rounded-[20px] border-2 focus:border-primary text-center text-lg tracking-widest"
-                                            />
-                                        </div>
-                                        <Button
-                                            type="submit"
-                                            variant="auth"
-                                            className="w-full btn-primary mt-6"
-                                            disabled={loading}
-                                        >
-                                            {loading ? "Verifying..." : "Verify Email"}
-                                        </Button>
-                                        <div className="text-center text-sm text-muted-foreground">
-                                            Didn't receive the code?{' '}
-                                            <button
-                                                type="button"
-                                                onClick={(e) => handleLogin(e)}
-                                                className="text-primary hover:underline"
-                                            >
-                                                Resend
-                                            </button>
-                                        </div>
-                                    </form>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    )}
-
-                    {mode === 'success' && (
-                        <motion.div
-                            key="success"
-                            initial={{ opacity: 0, y: 50, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: -50, scale: 0.95 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <Card className="">
-                                <CardContent className="text-center py-8">
-                                    <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                                    >
-                                        <CheckCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
-                                    </motion.div>
-                                    <CardTitle className="text-2xl font-bold text-primary mb-2">Success!</CardTitle>
-                                    <CardDescription className="text-muted-foreground mb-6">
-                                        Welcome to Gateway Abroad! Your account is ready.
-                                    </CardDescription>
-                                    <Button
-                                        variant="auth"
-                                        onClick={() => window.location.href("https://google.com")}
-                                        className="w-full"
-                                    >
-                                        Continue to Dashboard
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.div>
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-red-50 to-red-100 px-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-xl relative z-10"
+      >
+        <div className="mx-auto mb-6">
+          <img src="/img/ga-logo.svg" alt="Logo" className="w-[70%] mx-auto" />
         </div>
-    );
-};
 
-export default Auth;
+        <AnimatePresence mode="wait">
+          {/* LOGIN FORM */}
+          {mode === "login" && (
+            <motion.form
+              key="login"
+              onSubmit={handleEmailSubmit}
+              className="space-y-6 text-center"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-3xl font-bold text-red-800 mb-2">
+                Welcome Back
+              </h2>
+              <p className="text-muted-foreground mb-4">
+                Sign in to continue your journey
+              </p>
+
+              <div className="flex flex-col text-left mb-4">
+                <div className="flex items-center mb-2">
+                  <Mail className="w-5 h-5 text-gray-500 mr-2" />
+                  <Label htmlFor="email" className="font-medium">
+                    Email
+                  </Label>
+                </div>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  className="rounded-[20px] border-2 focus:border-primary w-full py-3 px-4 text-black"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
+              </div>
+
+              {/* ✅ Terms Checked by Default */}
+              <div className="text-left">
+                <div className="flex items-center space-x-2 text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    id="terms"
+                    checked={termsAccepted}
+                    onChange={(e) => setTermsAccepted(e.target.checked)}
+                    className="w-4 h-4 accent-red-600"
+                  />
+                  <label htmlFor="terms">
+                    I agree to the{" "}
+                    <a href="/terms" className="text-red-600 underline">
+                      Terms & Conditions
+                    </a>
+                  </label>
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-red-600 text-white font-semibold rounded-[20px] py-3 hover:bg-red-700 transition"
+                disabled={loading}
+              >
+                {loading ? "Signing In..." : "Login"}
+              </Button>
+            </motion.form>
+          )}
+
+          {/* REGISTER FORM */}
+          {mode === "register" && (
+            <motion.div
+              key="register"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -50 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-center mb-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => setMode("login")}
+                  className="border border-2 px-3 rounded-full mr-2"
+                >
+                  <ArrowLeft className="w-6 h-6" />
+                </Button>
+                <h2 className="text-3xl font-bold text-red-800">
+                  Register Account
+                </h2>
+              </div>
+
+              <form onSubmit={handleCreateAccount} className="space-y-3">
+                <div className="text-left">
+                  <Label htmlFor="name">Full Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="Full Name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                    required
+                    className="rounded-[20px] border-2 focus:border-primary w-full"
+                  />
+                  {errors.name && (
+                    <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+                  )}
+                </div>
+
+                <div className="text-left">
+                  <Label htmlFor="phone">Phone Number</Label>
+                  <Input
+                    id="phone"
+                    type="text"
+                    placeholder="Phone Number"
+                    value={formData.phoneNumber}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        phoneNumber: e.target.value,
+                      })
+                    }
+                    required
+                    maxLength={10}
+                    className="rounded-[20px] border-2 focus:border-primary w-full"
+                  />
+                  {errors.phoneNumber && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.phoneNumber}
+                    </p>
+                  )}
+                </div>
+
+                <div className="text-left">
+                  <Label htmlFor="ref">Referral Code (Optional)</Label>
+                  <Input
+                    id="ref"
+                    type="text"
+                    placeholder="Referral Code"
+                    value={formData.referCode}
+                    onChange={(e) =>
+                      setFormData({ ...formData, referCode: e.target.value })
+                    }
+                    className="rounded-[20px] border-2 focus:border-primary w-full"
+                  />
+                </div>
+
+                {errors.general && (
+                  <p className="text-red-500 text-sm text-center">
+                    {errors.general}
+                  </p>
+                )}
+
+                <Button
+                  type="submit"
+                  className="w-full py-3 rounded-[20px] bg-red-600 text-white font-semibold hover:bg-red-700 transition"
+                  disabled={loading}
+                >
+                  {loading ? "Sending OTP..." : "Send OTP"}
+                </Button>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </div>
+  );
+}
