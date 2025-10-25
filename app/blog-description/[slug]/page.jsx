@@ -1,12 +1,10 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
 import axios from "axios";
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function generateStaticParams() {
   try {
-    const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true", {
-      cache: "no-store",
-    });
+    const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true")
     const data = await res.json();
 
     const blogs = data?.data?.blogs || [];
@@ -24,7 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
-    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { cache: "no-store" });
+    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { next: { revalidate: 3600 } });
 
     const seoData = response?.data?.data?.blog;
 
@@ -85,7 +83,7 @@ export async function generateMetadata({ params }) {
 
 export default async function SingleBlog({ params }) {
   const { slug } = await params;
-  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { cache: "no-store" });
+  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { next: { revalidate: 3600 } });
   const data = await res.json();
 
   return <SingleBlogPage data={data?.data?.blog} />;
