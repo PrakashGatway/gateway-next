@@ -40,16 +40,15 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     <ThemeProvider defaultTheme="light" storageKey="gateway-theme">
       <GlobalProvider>
         <LoaderWrapper>
-          {/* Lazy load Header with Suspense */}
           {!shouldHideLayout && (
             <Suspense fallback={<LayoutFallback />}>
               <Header />
             </Suspense>
           )}
-
-          <main>{children}</main>
-
-          {/* Lazy load Footer with Suspense */}
+          <Suspense fallback={<LayoutFallback />}>
+            <div className="min-h-screen">{children}</div>
+          </Suspense>
+          {/* <main>{children}</main> */}
           {!shouldHideLayout && (
              <Suspense fallback={<LayoutFallback />}>
               <Footer />

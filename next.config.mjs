@@ -16,7 +16,19 @@ const nextConfig = {
     unoptimized: false
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "@radix-ui/react-*"],
+    optimizePackageImports: [
+      "lucide-react",
+      "@radix-ui/react-*",
+      "react-hook-form",
+      "clsx",
+      "tailwind-merge",
+      "framer-motion",
+      "react-slick",
+      "react-day-picker",
+      "sweetalert2",
+      "yet-another-react-lightbox",
+      "vaul",
+      "keen-slider"],
   },
 
   compiler: {
@@ -25,6 +37,12 @@ const nextConfig = {
 
   compress: true,
 
+  reactStrictMode: false,
+
+  trailingSlash: false,
+
+  poweredByHeader: false,
+
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {
@@ -32,6 +50,9 @@ const nextConfig = {
         fs: false,
       };
     }
+    config.resolve.alias = {
+      ...config.resolve.alias,
+    };
     return config;
   },
   async rewrites() {

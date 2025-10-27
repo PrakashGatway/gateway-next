@@ -8,8 +8,15 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ClientLayout from "@/components/home/mainLayout";
+import { Noto_Sans } from 'next/font/google';
 
 const inter = Inter({ subsets: ["latin"] });
+const notoSans = Noto_Sans({
+  weight: ['400', '500', '700'], // Specify the weights you need
+  style: ['normal'], // Add 'italic' if you need it
+  subsets: ['latin'], // Specify the character subsets you need
+  display: 'swap', // Optional, but 'swap' is good practice for performance
+});
 
 export const metadata = {
   title: "Gateway Abroad | Study Abroad Consultants",
@@ -341,7 +348,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           `}
         </Script>
       </head>
-      <body suppressHydrationWarning className={`${inter.className}`}>
+      <body suppressHydrationWarning className={`${notoSans.className} ${inter.className}`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KBCB5JV7"
