@@ -377,10 +377,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </Script>
       </head>
       <body suppressHydrationWarning className={`${notoSans.className} ${inter.className}`}>
-
-        <noscript><img height="1" width="1" style="display:none"
-          src="https://www.facebook.com/tr?id=913163584366474&ev=PageView&noscript=1"
-        /></noscript>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KBCB5JV7"
