@@ -238,7 +238,7 @@ export default function Auth({ toggleDrawer }: any) {
 
                                     {/* Terms & Conditions */}
                                     <div className="text-left">
-                                        <div className="flex items-start space-x-3 text-sm text-gray-700 p-3 bg-gray-200 rounded-xl">
+                                        <div className="flex items-start space-x-3 text-xs text-gray-700 p-2 bg-gray-200 rounded-xl">
                                             <input
                                                 type="checkbox"
                                                 id="terms"

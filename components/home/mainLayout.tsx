@@ -1,21 +1,35 @@
 "use client";
 
-import { ReactNode } from "react";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import { ReactNode, Suspense, lazy } from "react";
 import { ThemeProvider } from "@/components/theme-provider";
 import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
 import { usePathname } from "next/navigation";
 import Loader from "../loader";
-import AuthDrawer from "../auth/drawer";
+
+// Lazy load components
+const Header = lazy(() => import("@/components/header"));
+const Footer = lazy(() => import("@/components/footer"));
+const AuthDrawer = lazy(() => import("../auth/drawer"));
 
 const hideLayoutOnPaths = ['/thank-you'];
 
-function LoaderWrapper({ children }: { children: ReactNode }) {
+// Loading fallback component
+const LayoutFallback = () => (
+  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#E83A3A]"></div>
+);
 
+function LoaderWrapper({ children }: { children: ReactNode }) {
   const { loading, drawer, setDrawer } = useGlobal();
 
-  return <>{children} {loading && <Loader />} <AuthDrawer isOpen={drawer} setIsOpen={setDrawer} /></>;
+  return (
+    <>
+      {children}
+      {loading && <Loader />}
+      <Suspense fallback={null}>
+        <AuthDrawer isOpen={drawer} setIsOpen={setDrawer} />
+      </Suspense>
+    </>
+  );
 }
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
@@ -26,11 +40,21 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
     <ThemeProvider defaultTheme="light" storageKey="gateway-theme">
       <GlobalProvider>
         <LoaderWrapper>
-          {!shouldHideLayout && <Header />}
-          {/* <SkyRocketCelebration/> */}
-          {/* <TopRightImage/> */}
+          {/* Lazy load Header with Suspense */}
+          {!shouldHideLayout && (
+            <Suspense fallback={<LayoutFallback />}>
+              <Header />
+            </Suspense>
+          )}
+
           <main>{children}</main>
-          {!shouldHideLayout && <Footer />}
+
+          {/* Lazy load Footer with Suspense */}
+          {!shouldHideLayout && (
+             <Suspense fallback={<LayoutFallback />}>
+              <Footer />
+            </Suspense>
+          )}
         </LoaderWrapper>
       </GlobalProvider>
     </ThemeProvider>
