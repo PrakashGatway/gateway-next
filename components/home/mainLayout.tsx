@@ -15,7 +15,7 @@ const hideLayoutOnPaths = ['/thank-you'];
 
 // Loading fallback component
 const LayoutFallback = () => (
-  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#E83A3A]"></div>
+  null
 );
 
 function LoaderWrapper({ children }: { children: ReactNode }) {
