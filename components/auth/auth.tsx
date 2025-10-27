@@ -252,7 +252,7 @@ export default function Auth({ toggleDrawer }: any) {
                                                     Terms & Conditions
                                                 </a>{" "}
                                                 and{" "}
-                                                <a href="/privacy" className="text-red-600 underline font-medium">
+                                                <a href="/privacy-policy" className="text-red-600 underline font-medium">
                                                     Privacy Policy
                                                 </a>
                                             </label>
