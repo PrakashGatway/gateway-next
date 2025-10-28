@@ -32,7 +32,7 @@ const Header = () => {
 
   const { user, course, logout, drawer, setDrawer } = useGlobal();
   const [CourseData, setCourseData] = useState([]);
-  
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -62,12 +62,12 @@ const Header = () => {
     const loginParam = searchParams?.get('login');
     if (loginParam === 'true' && !drawer && !user?.email) {
       setDrawer(true);
-      
+
       // Remove login=true from URL without page refresh
       const url = new URL(window.location.href);
       url.searchParams.delete('login');
       const newUrl = url.pathname + url.search;
-      
+
       // Use replaceState to update URL without reload
       window.history.replaceState(null, '', newUrl);
     }
@@ -118,11 +118,10 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled || isMenuOpen
+      className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
           ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-lg md:py-[2.7rem] sm:py-2 py-2"
           : "header-gradient dark:bg-slate-900/20 backdrop-blur-sm py-3 sm:py-2"
-      }`}
+        }`}
     >
       <div className="mx-auto px-2 lg:p-0 sm:px-4 container-sm">
         <div className="flex items-center justify-between h-16">
@@ -177,9 +176,8 @@ const Header = () => {
               >
                 Test Preparation
                 <ChevronDown
-                  className={`ml-1 h-4 w-4 transition-transform duration-300 ${
-                    openMenu === "testPrep" ? "rotate-180" : ""
-                  }`}
+                  className={`ml-1 h-4 w-4 transition-transform duration-300 ${openMenu === "testPrep" ? "rotate-180" : ""
+                    }`}
                 />
               </button>
 
@@ -244,6 +242,17 @@ const Header = () => {
             </Link>
           </nav>
 
+          <a
+            href="tel:+918302092630"
+            className="inline-flex items-center justify-center text-gray-700 border border-red-800 border-2 hover:text-white font-semibold rounded-2xl shadow-md hover:bg-[#005fa3] px-3 py-1 text-sm transition-all duration-200"
+          >
+            <div className="flex flex-col items-center leading-tight">
+              <span className="text-[8px] md:text-[10px]">Connect With Expert</span>
+              <span className="text-[15px] md:text-[16px] font-semibold">+91 8302092630</span>
+            </div>
+          </a>
+
+
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 sm:space-x-3">
             {user?.email ? (
@@ -265,9 +274,8 @@ const Header = () => {
                     className="rounded-full border-2 border-gray-200 dark:border-gray-700 group-hover:border-[#E83A3A] dark:group-hover:border-[#FF6B6B] transition-all duration-300"
                   />
                   <ChevronDown
-                    className={`hidden lg:block h-4 w-4 text-gray-700 dark:text-gray-300 transition-transform duration-300 ${
-                      openMenu === "userMenu" ? "rotate-180" : ""
-                    }`}
+                    className={`hidden lg:block h-4 w-4 text-gray-700 dark:text-gray-300 transition-transform duration-300 ${openMenu === "userMenu" ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 
@@ -378,23 +386,20 @@ const Header = () => {
               <div className="relative w-6 h-6 flex items-center justify-center">
                 {/* Top Bar */}
                 <span
-                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${
-                    isMenuOpen ? "rotate-45" : "-translate-y-2"
-                  }`}
+                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "rotate-45" : "-translate-y-2"
+                    }`}
                 ></span>
 
                 {/* Middle Bar */}
                 <span
-                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${
-                    isMenuOpen ? "opacity-0" : "opacity-100"
-                  }`}
+                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"
+                    }`}
                 ></span>
 
                 {/* Bottom Bar */}
                 <span
-                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${
-                    isMenuOpen ? "-rotate-45" : "translate-y-2"
-                  }`}
+                  className={`absolute h-0.5 w-6 bg-current rounded-full transition-all duration-300 ${isMenuOpen ? "-rotate-45" : "translate-y-2"
+                    }`}
                 ></span>
               </div>
             </button>
@@ -403,11 +408,10 @@ const Header = () => {
 
         {/* Mobile Menu */}
         <div
-          className={`lg:hidden transition-all duration-500 overflow-y-auto ${
-            isMenuOpen
+          className={`lg:hidden transition-all duration-500 overflow-y-auto ${isMenuOpen
               ? "max-h-96 opacity-100"
               : "max-h-0 opacity-0 pointer-events-none"
-          }`}
+            }`}
           style={{ maxHeight: isMenuOpen ? "calc(100vh - 80px)" : "0" }}
         >
           <style jsx>{`
@@ -484,9 +488,8 @@ const Header = () => {
                     <span>Test Preparation</span>
                   </div>
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform duration-300 ${
-                      openMenu === "testPrepMobile" ? "rotate-180" : ""
-                    }`}
+                    className={`h-4 w-4 transition-transform duration-300 ${openMenu === "testPrepMobile" ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
 

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { GlobalProvider, useGlobal } from "@/hooks/AppStateContext";
 import { usePathname } from "next/navigation";
 import Loader from "../loader";
+import WhatsAppIcon from "../whatsappIcon";
 
 // Lazy load components
 const Header = lazy(() => import("@/components/header"));
@@ -45,6 +46,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
               <Header />
             </Suspense>
           )}
+          <WhatsAppIcon/>
           <Suspense fallback={<LayoutFallback />}>
             <div className="min-h-screen">{children}</div>
           </Suspense>

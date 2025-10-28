@@ -80,14 +80,15 @@ function Index() {
       });
       if (createJob.status === 'success') {
         resetRegisterForm();
-        Swal.fire({
-          title: "Success",
-          text: "Thanks for registering!",
-          icon: "success",
-          customClass: {
-            popup: "swal-zindex"
-          }
-        });
+        router.push('/thank-you');
+        // Swal.fire({
+        //   title: "Success",
+        //   text: "Thanks for registering!",
+        //   icon: "success",
+        //   customClass: {
+        //     popup: "swal-zindex"
+        //   }
+        // });
       } else {
         alert('Something went wrong');
       }
