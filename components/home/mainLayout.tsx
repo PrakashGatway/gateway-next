@@ -42,17 +42,17 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <GlobalProvider>
         <LoaderWrapper>
           {!shouldHideLayout && (
-            <Suspense fallback={<LayoutFallback />}>
+            <Suspense fallback={null}>
               <Header />
             </Suspense>
           )}
-          <WhatsAppIcon/>
-          <Suspense fallback={<LayoutFallback />}>
+          <WhatsAppIcon />
+          {/* <Suspense fallback={<LayoutFallback />}>
             <div className="min-h-screen">{children}</div>
-          </Suspense>
-          {/* <main>{children}</main> */}
+          </Suspense> */}
+          <main>{children}</main>
           {!shouldHideLayout && (
-             <Suspense fallback={<LayoutFallback />}>
+            <Suspense fallback={<LayoutFallback />}>
               <Footer />
             </Suspense>
           )}

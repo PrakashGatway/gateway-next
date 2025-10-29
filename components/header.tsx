@@ -119,8 +119,8 @@ const Header = () => {
   return (
     <header
       className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled || isMenuOpen
-          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-lg md:py-[2.7rem] sm:py-2 py-2"
-          : "header-gradient dark:bg-slate-900/20 backdrop-blur-sm py-3 sm:py-2"
+        ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-lg md:py-[2.5rem] sm:py-2 py-1"
+        : "header-gradient dark:bg-slate-900/20 backdrop-blur-sm py-2 sm:py-2"
         }`}
     >
       <div className="mx-auto px-2 lg:p-0 sm:px-4 container-sm">
@@ -135,7 +135,7 @@ const Header = () => {
               alt="Company Logo"
               width={200}
               height={40}
-              className="w-auto h-12 sm:h-14 transition-all duration-300 group-hover:scale-105"
+              className="w-auto h-10 sm:h-12 transition-all duration-300 group-hover:scale-105"
               priority
             />
           </Link>
@@ -242,19 +242,27 @@ const Header = () => {
             </Link>
           </nav>
 
-          <a
+          {/* <a
             href="tel:+918302092630"
-            className="inline-flex items-center justify-center text-gray-700 border border-red-800 border-2 hover:text-white font-semibold rounded-2xl shadow-md hover:bg-[#005fa3] px-3 py-1 text-sm transition-all duration-200"
+            className="inline-flex items-center justify-center bg-[#FBBF24] text-gray-700 border-2 border-black hover:text-white font-semibold rounded-3xl shadow-md hover:bg-[#E83A3A] px-2 sm:px-3 py-1 text-sm transition-all duration-200"
           >
             <div className="flex flex-col items-center leading-tight">
-              <span className="text-[8px] md:text-[10px]">Connect With Expert</span>
-              <span className="text-[15px] md:text-[16px] font-semibold">+91 8302092630</span>
+              <span className="text-[6px] md:text-[8px]">Connect With Expert</span>
+              <span className="text-[10px] md:text-[12px] font-semibold">+91 8302092630</span>
             </div>
-          </a>
-
+          </a> */}
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 sm:space-x-3">
+            <a
+              href="tel:+918302092630"
+              className="inline-flex items-center justify-center bg-[#FBBF24] text-gray-700 border-2 border-black hover:text-white font-semibold rounded-3xl shadow-md hover:bg-[#E83A3A] px-2 sm:px-3 py-1 text-sm transition-all duration-200"
+            >
+              <div className="flex flex-col items-center leading-tight">
+                <span className="text-[7px] md:text-[8px]">Connect With Expert</span>
+                <span className="text-[10px] md:text-[14px] font-semibold">+918302092630</span>
+              </div>
+            </a>
             {user?.email ? (
               <div
                 className="relative"
@@ -372,8 +380,8 @@ const Header = () => {
                 className="flex lg:flex hidden items-center justify-center py-2 space-x-2 btn-primary"
                 onClick={() => setDrawer(!drawer)}
               >
-                <User className="h-5 w-5" />
-                <span>Login</span>
+                {/* <User className="h-5 w-5" /> */}
+                <span >Login</span>
               </button>
             )}
 
@@ -409,8 +417,8 @@ const Header = () => {
         {/* Mobile Menu */}
         <div
           className={`lg:hidden transition-all duration-500 overflow-y-auto ${isMenuOpen
-              ? "max-h-96 opacity-100"
-              : "max-h-0 opacity-0 pointer-events-none"
+            ? "max-h-96 opacity-100"
+            : "max-h-0 opacity-0 pointer-events-none"
             }`}
           style={{ maxHeight: isMenuOpen ? "calc(100vh - 80px)" : "0" }}
         >

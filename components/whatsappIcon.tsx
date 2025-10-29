@@ -17,10 +17,10 @@ const WhatsAppIcon = () => {
   };
 
   return (
-    <div className={`fixed bottom-28 sm:bottom-6 left-3 sm:left-6 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 '}`}>
+    <div className={`fixed bottom-6 sm:bottom-6 left-3 sm:left-6 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 '}`}>
       <button
         onClick={handleClick}
-        className="group flex items-center gap-1 sm:gap-2 bg-[#FBBF24] hover:bg-amber-600 text-black p-2 px-3 sm:px-4 sm:py-3 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
+        className="group flex items-center gap-1 sm:gap-2 bg-[#0DBF41] hover:bg-amber-600 text-black p-2 px-3 sm:px-4 sm:py-3 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
         aria-label="Chat on WhatsApp"
       >
         <svg

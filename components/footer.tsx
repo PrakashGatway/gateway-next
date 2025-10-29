@@ -17,6 +17,7 @@ export const Footer = () => {
   const [contactData, setContactData] = useState([]);
   const [cityPage, setCityPage] = useState([]);
   const [countryPage, setCountyPage] = useState([]);
+  const [loading, setLoading] = useState(false);
   const pathname = usePathname();
   const {
     register: registerContact,
@@ -64,19 +65,17 @@ export const Footer = () => {
     getPageData('country_page', setCountyPage);
   }, []);
 
-  const handleUpdate = async (formData) => { // Renamed 'data' to 'formData' for clarity
+  const handleUpdate = async (formData) => {
     const { name, email, mobile, city, message } = formData;
     try {
-      // Make an API call to update the data
-      const createJob = await PageServices.createForme({
-        name,
-        email,
-        mobileNo: mobile,
-        city,
-        message,
-        type: 'contact'
-      });
-      if (createJob.status === 'success') {
+      setLoading(true);
+      let response = await axiosInstance.post('/leads', {
+        fullName: name, email, phone: mobile, source: "website", coursePreference: "unfilled", countryOfResidence: city, extraDetails: {
+          message,
+          type: 'contact'
+        }
+      })
+      if (response.data.success) {
         resetContactForm(); // Reset the contact form fields
         const modalEl = document.getElementById("getintouchModel");
         if (modalEl) {
@@ -100,6 +99,8 @@ export const Footer = () => {
       }
     } catch (error) {
       console.error("Error submitting contact form:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,7 +126,7 @@ export const Footer = () => {
     <>
       <footer>
         <div className="footer-inner">
-          {pathname.includes("study-abroad") && <LocationAvailability cities= {cityPage} />}
+          {pathname.includes("study-abroad") && <LocationAvailability cities={cityPage} />}
           <div className="container-sm">
             <div className="row">
               <div className="col-lg-3 col-sm-6">
@@ -187,7 +188,7 @@ export const Footer = () => {
                   <div className="footer-menu mt-0">
                     <h4 className="footer-title"><Link className='text-gray-800' href={'/study-abroad'}>Study Abroad</Link></h4>
                     <ul className="list-unstyled">
-                      {countryPage.map((country,index) => (
+                      {countryPage.map((country, index) => (
                         <li key={index}>
                           <Link href={`/study-in-${country?.slug.toLowerCase().replace(' ', '-')}`} className='duration-200 hover:!translate-x-[6px] capitalize'>
                             Study in {country?.slug}
@@ -360,7 +361,7 @@ export const Footer = () => {
                       placeholder="Message"
                     ></textarea>
                   </div>
-                  <button type="submit">SUBMIT</button>
+                  <button disabled={loading} type="submit">{loading ? 'SUBMITTING...' : 'SUBMIT'}</button>
                 </form>
               </div>
             </div>

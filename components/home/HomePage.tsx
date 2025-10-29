@@ -13,6 +13,7 @@ import AboutSection from '../about-section';
 import TestPreparation from '../TestPreparationSection';
 import { useGlobal } from '@/hooks/AppStateContext';
 import Swal from 'sweetalert2';
+import axiosInstance from '@/services/axiosInstance';
 
 function Index() {
   const router = useRouter(); // For App Router
@@ -20,6 +21,7 @@ function Index() {
   const [video, setVideo] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [studentData, setStudentData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { homePage: homePageDetails, course: CourseData, aboutPage: aboutPageData, testimonials: testimonials, youtubeVideo: videoStudednt, studentSlider: slider, studentHome: slider2 } = useGlobal();
 
@@ -70,15 +72,13 @@ function Index() {
   const handleUpdate = async (data) => { // 'data' now contains validated form values
     const { name, email, mobile, studyDestination, query } = data;
     try {
-      const createJob = await PageServices.createForme({
-        name,
-        email,
-        mobileNo: mobile,
-        message: query,
-        studyDestination,
-        type: 'register'
-      });
-      if (createJob.status === 'success') {
+      setLoading(true);
+      let response = await axiosInstance.post('/leads', {
+        fullName: name, email, phone: mobile, source: "website", coursePreference: studyDestination, extraDetails: {
+          query
+        }
+      })
+      if (response.data.success) {
         resetRegisterForm();
         router.push('/thank-you');
         // Swal.fire({
@@ -95,6 +95,8 @@ function Index() {
     } catch (error) {
       console.error("Error submitting register form:", error);
       alert('An error occurred. Please try again.'); // Provide user feedback
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,6 +116,7 @@ function Index() {
       city: '',
       occupation: '',
       adress: '', // Note: Typo in state name 'adress' kept for consistency with original logic
+      // Log the error and show an alert if something went wrong
       howDidyouKnow: '',
       qualifications: '',
       query: ''
@@ -314,7 +317,13 @@ function Index() {
                         placeholder="Message"
                       ></textarea>
                     </div>
-                    <button type="submit" className="btn btn-primary">SUBMIT</button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary"
+                      disabled={loading} 
+                    >
+                      {loading ? 'SUBMITTING...' : 'SUBMIT'}
+                    </button>
                   </form>
                 </div>
               </div>

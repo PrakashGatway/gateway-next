@@ -64,6 +64,10 @@ export async function generateMetadata({ params }) {
       title: fallbackTitle,
       description: fallbackDescription,
       keywords: "study abroad blog, Gateway Abroad",
+      robots: {
+        index: true,
+        follow: true,
+      },
       openGraph: {
         title: fallbackTitle,
         description: fallbackDescription,
