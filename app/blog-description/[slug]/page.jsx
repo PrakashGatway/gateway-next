@@ -6,7 +6,6 @@ export async function generateStaticParams() {
   try {
     const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true")
     const data = await res.json();
-
     const blogs = data?.data?.blogs || [];
     return blogs
       .filter((b) => typeof b?.Slug === "string" && b.Slug.trim() !== "")
@@ -45,6 +44,10 @@ export async function generateMetadata({ params }) {
         images: [ogImage],
         type: "article",
         site_name: "Gateway Abroad Education",
+      },
+      robots: {
+        index: true,
+        follow: true,
       },
       twitter: {
         card: "summary_large_image",
@@ -89,6 +92,5 @@ export default async function SingleBlog({ params }) {
   const { slug } = await params;
   const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { next: { revalidate: 3600 } });
   const data = await res.json();
-
   return <SingleBlogPage data={data?.data?.blog} />;
 }
