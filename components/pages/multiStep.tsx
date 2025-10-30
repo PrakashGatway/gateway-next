@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ChevronRight, ChevronLeft, Check, User, MapPin, Calendar, GraduationCap } from "lucide-react"
 import PageServices from "@/services/PageServices"
 import Swal from 'sweetalert2'
+import axiosInstance from "@/services/axiosInstance"
+import { useRouter } from "next/navigation"
 
 const steps = ["course", "country", "intake", "details"]
 const courses = ["UG", "PG", "PHD"]
@@ -16,6 +18,7 @@ const stepIcons = [GraduationCap, MapPin, Calendar, User]
 
 export default function EnhancedMultiStepForm() {
   const [step, setStep] = useState(0)
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -43,14 +46,33 @@ export default function EnhancedMultiStepForm() {
       perferedCountry: data.country,
       study: data.intake,
     }
-    let response = await PageServices.newPreferences(formatData)
-    Swal.fire({
-      title: "Thank You",
-      text: response.message,
-      icon: "success"
-    });
-    reset()
-    setStep(0)
+    try {
+      let res = await axiosInstance.post('/leads', {
+        fullName: data.name, email: data.email, phone: data.mobile, source: "website", coursePreference: data.course, extraDetails: {
+          city: data.city,
+          preferredCountry: data.country,
+          preferredIntake: data.intake,
+        }
+      })
+      if (res.data.success) {
+        router.push('/thank-you');
+        reset()
+        setStep(0)
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "There was an error submitting the form. Please try again.",
+          icon: "error"
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "There was an error submitting the form. Please try again.",
+        icon: "error"
+      });
+    }
+
   }
 
   return (
