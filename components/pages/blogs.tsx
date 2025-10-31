@@ -309,7 +309,7 @@ const Blog = () => {
                 return (
                   <div key={blog.Slug} className="col-md-6 col-lg-4">
                     <div
-                      onClick={() => isOctober2025 ? router.push(`/blogs/${blog.Slug}`) :
+                      onClick={() => isOctober2025 ? router.push(`/blog-description/${blog.Slug}`) :
                         router.push(`/blog-description/${blog.Slug}`)
                       }
                       className="blog-card cursor-pointer"
@@ -351,7 +351,6 @@ const Blog = () => {
                 )
               })}
           </div>
-
           {totalPages > 1 && <nav className="mt-4">{renderPagination()}</nav>}
         </div>
       </section>
