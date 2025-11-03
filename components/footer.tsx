@@ -176,6 +176,7 @@ export const Footer = () => {
                       <li><Link href="/about">About Us</Link></li>
                       <li><Link href="/spoken-english">Spoken English</Link></li>
                       <li><Link href="/blog">Blog</Link></li>
+                      <li><Link href="/article">Articles</Link></li>
                       <li><Link href="/career">Career</Link></li>
                       <li><Link href="/contact">Contact Us</Link></li>
                       <li><Link href="/gallary">Gallery</Link></li>

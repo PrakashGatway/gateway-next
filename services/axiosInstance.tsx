@@ -1,10 +1,10 @@
 import axios from "axios";
 
-let mode = "devppppp"
+let mode = "dev"
 
 export const serverInstance = axios.create({
-    baseURL: mode == "dev" ? "http://localhost:5000/api/v1/" : "https://uat.gatewayabroadeducations.com/api/v1/",
-    timeout: 60000, // 10 seconds timeout
+    baseURL: mode == "dev" ? "https://m8j3lq9z-5000.inc1.devtunnels.ms/api/v1/" : "https://uat.gatewayabroadeducations.com/api/v1/",
+    timeout: 60000,
     headers: {
         "Content-Type": "application/json"
     },

@@ -1,22 +1,5 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
 import axios from "axios";
-export const dynamic = "force-dynamic";
-
-export async function generateStaticParams() {
-  try {
-    const res = await fetch("https://www.gatewayabroadeducations.com/api/v1/blog?all=true")
-    const data = await res.json();
-    const blogs = data?.data?.blogs || [];
-    return blogs
-      .filter((b) => typeof b?.Slug === "string" && b.Slug.trim() !== "")
-      .map((b) => ({
-        slug: b.Slug,
-      }));
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
