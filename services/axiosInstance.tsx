@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let mode = "dev"
+let mode = "deviii"
 
 export const serverInstance = axios.create({
     baseURL: mode == "dev" ? "https://m8j3lq9z-5000.inc1.devtunnels.ms/api/v1/" : "https://uat.gatewayabroadeducations.com/api/v1/",

@@ -73,8 +73,8 @@ const HeroSection = ({ type, title, description, image }: any) => {
           </div>
 
           {/* Right Illustration with floating animation */}
-          <TestPrepEnquiryForm />
-          {/* <div className="relative animate-fadeInRight mx-auto">
+          {/* <TestPrepEnquiryForm /> */}
+          <div className="relative animate-fadeInRight mx-auto">
             <div className="relative z-10 animate-floa mx-auto">
               <Image
                 src={title ? image : "https://www.gatewayabroadeducations.com/uploads/1725703170821-319524011.svg"}
@@ -89,7 +89,7 @@ const HeroSection = ({ type, title, description, image }: any) => {
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white bg-opacity-30 rounded-full animate-pulse-slow -z-10"></div>
             <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full animate-bounce-slow"></div>
             <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full animate-pulse-slow"></div>
-          </div> */}
+          </div>
         </div>
       </div>
 
