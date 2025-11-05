@@ -1,25 +1,17 @@
 import { serverInstance } from '@/services/axiosInstance';
 import ArticleClient from '@/components/article/ArticleDetail';
 
-const SITE_URL = 'https://www.gatewayabroadeducations.com';
-
 export async function generateMetadata({ params }) {
     const { slug } = await params;
     try {
         const res = await serverInstance.get(`/web/blog/${slug}`);
         const article = res.data?.data;
-        const title = article.title.trim() || 'Blog - Gateway Abroad | Study Abroad Tips & Updates';
-        const description =
-            article.description?.trim() ||
-            (article.description
-                ? article.description
-                : 'Expert study abroad & test prep guidance from Gateway Abroad.');
-        const ogImage = article.image
-            ? `https://uat.gatewayabroadeducations.com/uploads/${encodeURIComponent(article.coverImage)}`
-            : `${SITE_URL}/assets/img/ga-logo.svg`;
+        const title = article.title || 'Blog - Gateway Abroad | Study Abroad Tips & Updates';
+        const description =article.description || 'Expert study abroad & test prep guidance from Gateway Abroad.';
+        const ogImage = `/img/ga-logo.svg`;
 
         return {
-            metadataBase: new URL(SITE_URL),
+            metadataBase: new URL('https://www.gatewayabroadeducations.com'),
             title,
             description,
             keywords: 'study abroad, IELTS, GMAT, GRE, TOEFL, PTE, SAT, Gateway Abroad ,blog',
@@ -29,20 +21,15 @@ export async function generateMetadata({ params }) {
                 images: [ogImage],
                 type: 'article',
             },
-            robots: {
-                index: true,
-                follow: true,
-            },
+            alertnates: {
+                canonical: `https://www.gatewayabroadeducations.com/article/${slug}`,
+            }
         };
     } catch (error) {
         return {
             title: 'Article Post | Gateway Abroad',
             description: 'Get expert advice on IELTS, GMAT, GRE, study abroad, and more.',
             keywords: 'study abroad, IELTS, GMAT, GRE, TOEFL, PTE, SAT, Gateway Abroad',
-            robots: {
-                index: true,
-                follow: true,
-            },
         };
     }
 }
