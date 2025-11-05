@@ -46,9 +46,20 @@ export default function EnhancedMultiStepForm() {
       perferedCountry: data.country,
       study: data.intake,
     }
+
+    let src = 'website' as any;
+
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const from = params.get("src")
+      if (from == 'facebook') {
+        src = 'facebook';
+      }
+    }
+
     try {
       let res = await axiosInstance.post('/leads', {
-        fullName: data.name, email: data.email, phone: data.mobile, source: "website", coursePreference: data.course, extraDetails: {
+        fullName: data.name, email: data.email, phone: data.mobile, source: src || "website", coursePreference: data.course, extraDetails: {
           city: data.city,
           preferredCountry: data.country,
           preferredIntake: data.intake,

@@ -22,7 +22,7 @@ const StudyInUk = ({ content ,country}:any) => {
   const [form, setform] = useState([]);
   const { teamMembers: member, youtubeVideo: videoStudednt, } = useGlobal();
   const [blogData, setBlogData] = useState([]);
-  const router = useRouter(); // For App Router
+  const router = useRouter(); 
   const [video, setVideo] = useState([]);
 
 

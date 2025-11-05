@@ -69,12 +69,24 @@ export const Footer = () => {
     const { name, email, mobile, city, message } = formData;
     try {
       setLoading(true);
+
+      let src = 'website' as any;
+
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get("src")
+        if (from == 'facebook') {
+          src = 'facebook';
+        }
+      }
+
       let response = await axiosInstance.post('/leads', {
-        fullName: name, email, phone: mobile, source: "website", coursePreference: "unfilled", countryOfResidence: city, extraDetails: {
+        fullName: name, email, phone: mobile, source: src || "website", coursePreference: "unfilled", countryOfResidence: city, extraDetails: {
           message,
           type: 'contact'
         }
       })
+
       if (response.data.success) {
         resetContactForm(); // Reset the contact form fields
         const modalEl = document.getElementById("getintouchModel");
@@ -93,7 +105,7 @@ export const Footer = () => {
             if (backdrop) backdrop.remove();
           }
         }
-        router.push('/thank-you'); // For App Router
+        router.push('/thank-you');
       } else {
         console.error('Contact form submission failed:', createJob);
       }

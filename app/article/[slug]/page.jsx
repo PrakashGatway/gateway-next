@@ -4,7 +4,7 @@ import ArticleClient from '@/components/article/ArticleDetail';
 
 const SITE_URL = 'https://www.gatewayabroadeducations.com';
 
-export const revalidate = 21600;
+export const revalidate = 3600;
 
 // export async function generateStaticParams() {
 //   try {
@@ -24,18 +24,10 @@ export async function generateMetadata({ params }) {
     const { slug } = await params;
     try {
         const res = await serverInstance.get(`/web/blog/${slug}`, {
-            next: { revalidate: 21600 },
+            next: { revalidate: 3600 },
         });
-
         const article = res.data?.data;
-
-        if (res.data?.success == false) {
-            return {
-                title: 'Article Not Found | Gateway Abroad',
-                robots: { index: false, follow: false },
-            };
-        }
-        const title = article.title.trim() || 'Gateway Abroad Blog';
+        const title = article.title.trim() || 'Blog - Gateway Abroad | Study Abroad Tips & Updates';
         const description =
             article.description?.trim() ||
             (article.description
@@ -46,29 +38,15 @@ export async function generateMetadata({ params }) {
             : `${SITE_URL}/assets/img/ga-logo.svg`;
 
         return {
+            metadataBase: new URL(SITE_URL),
             title,
             description,
-            metadataBase: new URL(SITE_URL),
+            keywords: 'study abroad, IELTS, GMAT, GRE, TOEFL, PTE, SAT, Gateway Abroad ,blog',
             openGraph: {
                 title,
                 description,
-                url: `${SITE_URL}/article/${slug}`,
-                images: [
-                    {
-                        url: ogImage,
-                        width: 1200,
-                        height: 630,
-                        alt: article.title || 'Gateway Abroad Blog',
-                    },
-                ],
-                type: 'article',
-                siteName: 'Gateway Abroad Education',
-            },
-            twitter: {
-                card: 'summary_large_image',
-                title,
-                description,
                 images: [ogImage],
+                type: 'article',
             },
             robots: {
                 index: true,
@@ -91,31 +69,24 @@ export async function generateMetadata({ params }) {
 export default async function BlogPostPage({ params }) {
     const { slug } = await params;
 
-    try {
-        const articleRes = await serverInstance.get(`/web/blog/${slug}`, {
-            next: { revalidate: 21600 },
-        });
-        // const similarArticles = await serverInstance.get(`/web/blog?category=${articleRes?.data?.data?.category._id}&limit=10`, {
-        //     next: { revalidate: 21600 },
-        // }); 
-        // console.log(similarArticles.data)
-        // const latestArticles = await serverInstance.get(`/web/blog?limit=10`, {
-        //     next: { revalidate: 21600 },
-        // });
+    const articleRes = await serverInstance.get(`/web/blog/${slug}`, {
+        next: { revalidate: 3600 },
+    });
+    // const similarArticles = await serverInstance.get(`/web/blog?category=${articleRes?.data?.data?.category._id}&limit=10`, {
+    //     next: { revalidate: 21600 },
+    // }); 
+    // console.log(similarArticles.data)
+    // const latestArticles = await serverInstance.get(`/web/blog?limit=10`, {
+    //     next: { revalidate: 21600 },
+    // });
 
+    const article = articleRes?.data?.data
 
-        if (articleRes.status !== 200) return notFound();
-        const article = articleRes?.data?.data
-
-        return (
-            <ArticleClient
-                article={article}
-                similarArticles={[]}
-                latestArticles={[]}
-            />
-        );
-    } catch (error) {
-        console.error('Blog page error:', error);
-        return notFound();
-    }
+    return (
+        <ArticleClient
+            article={article}
+            similarArticles={[]}
+            latestArticles={[]}
+        />
+    );
 }
