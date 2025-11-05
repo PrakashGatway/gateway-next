@@ -143,7 +143,7 @@ export const Footer = () => {
             <h4 className="text-sm font-semibold text-gray-800 inline-block px-1 py-1 rounded-full mb-3 ">
               🌍 Choose Your Destination
             </h4>
-            <div className="flex gap-1 items-center sm:gap-3 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pb-3">
+            <div className="flex gap-1 flex-wrap justify-start items-center sm:gap-3 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pb-3">
 
               {countryPage.map((country, index) => {
                 const slug = country?.slug?.toLowerCase().replace(/\s+/g, "-");
