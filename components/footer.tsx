@@ -8,6 +8,7 @@ import useAsync from '../hooks/useAsync'; // Ensure path is correct
 import { useForm } from 'react-hook-form';
 import LocationAvailability from './sections/cityLocation';
 import axiosInstance from '@/services/axiosInstance';
+import { Globe } from 'lucide-react';
 
 export const Footer = () => {
   const { data } = useAsync(PageServices.getSettingData);
@@ -138,15 +139,34 @@ export const Footer = () => {
     <>
       <footer>
         <div className="footer-inner">
-          {pathname.includes("study-abroad") && <LocationAvailability cities={cityPage} />}
+          <div className="container-sm mx-auto">
+            <h4 className="text-sm font-semibold text-gray-800 inline-block px-1 py-1 rounded-full mb-3 ">
+              🌍 Choose Your Destination
+            </h4>
+            <div className="flex gap-1 items-center sm:gap-3 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent pb-3">
+
+              {countryPage.map((country, index) => {
+                const slug = country?.slug?.toLowerCase().replace(/\s+/g, "-");
+                return (
+                  <Link
+                    key={index}
+                    href={`/study-in-${slug}`}
+                    className={`relative flex flex-wrap items-center justify-center px-3 sm:px-3 py-2 rounded-full text-sm md:text-xs font-medium capitalize whitespace-nowrap transition-all duration-300 !border !border-gray-200 hover:bg-gray-50 hover:text-gray-900 shadow-sm text-gray-700 `}
+                  >
+                    {country?.slug.toUpperCase()}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+          {<LocationAvailability cities={cityPage} />}
+
           <div className="container-sm">
             <div className="row">
-              <div className="col-lg-3 col-sm-6">
+              <div className="col-lg-4 col-sm-6">
                 <div className="footer-left">
                   <div className="logo-sec">
-                    {/* Changed Link usage for Next.js */}
                     <Link href="/">
-                      {/* Ensure image path is correct for Next.js public directory */}
                       <img src="/img/ga-logo.svg" alt="logo" />
                     </Link>
                   </div>
@@ -189,25 +209,10 @@ export const Footer = () => {
                       <li><Link href="/spoken-english">Spoken English</Link></li>
                       <li><Link href="/blog">Blog</Link></li>
                       <li><Link href="/article">Articles</Link></li>
+                      <li><Link href="/study-abroad">Study Abroad</Link></li>
                       <li><Link href="/career">Career</Link></li>
                       <li><Link href="/contact">Contact Us</Link></li>
                       <li><Link href="/gallary">Gallery</Link></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-2 col-sm-6">
-                <div className="footer-middle ps-2">
-                  <div className="footer-menu mt-0">
-                    <h4 className="footer-title"><Link className='text-gray-800' href={'/study-abroad'}>Study Abroad</Link></h4>
-                    <ul className="list-unstyled">
-                      {countryPage.map((country, index) => (
-                        <li key={index}>
-                          <Link href={`/study-in-${country?.slug.toLowerCase().replace(' ', '-')}`} className='duration-200 hover:!translate-x-[6px] capitalize'>
-                            Study in {country?.slug}
-                          </Link>
-                        </li>
-                      ))}
                     </ul>
                   </div>
                 </div>
@@ -229,7 +234,7 @@ export const Footer = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-8">
+              <div className="col-lg-4 col-md-8">
                 <div className="footer-right">
                   <div className="footer-contact">
                     <h4 className="footer-title">Contact us</h4>
@@ -293,20 +298,17 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="footer-bottom text-center py-4">
+        <div className="footer-bottom text-center py-3">
           <p>Copyrights © {new Date().getFullYear()} All Rights Reserved by Gateway Abroad.</p>
         </div>
       </footer>
       <div className="scroll_top">
-        {/* Scroll to top functionality */}
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
       <div style={{ zIndex: '99!important' }} className="get-in-touch-sidebar">
-        {/* Trigger for Contact Modal */}
         <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
       </div>
 
-      {/* --- Updated Contact Us Modal Form using react-hook-form --- */}
       <div className="modal right fade" id="getintouchModel" tabIndex={-1} aria-labelledby="getintouchModelLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">

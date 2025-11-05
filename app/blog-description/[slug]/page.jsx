@@ -4,7 +4,7 @@ import axios from "axios";
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
-    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { next: { revalidate: 3600 } });
+    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
 
     const seoData = response?.data?.data?.blog;
 
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }) {
     };
 
   } catch (error) {
-    const fallbackTitle = "Blog Post - Gateway Abroad";
+    const fallbackTitle = "Blog Article - Gateway Abroad";
     const fallbackDescription = "Read insightful articles on studying abroad, test preparation, and visa guidance.";
     const fallbackImage = "https://www.gatewayabroadeducations.com/assets/img/ga-logo.svg";
 
@@ -73,7 +73,7 @@ export async function generateMetadata({ params }) {
 
 export default async function SingleBlog({ params }) {
   const { slug } = await params;
-  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
   const data = await res.json();
   return <SingleBlogPage data={data?.data?.blog} />;
 }
