@@ -1,13 +1,49 @@
 import StudyAbroadPage from "@/components/pages/studyAbroad";
 import { serverInstance } from "@/services/axiosInstance";
 
+export const revalidate = 21600;
 const pageContentPromise = async ({ slug }) => {
     try {
-        const response = await serverInstance.get(`/page/${slug}?type=city_page`);
-        return response.data?.data;
+        const res = await fetch(
+            `https://uat.gatewayabroadeducations.com/api/v1/page/${slug}?type=city_page`,
+            {
+                next: { revalidate: 21600 },
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch page data: ${res.status}`);
+        }
+
+        const data = await res.json();
+        return data?.data || null;
     } catch (error) {
         console.error("Error fetching data:", error);
-        return null; // or handle the error as needed
+        return null;
+    }
+};
+
+export async function generateStaticParams() {
+    try {
+        const res = await fetch(
+            `https://uat.gatewayabroadeducations.com/api/v1/page?page=1&limit=100&pageType=city_page`,
+            { next: { revalidate: 21600 } }
+        );
+        if (!res.ok) {
+            console.error("Failed to fetch slugs for static generation");
+            return [];
+        }
+        const data = await res.json();
+        const [main, ...pages] = data?.data || [];
+        return pages.map((page) => ({
+            slug: page.slug,
+        }));
+    } catch (error) {
+        console.error("Error generating static params:", error);
+        return [];
     }
 }
 
@@ -31,7 +67,7 @@ export async function generateMetadata({ params }) {
                 },
             ],
         },
-          twitter: {
+        twitter: {
             card: "summary_large_image",
             title: pageContent.metaTitle,
             description: pageContent.metaDescription,

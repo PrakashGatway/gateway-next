@@ -1,12 +1,44 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
-import axios from "axios";
+
+export const revalidate = 21600;
+
+// export async function generateStaticParams() {
+//   try {
+//     const res = await fetch(
+//       "https://www.gatewayabroadeducations.com/api/v1/blog?all=true"
+//     );
+//     if (!res.ok) {
+//       console.error("❌ Failed to fetch blog slugs for static generation");
+//       return [];
+//     }
+//     const data = await res.json();
+//     const blogs = data?.data?.blog || [];
+
+//     return blogs.map((blog) => ({
+//       slug: blog.Slug,
+//     }));
+//   } catch (error) {
+//     console.error("⚠️ Error generating static params:", error);
+//     return [];
+//   }
+// }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   try {
-    const response = await axios.get(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
+    const res = await fetch(
+      `https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`,
+      {
+        next: { revalidate: 21600 },
+      }
+    );
 
-    const seoData = response?.data?.data?.blog;
+    if (!res.ok) {
+      throw new Error(`Failed to fetch blog metadata: ${res.status}`);
+    }
+
+    const data = await res.json();
+    const seoData = data?.data?.blog;
 
     const defaultTitle = "Blog - Gateway Abroad | Study Abroad Tips & Updates";
     const defaultDescription = "Stay updated with the latest study abroad news, visa updates, test prep tips, and student success stories from Gateway Abroad.";
@@ -71,7 +103,9 @@ export async function generateMetadata({ params }) {
 
 export default async function SingleBlog({ params }) {
   const { slug } = await params;
-  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`);
+  const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, {
+    next: { revalidate: 21600 },
+  });
   const data = await res.json();
   return <SingleBlogPage data={data?.data?.blog} />;
 }

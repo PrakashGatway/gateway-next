@@ -2,12 +2,46 @@ import NotFound from "@/app/not-found";
 import StudyInUk from "@/components/pages/studyInUk";
 import { serverInstance } from "@/services/axiosInstance";
 
+
+export const revalidate = 21600;
 const pageContentPromise = async ({ country }) => {
     try {
-        const response = await serverInstance.get(`/page/${country}?type=country_page`);
-        return response.data?.data;
+        const res = await fetch(
+            `https://uat.gatewayabroadeducations.com/api/v1/page/${country}?type=country_page`,
+            {
+                next: { revalidate: 21600 }, // enables ISR (optional)
+                headers: { "Content-Type": "application/json" },
+            }
+        );
+        if (!res.ok) {
+            throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+        }
+        const data = await res.json();
+        return data?.data || null;
     } catch (error) {
-        return null; // or handle the error as needed
+        return null; // return null if any error
+    }
+};
+
+
+export async function generateStaticParams() {
+    try {
+        const res = await fetch(
+            `https://uat.gatewayabroadeducations.com/api/v1/page?page=1&limit=100&pageType=country_page`,
+            { next: { revalidate: 21600 } }
+        );
+        if (!res.ok) {
+            console.error("Failed to fetch slugs for static generation");
+            return [];
+        }
+        const data = await res.json();
+        const pages= data?.data || [];
+        return pages.map((page) => ({
+            country: page.slug,
+        }));
+    } catch (error) {
+        console.error("Error generating static params:", error);
+        return [];
     }
 }
 

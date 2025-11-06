@@ -3,12 +3,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { constant } from '@/constant/index.constant';
-import DOMPurify from 'dompurify';
 
 const sanitizeContent = (content) => {
-    return { __html: DOMPurify.sanitize(content || '') };
+    return { __html: content || '' };
 };
 
 const formatDate = (dateString) => {

@@ -1,6 +1,5 @@
 import Index from "@/components/home/HomePage"
 
-
 export async function generateMetadata() {
   const seoData = {
     title: "Gateway Abroad Education, Study Abroad and Test Preparation",

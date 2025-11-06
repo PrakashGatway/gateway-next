@@ -1,5 +1,6 @@
 import Course from "@/components/pages/courseDetails";
-import { Metadata } from 'next';
+
+export const revalidate = 21600; 
 
 const seoData = {
   default: {
