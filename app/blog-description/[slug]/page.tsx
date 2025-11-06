@@ -57,9 +57,7 @@ export async function generateMetadata({ params }) {
       openGraph: {
         title: fallbackTitle,
         description: fallbackDescription,
-        images: [fallbackImage],
-        type: "article",
-        site_name: "Gateway Abroad Education",
+        images: [fallbackImage]
       },
       twitter: {
         card: "summary_large_image",

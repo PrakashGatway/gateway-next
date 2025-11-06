@@ -18,8 +18,7 @@ export async function generateMetadata({ params }) {
             openGraph: {
                 title,
                 description,
-                images: [ogImage],
-                type: 'article',
+                images: [ogImage]
             },
             alertnates: {
                 canonical: `https://www.gatewayabroadeducations.com/article/${slug}`,
