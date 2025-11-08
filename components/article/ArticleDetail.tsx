@@ -106,7 +106,7 @@ export default function ArticleClient({
 
                             {/* Article Body */}
                             <article className="prose prose-gray max-w-none">
-                                <div
+                                <div 
                                     className="text-gray-700 leading-relaxed"
                                     dangerouslySetInnerHTML={sanitizeContent(decodeURIComponent(escape(atob(article.content))))}
                                 />

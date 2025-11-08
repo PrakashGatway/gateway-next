@@ -27,7 +27,7 @@ export default function LocationAvailability({ cities }) {
       </div>
 
       <style jsx>{`
-        .city-item {
+        .city-item {w
           cursor: pointer;
           transition: all 0.3s ease;
         }

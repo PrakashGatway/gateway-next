@@ -11,13 +11,72 @@ const WhatsAppIcon = () => {
     return () => clearTimeout(timeout);
   }, []);
 
+  const getMessageByRoute = () => {
+    // Use window.location for client-side routing
+    const path = window.location.pathname;
+    
+    // Country routes
+    if (path.includes('/study-in-uk') || path.includes('/study-uk')) {
+      return 'Hi! I want to know more about studying in the UK.';
+    }
+    if (path.includes('/study-in-usa') || path.includes('/study-usa')) {
+      return 'Hello! I\'m interested in studying in the USA.';
+    }
+    if (path.includes('/study-in-australia') || path.includes('/study-australia')) {
+      return 'Hi there! I\'d like to know more about studying in Australia.';
+    }
+    if (path.includes('/study-in-new-zealand') || path.includes('/study-new-zealand')) {
+      return 'Hello! I\'d like to get details about studying in New Zealand.';
+    }
+    if (path.includes('/study-in-canada') || path.includes('/study-canada')) {
+      return 'Hi! I want to learn more about studying in Canada.';
+    }
+    if (path.includes('/study-in-dubai') || path.includes('/study-dubai')) {
+      return 'Hello! I\'m interested in studying in Dubai.';
+    }
+    if (path.includes('/study-in-ireland') || path.includes('/study-ireland')) {
+      return 'Hi there! I\'d like to know more about studying in Ireland.';
+    }
+    
+    // Test prep routes
+    if (path.includes('/gre')) {
+      return 'Hi! I\'d like to know more about GRE preparation classes.';
+    }
+    if (path.includes('/gmat')) {
+      return 'Hi! I\'d like to know more about GMAT preparation classes.';
+    }
+    if (path.includes('/toefl')) {
+      return 'Hi! I\'d like to know more about TOEFL preparation classes.';
+    }
+    if (path.includes('/ielts')) {
+      return 'Hi! I\'d like to know more about IELTS preparation classes.';
+    }
+    if (path.includes('/sat')) {
+      return 'Hi! I\'d like to know more about SAT preparation classes.';
+    }
+    if (path.includes('/pte')) {
+      return 'Hi! I\'d like to know more about PTE preparation classes.';
+    }
+    if (path.includes('/duolingo')) {
+      return 'Hi! I\'d like to know more about Duolingo English Test preparation classes.';
+    }
+    
+    // Career page
+    if (path.includes('/career') || path.includes('/jobs')) {
+      return 'Hi! I\'d like to know more about career opportunities at Gateway Abroad.';
+    }
+    
+    // Default message
+    return 'Hi, I would like to know more about your courses.';
+  };
+
   const handleClick = () => {
-    const message = encodeURIComponent('Hi, I would like to know more about your courses.');
+    const message = encodeURIComponent(getMessageByRoute());
     window.open(`https://wa.me/918302092630?text=${message}`, '_blank');
   };
 
   return (
-    <div className={`fixed bottom-6 sm:bottom-6 left-3 sm:left-6 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 '}`}>
+    <div className={`fixed bottom-6 sm:bottom-6 left-3 sm:left-6 z-50 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
       <button
         onClick={handleClick}
         className="group flex items-center gap-1 sm:gap-2 bg-[#28B63E] hover:bg-amber-600 text-black p-2 px-3 sm:px-4 sm:py-3 rounded-full shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
@@ -35,11 +94,7 @@ const WhatsAppIcon = () => {
           />
         </svg>
 
-        {/* Text */}
         <span className="font-medium text-white text-xs sm:text-sm whitespace-nowrap">Chat on WhatsApp</span>
-
-        {/* Glow effect */}
-        {/* <div className="absolute inset-0 rounded-full bg-green-400 opacity-0 group-hover:opacity-50 blur-md transition-opacity duration-300"></div> */}
       </button>
     </div>
   );

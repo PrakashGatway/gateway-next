@@ -201,7 +201,7 @@ export default function CareerPage() {
                         value={branch} // Set the selected value
                         onChange={(e) => setBranch(e.target.value)}
                         aria-label="Default select example">
-                        <option selected>Select Vacancies</option>
+                        <option value="" selected>Select Vacancies</option>
                         {jobData.map((job) => (
                           <option value={job.jobTitle}>{job.jobTitle}</option>
                         ))}
