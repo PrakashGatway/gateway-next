@@ -37,13 +37,13 @@ export async function generateMetadata({ params }) {
         const article = data?.data;
 
         const title =
-            article?.title || "Blog - Gateway Abroad | Study Abroad Tips & Updates";
+            article?.title || "Article - Gateway Abroad | Study Abroad Tips & Updates";
         const description =
             article?.description ||
             "Expert study abroad & test prep guidance from Gateway Abroad.";
         const ogImage =
-            article?.image
-                ? `https://uat.gatewayabroadeducations.com/uploads/${article.image}`
+            article?.coverImage
+                ? `https://uat.gatewayabroadeducations.com/uploads/${article.coverImage}`
                 : "https://www.gatewayabroadeducations.com/img/ga-logo.svg";
 
         return {

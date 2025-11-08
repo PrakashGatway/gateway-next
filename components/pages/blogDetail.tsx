@@ -5,11 +5,10 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation'; // Import Next.js router hooks
 import PageServices from '@/services/PageServices'; // Adjust path as needed
 import { constant } from '@/constant/index.constant'; // Adjust path as needed
-import DOMPurify from 'dompurify';
 import Loader from '../loader';
 
 const sanitizeContent = (content) => {
-  return { __html: DOMPurify.sanitize(content) };
+  return { __html: content || '' };
 };
 
 export default function SingleBlogPage({ data }) {
