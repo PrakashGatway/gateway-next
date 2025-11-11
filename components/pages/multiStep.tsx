@@ -10,14 +10,14 @@ import { useRouter } from "next/navigation"
 
 // UK-specific steps and options
 const ukSteps = ["course_intake", "english_education", "details"]
-const ukCourses = ["MBA", "MSc", "Business", "Nursing", "Engineering"]
+const ukCourses = ["MBA", "MSc", "Business", "Nursing", "Engineering", "Other"]
 const ukIntakes = ["Jan 2026", "May 2026", "Sept 2026", "Not sure"]
 const ukEnglishTests = ["Yes (IELTS)", "Yes (PTE)", "Not yet", "Planning soon"]
 const ukEducationLevels = ["12th Pass", "Graduate", "Postgraduate", "Other"]
 
 // Default steps and options
 const defaultSteps = ["course", "country", "intake_details", "details"]
-const defaultCourses = ["MBA", "MSc", "Business", "Nursing", "Engineering"]
+const defaultCourses = ["MBA", "MSc", "Business", "Nursing", "Engineering","Other"]
 const defaultCountries = ["UK", "USA", "Canada", "Australia"]
 const defaultIntakes = ["Jan 2026", "May 2026", "September", "Nov 2026"]
 
@@ -513,7 +513,7 @@ export default function EnhancedMultiStepForm() {
                                   ))}
                                 </div>
                               </div>
-                              
+
                             </div>
                           )}
 
