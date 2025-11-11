@@ -46,7 +46,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
               <Header />
             </Suspense>
           )}
-          <WhatsAppIcon />
+          {/* <WhatsAppIcon /> */}
           {/* <Suspense fallback={<LayoutFallback />}>
             <div className="min-h-screen">{children}</div>
           </Suspense> */}

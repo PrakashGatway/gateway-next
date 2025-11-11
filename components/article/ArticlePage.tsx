@@ -341,12 +341,14 @@ const Blog = () => {
                   className="group cursor-pointer"
                 >
                   <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100 group-hover:scale-[1.02]">
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-44 overflow-hidden">
                       <Image
                         src={getCoverImageUrl(article.coverImage)}
                         alt={article.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        objectFit="cover"
+                        objectPosition="top"
+                        className="object-cover object-top group-hover:scale-[1.05] transition-transform duration-300"
                       />
                     </div>
                     <div className="p-4 pt-2 pb-2">
@@ -361,10 +363,10 @@ const Blog = () => {
                           <span>{formatDate(article.createdAt)}</span>
                         </div>
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+                      <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
                         {article.title}
                       </h3>
-                      <p className="text-gray-600 text-sm line-clamp-2.5">
+                      <p className="text-gray-600 text-sm line-clamp-2">
                         {article.description}
                       </p>
                     </div>

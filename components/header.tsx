@@ -254,7 +254,7 @@ const Header = () => {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2 sm:space-x-3">
-            <a
+            {typeof window !== "undefined" && !window.location.pathname.includes("uk") && <a
               href="tel:+918302092630"
               className="relative items-center justify-center bg-[#FBBF24] text-gray-700 border-2 border-black hover:text-white font-semibold rounded-3xl shadow-md hover:bg-[#E83A3A] px-2 sm:px-3 py-[5px] text-sm transition-all duration-200  hover:-translate-y-0.5 hover:shadow-[0_15px_35px_rgba(220,38,38,0.4)]"
             >
@@ -262,7 +262,7 @@ const Header = () => {
                 <span className="text-[11px] md:text-[14px] py-1 font-semibold">+918302092630</span>
               </div>
               <span className="absolute -bottom-5 left-0 right-0 text-red-600 text-center text-[9px] md:text-[11px]">Connect With Expert</span>
-            </a>
+            </a>}
             {user?.email ? (
               <div
                 className="relative"

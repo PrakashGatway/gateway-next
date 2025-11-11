@@ -305,9 +305,10 @@ export const Footer = () => {
       <div className="scroll_top">
         <Link href="#" id="scroll-button" style={{ display: 'block' }} onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><i className="fa fa-angle-up" /></Link>
       </div>
-      <div style={{ zIndex: '99!important' }} className="get-in-touch-sidebar">
+
+  {pathname?.includes("uk") ? "" : <div style={{ zIndex: '99!important' }} className="get-in-touch-sidebar">
         <button data-bs-toggle="modal" data-bs-target="#getintouchModel"><span className="content-red"><i className="fa fa-envelope-o me-2" /> Get in touch</span><span className="content-dark"><i className="fa fa-long-arrow-down" /></span></button>
-      </div>
+      </div>}
 
       <div className="modal right fade" id="getintouchModel" tabIndex={-1} aria-labelledby="getintouchModelLabel" aria-hidden="true">
         <div className="modal-dialog">

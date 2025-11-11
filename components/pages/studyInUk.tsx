@@ -17,12 +17,12 @@ import { DynamicIcon } from "../sections/processRoad";
 import { baseUrl } from "@/services/axiosInstance";
 
 
-const StudyInUk = ({ content ,country}:any) => {
+const StudyInUk = ({ content, country }: any) => {
 
   const [form, setform] = useState([]);
   const { teamMembers: member, youtubeVideo: videoStudednt, } = useGlobal();
   const [blogData, setBlogData] = useState([]);
-  const router = useRouter(); 
+  const router = useRouter();
   const [video, setVideo] = useState([]);
 
 
@@ -125,9 +125,25 @@ const StudyInUk = ({ content ,country}:any) => {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mt-4 animate-stagger-4">
-                <Link href="#" data-bs-toggle="modal" data-bs-target="#getintouchModel" className="btn-primary inline-block text-center group">
+                <button
+                  onClick={() => {
+                    const section = document.getElementById("multistepfrom");
+                    if (section) {
+                      const offset = 60; // adjust this to your header height
+                      const elementPosition = section.getBoundingClientRect().top + window.scrollY;
+                      const offsetPosition = elementPosition - offset;
+
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth",
+                      });
+                    }
+                  }}
+                  className="btn-primary inline-block text-center group"
+                >
                   <span className="relative z-10">Get Started Today</span>
-                </Link>
+                </button>
+
               </div>
             </div>
 
@@ -135,7 +151,7 @@ const StudyInUk = ({ content ,country}:any) => {
             <div className="relative animate-fadeInRight mx-auto">
               <div className="relative z-10 mx-auto ">
                 <Image
-                  src={ content?.pageContent?.heroImage ? `${baseUrl}/uploads/${content?.pageContent?.heroImage}` : '/anime/map.png'}
+                  src={content?.pageContent?.heroImage ? `${baseUrl}/uploads/${content?.pageContent?.heroImage}` : '/anime/map.png'}
                   alt="Study Abroad Illustration"
                   width={500}
                   height={470}
@@ -207,7 +223,7 @@ const StudyInUk = ({ content ,country}:any) => {
 
                 {/* Anime Character */}
                 <div className="flex-shrink-0 w-20 h-20 opacity-90 pointer-events-none transition-transform duration-300 group-hover:scale-105">
-                 <DynamicIcon name={reason.icon} color="red" className="w-12 h-12" />
+                  <DynamicIcon name={reason.icon} color="red" className="w-12 h-12" />
                 </div>
 
                 {/* Glow Overlay */}
@@ -226,14 +242,14 @@ const StudyInUk = ({ content ,country}:any) => {
 
         {/* Desktop Image (shown on lg and above) */}
         <img
-          src={ content?.pageContent?.roadmapImage ? `${baseUrl}/uploads/${content?.pageContent?.roadmapImage}` : "/anime/road.svg"}
+          src={content?.pageContent?.roadmapImage ? `${baseUrl}/uploads/${content?.pageContent?.roadmapImage}` : "/anime/road.svg"}
           alt={getContentByType('form-section')?.title}
           className="hidden md:block h-full w-full"
         />
 
         {/* Mobile Image (shown on sm to lg- screens) */}
         <img
-          src={ content?.pageContent?.mobileRoadMap ? `${baseUrl}/uploads/${content?.pageContent?.mobileRoadMap}` : "/anime/mobileRoad.png"}
+          src={content?.pageContent?.mobileRoadMap ? `${baseUrl}/uploads/${content?.pageContent?.mobileRoadMap}` : "/anime/mobileRoad.png"}
           alt="Study in UK Roadmap - Mobile"
           className="block md:hidden h-full w-full"
         />
