@@ -182,14 +182,13 @@ export default function DegreesSection({ content }: DegreesSectionProps) {
                       {/* Content */}
                       <div className="relative z-10">
                         {/* Icon and Badge */}
-                        <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-start justify-between mb-2">
                           <div
-                            className={`p-3 rounded-2xl bg-gradient-to-br from-red-500 to-rose-600 shadow-lg group-hover:scale-105 transition-transform duration-300`}
+                            className={`p-3 rounded-full bg-gradient-to-br from-red-500 to-rose-600 shadow-lg group-hover:scale-105 transition-transform duration-300`}
                           >
                             <DynamicIcon 
-                              name={program?.icon}  
-                              className="w-6 h-6 text-white" 
-                              fallback={<GraduationCap className="w-6 h-6 text-white" />}
+                              name={program?.icon || "graduation-cap"}  
+                              className="w-4 h-4 text-white" 
                             />
                           </div>
                           <div className="flex items-center gap-1 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full">
@@ -200,10 +199,10 @@ export default function DegreesSection({ content }: DegreesSectionProps) {
 
                         {/* Title and Duration */}
                         <div className="mb-2">
-                          <h3 className="sub-heading font-bold mb-1 group-hover:text-red-700 transition-colors duration-300">
+                          <h3 className="sub-heading  mb-1 group-hover:text-red-700 transition-colors duration-300">
                             {program?.title || "Program Title"}
                           </h3>
-                          <p className="text-red-600 text-base font-medium mb-2">{program?.subTitle || "Program Subtitle"}</p>
+                          <p className="text-red-600 text-sm font-medium mb-2">{program?.subTitle || "Program Subtitle"}</p>
                           <div className="flex items-center gap-2 text-gray-600">
                             <Clock className="w-4 h-4" />
                             <span className="text-sm font-medium">{program?.duration || "2-4 years"}</span>
@@ -211,7 +210,7 @@ export default function DegreesSection({ content }: DegreesSectionProps) {
                         </div>
 
                         {/* Description */}
-                        <p className="text-gray-800 text-base mb-2 leading-relaxed">
+                        <p className="text-gray-800 text-sm mb-2 leading-relaxed line-clamp-3">
                           {program?.description || "Comprehensive program designed to provide in-depth knowledge and practical skills."}
                         </p>
 
@@ -223,9 +222,9 @@ export default function DegreesSection({ content }: DegreesSectionProps) {
                               "Industry-relevant curriculum",
                               "Experienced faculty",
                               "Hands-on learning"
-                            ]).slice(0, 3).map((feature, idx) => (
+                            ]).slice(0, 2).map((feature, idx) => (
                               <div key={idx} className="flex items-center gap-2 text-sm text-gray-800">
-                                <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
+                                <div className="w-1 h-1 p-[3px] rounded-full bg-red-500 text-sm"></div>
                                 {feature}
                               </div>
                             ))}
@@ -233,12 +232,12 @@ export default function DegreesSection({ content }: DegreesSectionProps) {
                         </div>
 
                         {/* Students Count */}
-                        <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                        <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2 text-gray-600">
                             <Users className="w-4 h-4" />
                             <span className="text-sm font-medium">{program?.studentCount || "500+ students"}</span>
                           </div>
-                          <button onClick={() => Router.push(`/blog-description/${program?.slug}`)} className="btn-primary py-2">
+                          <button onClick={() => Router.push(`/article/${program?.slug}`)} className="btn-secondary py-1.5 text-xs">
                             Learn More
                           </button>
                         </div>

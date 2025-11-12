@@ -96,7 +96,7 @@ export default function DestinationsSection({ content }: DestinationsSectionProp
             loop: true,
             mode: "free",
             slides: {
-                perView: 3.4,
+                perView: 3.8,
                 spacing: 20,
             },
             breakpoints: {
@@ -230,7 +230,7 @@ export default function DestinationsSection({ content }: DestinationsSectionProp
                                 {pages.map((destination, index) => (
                                     <div key={index} className="keen-slider__slide px-1 py-6">
                                         <div
-                                            className="destination-card bg-white backdrop-blur-sm rounded-2xl transition-all duration-700 overflow-hidden group border border-white/50 animate-slide-up hover:shadow-2xl hover:-translate-y-4 hover:rotate-1 hover:border-red-200 hover:shadow-red-100/50 hover:bg-white"
+                                            className="destination-card bg-white backdrop-blur-sm rounded-2xl transition-all duration-700 overflow-hidden group border border-white/50 animate-slide-up hover:shadow-2xl hover:-translate-y-4 hover:border-red-200 hover:shadow-red-100/50 hover:bg-white"
                                             style={{ animationDelay: `${index * 150}ms` }}
                                             onMouseEnter={() => setHoveredCard(index)}
                                             onMouseLeave={() => setHoveredCard(null)}
@@ -243,16 +243,16 @@ export default function DestinationsSection({ content }: DestinationsSectionProp
                                                 <img
                                                     src={destination?.sliderImage ? `${baseUrl}/uploads/${destination.sliderImage}` : "https://acko-cms.ackoassets.com/Best_time_to_visit_UK_6dae1f2b10.png"}
                                                     alt={`Study in ${destination?.sliderData?.label || destination.slug}`}
-                                                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                                                    className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-105 group-hover:rotate-1"
                                                 />
 
                                                 {/* Enhanced Gradient Overlay */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-red-900/70 transition-all duration-700"></div>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/40 to-transparent group-hover:from-red-900/70 transition-all duration-700"></div>
 
                                                 {/* Enhanced Stats Badge */}
-                                                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-2 py-1 transform transition-all duration-500 group-hover:scale-110 group-hover:bg-red-50 shadow-lg">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-red-600 font-bold text-sm">{destination.universities}+</span>
+                                                <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl px-2 py-1 text-xs transform transition-all duration-500 group-hover:scale-110 group-hover:bg-red-50 shadow-lg">
+                                                    <div className="flex items-center gap-1">
+                                                        <span className="text-red-600 font-bold">{destination.universities}+</span>
                                                         <span className="text-gray-700 text-xs">Universities</span>
                                                     </div>
                                                 </div>
@@ -265,23 +265,23 @@ export default function DestinationsSection({ content }: DestinationsSectionProp
 
                                             {/* Enhanced Content */}
                                             <div className="p-3">
-                                                <h3 className="sub-heading transition-all duration-300 mb-2 flex items-center gap-2">
-                                                    {destination?.sliderData?.label || destination.slug}
+                                                <h3 className="sub-heading !text-lg transition-all duration-300 mb-2 flex items-center gap-2">
+                                                    {destination?.sliderData?.title || destination?.sliderData?.label || destination.slug}
                                                 </h3>
 
-                                                <p className="text-slate-600 text-sm mb-2 leading-relaxed duration-300">
+                                                {/* <p className="text-slate-600 text-sm mb-2 leading-relaxed duration-300">
                                                     {destination?.sliderData?.title || "World-class education opportunities"}
-                                                </p>
+                                                </p> */}
 
                                                 {/* Enhanced Programs Tags */}
-                                                <div className="mb-3">
-                                                    <div className="flex flex-wrap gap-1.5">
+                                                <div className="mb-2">
+                                                    <div className="flex flex-wrap gap-1">
                                                         {destination?.tags && destination.tags
                                                             .slice(0, 2)
                                                             .map((program, idx) => (
                                                                 <span
                                                                     key={idx}
-                                                                    className="bg-gradient-to-r from-red-50 to-rose-50 text-red-700 px-3 py-1 rounded-full text-xs font-medium border border-red-200/50 transition-all duration-300 group-hover:from-red-100 group-hover:to-rose-100 group-hover:border-red-300 group-hover:scale-105 group-hover:-translate-y-0.5"
+                                                                    className="bg-gradient-to-r from-red-50 to-rose-50 text-red-700 px-3 py-1 rounded-full text-[10px] font-medium border border-red-200/50 transition-all duration-300 group-hover:from-red-100 group-hover:to-rose-100 group-hover:border-red-300 group-hover:scale-105 group-hover:-translate-y-0.5"
                                                                     style={{ animationDelay: `${idx * 100}ms` }}
                                                                 >
                                                                     {program}
@@ -296,7 +296,7 @@ export default function DestinationsSection({ content }: DestinationsSectionProp
                                                 </div>
 
                                                 {/* Enhanced CTA Button */}
-                                                <button onClick={()=>Router.push(`/study-in-${destination?.slug?.toLowerCase()}`)} className="w-full btn-primary group/btn">
+                                                <button onClick={() => Router.push(`/study-in-${destination?.slug?.toLowerCase()}`)} className="w-full group/btn text-sm">
                                                     <span className="flex items-center justify-center relative z-10 gap-2">
                                                         <span>Explore Now</span>
                                                         <svg
