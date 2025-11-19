@@ -98,9 +98,10 @@ export default function ArticleClient({
                             {/* Featured Image */}
                             <div className="rounded-xl overflow-hidden mb-6">
                                 <img
-                                    src={`https://uat.gatewayabroadeducations.com/uploads/${article.coverImage}`}
+                                    src={article.slug == "preparing-for-toefl-speaking-section" ? `https://gatewayabroadeducations.com/uploads/${article.coverImage}`:`https://uat.gatewayabroadeducations.com/uploads/${article.coverImage}`}
                                     alt={article.title}
                                     className="w-full h-auto"
+                                    loading="lazy"
                                 />
                             </div>
 

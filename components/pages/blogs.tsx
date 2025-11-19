@@ -309,7 +309,7 @@ const Blog = () => {
                 return (
                   <div key={blog.Slug} className="col-md-6 col-lg-4">
                     <div
-                      onClick={() => isOctober2025 ? router.push(`/blog-description/${blog.Slug}`) :
+                      onClick={() => blog.Slug == "preparing-for-toefl-speaking-section" ? router.push(`/article/${blog.Slug}`) :
                         router.push(`/blog-description/${blog.Slug}`)
                       }
                       className="blog-card cursor-pointer"

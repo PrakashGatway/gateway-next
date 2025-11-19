@@ -294,7 +294,9 @@ const StudyInUk = ({ content, country }: any) => {
             <Slider {...blogSlider} className="blog-section-slider">
               {blogData && blogData.map((blog, index) => (
                 <div
-                  onClick={() => router.push(`/blog-description/${blog.Slug}`)} // For App Router
+                  onClick={() => blog.Slug == "preparing-for-toefl-speaking-section" ? router.push(`/article/${blog.Slug}`) :
+                    router.push(`/blog-description/${blog.Slug}`)
+                  }
                   className="blog-section-slider-inner cursor-pointer p-2"
                   key={index}
                 >

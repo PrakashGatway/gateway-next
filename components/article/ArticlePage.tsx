@@ -4,7 +4,6 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import Loader from "@/components/loader";
 import axiosInstance from "@/services/axiosInstance";
 
 // Replace with your actual API service

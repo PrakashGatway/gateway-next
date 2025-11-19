@@ -320,7 +320,7 @@ function Index() {
                     <button
                       type="submit"
                       className="btn btn-primary"
-                      disabled={loading} 
+                      disabled={loading}
                     >
                       {loading ? 'SUBMITTING...' : 'SUBMIT'}
                     </button>
@@ -602,8 +602,9 @@ function Index() {
               {blogData.map((blog) => (
                 // Changed onClick navigation for Next.js
                 <div
-                  onClick={() => router.push(`/blog-description/${blog.Slug}`)} // For App Router
-                  // onClick={() => router.push(`/blog-description/${blog.Slug}`)} // For Pages Router (same method)
+                  onClick={() => blog.Slug == "preparing-for-toefl-speaking-section" ? router.push(`/article/${blog.Slug}`) :
+                    router.push(`/blog-description/${blog.Slug}`)
+                  }
                   className="blog-section-slider-inner cursor-pointer p-2"
                   key={blog.id}
                 >
