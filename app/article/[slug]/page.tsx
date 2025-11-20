@@ -1,6 +1,6 @@
 import ArticleClient from "@/components/article/ArticleDetail";
 
-export const revalidate = 21600;
+export const revalidate = 600;
 
 const blogData = {
     data: {
@@ -27,7 +27,7 @@ const blogData = {
 export async function generateStaticParams() {
     try {
         const res = await fetch("https://uat.gatewayabroadeducations.com/api/v1/web/blog?limit=1000", {
-            next: { revalidate: 21600 },
+            next: { revalidate: 600 },
         });
         if (!res.ok) {
             console.error("❌ Failed to fetch blog slugs for static generation");
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }) {
         if (slug != "preparing-for-toefl-speaking-section") {
             const res = await fetch(
                 `https://uat.gatewayabroadeducations.com/api/v1/web/blog/${slug}`,
-                { next: { revalidate: 21600 } }
+                { next: { revalidate: 600 } }
             );
 
             if (!res.ok) throw new Error(`Failed to fetch metadata: ${res.status}`);
@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }) {
 
     const res = await fetch(
         `https://uat.gatewayabroadeducations.com/api/v1/web/blog/${slug}`,
-        { next: { revalidate: 21600 } }
+        { next: { revalidate: 600 } }
     );
 
     if (!res.ok) {
