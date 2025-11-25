@@ -1,4 +1,5 @@
 import SingleBlogPage from "@/components/pages/blogDetail";
+import { redirect } from "next/navigation";
 
 export const revalidate = 21600;
 
@@ -103,6 +104,10 @@ export async function generateMetadata({ params }) {
 
 export default async function SingleBlog({ params }) {
   const { slug } = await params;
+
+  if (slug === "preparing-for-toefl-speaking-section") {
+    redirect(`/article/${slug}`);
+  }
   const res = await fetch(`https://www.gatewayabroadeducations.com/api/v1/blog/${slug}`, {
     next: { revalidate: 21600 },
   });
