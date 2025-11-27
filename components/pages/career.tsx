@@ -6,7 +6,7 @@ import { useGlobal } from "@/hooks/AppStateContext";
 import Swal from 'sweetalert2'; // Import SweetAlert2
 
 export default function CareerPage() {
-  const {careerPage:data,jobFormData} = useGlobal();
+  const { careerPage: data, jobFormData } = useGlobal();
 
   const [jobData, setJobData] = useState([]);
   const [pageTitle, setPageTitle] = useState("");
@@ -22,7 +22,6 @@ export default function CareerPage() {
 
   const section1Ref = useRef(null);
 
-  // Update state when API data loads
   useEffect(() => {
     if (data?.page) {
       setPageTitle(data.page.pageTitle || "");
@@ -62,7 +61,7 @@ export default function CareerPage() {
       formData.append("file", file);
 
       const createJob = await PageServices.createForme(formData);
-      
+
       if (createJob.status === "success") {
         // Show success message
         Swal.fire({
@@ -70,6 +69,17 @@ export default function CareerPage() {
           title: 'Application Submitted!',
           text: 'Your application has been successfully submitted. We will contact you soon.',
           confirmButtonColor: '#3085d6',
+        });
+        const emailFormData = new FormData();
+        emailFormData.append("name", name);
+        emailFormData.append("email", email);
+        emailFormData.append("mobileNo", phone);
+        emailFormData.append("eduInterest", branch);
+        emailFormData.append("file", file);
+
+        const emailResponse = fetch('https://otp-backend-main.vercel.app/api/send-resume', { // Update with your actual API route
+          method: 'POST',
+          body: emailFormData
         });
 
         // Reset form
@@ -143,9 +153,9 @@ export default function CareerPage() {
             </div>
             <div className="col-md-7">
               <div className="about-us-right-new ps-1 career-content-box">
-                  <h2 className="heading">Culture of Success at <br />Gateway Abroad</h2>
-                  <p style={{textAlign:"left"}} className="descp !text-justify">{pageTitle ? pageTitle : "We support the empowerment of everyone in our community. Join us if you enjoy exploring and want to learn more about schooling outside of India. We are seeking people who are ready to make a move to promote high-quality education. We are a group of driven and career-oriented people that are eager to develop by cooperating in a welcoming and goal- oriented environment. Gateway Abroad is spread across eight branches in India. Join us right away if you're seeking for a vibrant and welcoming environment that supports your growth."}</p>
-                </div>
+                <h2 className="heading">Culture of Success at <br />Gateway Abroad</h2>
+                <p style={{ textAlign: "left" }} className="descp !text-justify">{pageTitle ? pageTitle : "We support the empowerment of everyone in our community. Join us if you enjoy exploring and want to learn more about schooling outside of India. We are seeking people who are ready to make a move to promote high-quality education. We are a group of driven and career-oriented people that are eager to develop by cooperating in a welcoming and goal- oriented environment. Gateway Abroad is spread across eight branches in India. Join us right away if you're seeking for a vibrant and welcoming environment that supports your growth."}</p>
+              </div>
             </div>
           </div>
 
@@ -156,8 +166,8 @@ export default function CareerPage() {
               <div className="col-md-7">
                 <div className="about-us-right-new career-content-box pe-3">
                   <h2 className="heading">Working with Gateway Abroad</h2>
-                  <p style={{textAlign:"left"}} className="descp !text-justify mb-2">{description ? description : "In a relatively short period of time, Gateway Abroad has assembled such a strong team. Staff members that are committed and diligent have made this possible. We make an effort to encourage and reward personnel on a regular basis. After all, what good is labour without praise? We seek people who can contribute to our team with innovative ideas and effectively interact with clients."}</p>
-                  <p style={{textAlign:"left"}} className="descp !text-justify">Join us immediately if you're looking for opportunities to improve your talents and have excellent communication skills.</p>
+                  <p style={{ textAlign: "left" }} className="descp !text-justify mb-2">{description ? description : "In a relatively short period of time, Gateway Abroad has assembled such a strong team. Staff members that are committed and diligent have made this possible. We make an effort to encourage and reward personnel on a regular basis. After all, what good is labour without praise? We seek people who can contribute to our team with innovative ideas and effectively interact with clients."}</p>
+                  <p style={{ textAlign: "left" }} className="descp !text-justify">Join us immediately if you're looking for opportunities to improve your talents and have excellent communication skills.</p>
                 </div>
               </div>
               <div className="col-md-5">
@@ -184,8 +194,8 @@ export default function CareerPage() {
                       <h6 className="vacancy-num">No. of Vacancy: {job.vacancy}</h6>
                       <h6 className="vacancy-location">Location: {job.location}</h6>
                       <div className="scroll-container">
-                        <div style={{textAlign:"left"}} className="descp" dangerouslySetInnerHTML={{ __html: job.jobShortDescription }} />
-                        <div style={{textAlign:"left"}} className="descp" dangerouslySetInnerHTML={{ __html: job.jobDescription }} />
+                        <div style={{ textAlign: "left" }} className="descp" dangerouslySetInnerHTML={{ __html: job.jobShortDescription }} />
+                        <div style={{ textAlign: "left" }} className="descp" dangerouslySetInnerHTML={{ __html: job.jobDescription }} />
                       </div>
                       <div>
                         <div className="list-unstyled flex flex-row job-duration mt-3">
@@ -220,19 +230,20 @@ export default function CareerPage() {
             <div className="col-lg-5">
               <div className="career-form-section-right">
                 <div className="career-form-inner students-info-right">
-                  <form>
-                    <div className="input-field">
-                      <input type="text" name="name" className="form-control" onChange={(e) => setName(e.target.value)} placeholder="Name" value={name} />
+                  <form className="space-y-3">
+                    <div className="">
+                      <input type="text" name="name"
+                        className="rounded-3xl border-2 border-gray-400 focus:border-red-500 w-full py-2 px-4 transition-colors" onChange={(e) => setName(e.target.value)} placeholder="Name" value={name} />
                     </div>
-                    <div className="input-field">
-                      <input type="email" name="email" className="form-control" onChange={(e) => setEmail(e.target.value)} placeholder="Email" value={email} />
+                    <div className="input-">
+                      <input type="email" name="email" className="rounded-3xl border-2 border-gray-400 focus:border-red-500 w-full py-2 px-4 transition-colors" onChange={(e) => setEmail(e.target.value)} placeholder="Email" value={email} />
                     </div>
-                    <div className="input-field">
-                      <input type="text" name="phone" className="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="Phone" value={phone} />
+                    <div className="input-">
+                      <input type="text" name="phone" className="rounded-3xl border-2 border-gray-400 focus:border-red-500 w-full py-2 px-4 transition-colors" onChange={(e) => setPhone(e.target.value)} placeholder="Phone" value={phone} />
                     </div>
-                    <div className="input-field">
-                      <select className="form-select"
-                        value={branch} 
+                    <div className="input-">
+                      <select className="rounded-3xl border-2 border-gray-400 focus:border-red-500 w-full py-2 px-4 transition-colors"
+                        value={branch}
                         onChange={(e) => setBranch(e.target.value)}
                         aria-label="Default select example">
                         <option value="" selected>Select Vacancies</option>
@@ -241,19 +252,19 @@ export default function CareerPage() {
                         ))}
                       </select>
                     </div>
-                    <div className="input-field type-file-field">
-                      <label className="filelabel"><img src="img/upload-img.svg" className="file_img mx-auto" />
-                        <span className="title">
+                    <div className="input-fiel type-file-fied rounded-3xl border-2 border-gray-400 focus-within:border-red-500 w-full py-2 px-4 transition-colors">
+                      <label className="filelabel !border-none !outline-none"><img src="img/upload-img.svg" className="file_img mx-auto" />
+                        <span className="titl">
                           {file ? file.name : "Upload your CV here"}
                         </span>
-                        <input className="FileUpload1 form-control py-3" onChange={(e) => { handleFileChange(e) }} id="FileInput" name="booking_attachment" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
+                        <input className=" form-control py-3 rounded-3xl" onChange={(e) => { handleFileChange(e) }} id="FileInput" name="booking_attachment" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
                       </label>
                     </div>
-                    <button 
-                      type="submit" 
-                      onClick={(e) => { handleUpdate(e) }} 
+                    <button
+                      type="submit"
+                      onClick={(e) => { handleUpdate(e) }}
                       disabled={loading} // Disable button during loading
-                      className={`w-full ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                      className={`w-full !rounded-3xl ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
                     >
                       {loading ? (
                         <>
