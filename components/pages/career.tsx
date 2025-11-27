@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import PageServices from "@/services/PageServices";
 import { useGlobal } from "@/hooks/AppStateContext";
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 export default function CareerPage() {
   const {careerPage:data,jobFormData} = useGlobal();
@@ -17,8 +18,9 @@ export default function CareerPage() {
   const [file, setFile] = useState(null);
   const [branch, setBranch] = useState("");
 
-  const section1Ref = useRef(null);
+  const [loading, setLoading] = useState(false); // Add loading state
 
+  const section1Ref = useRef(null);
 
   // Update state when API data loads
   useEffect(() => {
@@ -39,9 +41,17 @@ export default function CareerPage() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     if (!name || !email || !phone || !file) {
-      alert("All fields are required");
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation Error',
+        text: 'All fields are required!',
+        confirmButtonColor: '#3085d6',
+      });
       return;
     }
+
+    setLoading(true); // Start loading
+
     try {
       const formData = new FormData();
       formData.append("name", name);
@@ -52,18 +62,42 @@ export default function CareerPage() {
       formData.append("file", file);
 
       const createJob = await PageServices.createForme(formData);
+      
       if (createJob.status === "success") {
+        // Show success message
+        Swal.fire({
+          icon: 'success',
+          title: 'Application Submitted!',
+          text: 'Your application has been successfully submitted. We will contact you soon.',
+          confirmButtonColor: '#3085d6',
+        });
+
+        // Reset form
         setName("");
         setEmail("");
         setPhone("");
         setBranch("");
         setFile(null);
       } else {
-        alert("Something went wrong");
+        // Show error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: 'Something went wrong. Please try again.',
+          confirmButtonColor: '#d33',
+        });
       }
     } catch (err) {
       console.error("Error submitting form:", err);
-      alert("Submission failed. Please try again.");
+      // Show error message
+      Swal.fire({
+        icon: 'error',
+        title: 'Submission Failed',
+        text: 'Submission failed. Please try again.',
+        confirmButtonColor: '#d33',
+      });
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -188,22 +222,22 @@ export default function CareerPage() {
                 <div className="career-form-inner students-info-right">
                   <form>
                     <div className="input-field">
-                      <input type="text" name="name" className="form-control" onChange={(e) => setName(e.target.value)} placeholder="Name" />
+                      <input type="text" name="name" className="form-control" onChange={(e) => setName(e.target.value)} placeholder="Name" value={name} />
                     </div>
                     <div className="input-field">
-                      <input type="email" name="email" className="form-control" onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+                      <input type="email" name="email" className="form-control" onChange={(e) => setEmail(e.target.value)} placeholder="Email" value={email} />
                     </div>
                     <div className="input-field">
-                      <input type="text" name="phone" className="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="Phone" />
+                      <input type="text" name="phone" className="form-control" onChange={(e) => setPhone(e.target.value)} placeholder="Phone" value={phone} />
                     </div>
                     <div className="input-field">
                       <select className="form-select"
-                        value={branch} // Set the selected value
+                        value={branch} 
                         onChange={(e) => setBranch(e.target.value)}
                         aria-label="Default select example">
                         <option value="" selected>Select Vacancies</option>
                         {jobData.map((job) => (
-                          <option value={job.jobTitle}>{job.jobTitle}</option>
+                          <option value={job.jobTitle} key={job._id}>{job.jobTitle}</option>
                         ))}
                       </select>
                     </div>
@@ -215,7 +249,21 @@ export default function CareerPage() {
                         <input className="FileUpload1 form-control py-3" onChange={(e) => { handleFileChange(e) }} id="FileInput" name="booking_attachment" type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
                       </label>
                     </div>
-                    <button type="submit" onClick={(e) => { handleUpdate(e) }} >SUBMIT</button>
+                    <button 
+                      type="submit" 
+                      onClick={(e) => { handleUpdate(e) }} 
+                      disabled={loading} // Disable button during loading
+                      className={`w-full ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          Submitting...
+                        </>
+                      ) : (
+                        "SUBMIT"
+                      )}
+                    </button>
                   </form>
                 </div>
               </div>
