@@ -3,13 +3,13 @@ import StudyInUk from "@/components/pages/studyInUk";
 import { serverInstance } from "@/services/axiosInstance";
 
 
-export const revalidate = 21600;
+export const revalidate = 600;
 const pageContentPromise = async ({ country }) => {
     try {
         const res = await fetch(
             `https://uat.gatewayabroadeducations.com/api/v1/page/${country}?type=country_page`,
             {
-                next: { revalidate: 21600 }, // enables ISR (optional)
+                next: { revalidate: 600 }, // enables ISR (optional)
                 headers: { "Content-Type": "application/json" },
             }
         );
@@ -28,14 +28,14 @@ export async function generateStaticParams() {
     try {
         const res = await fetch(
             `https://uat.gatewayabroadeducations.com/api/v1/page?page=1&limit=100&pageType=country_page`,
-            { next: { revalidate: 21600 } }
+            { next: { revalidate: 600 } }
         );
         if (!res.ok) {
             console.error("Failed to fetch slugs for static generation");
             return [];
         }
         const data = await res.json();
-        const pages= data?.data || [];
+        const pages = data?.data || [];
         return pages.map((page) => ({
             country: page.slug,
         }));

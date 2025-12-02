@@ -41,9 +41,9 @@ const HeroSection = ({ type, title, description, image }: any) => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 animate-stagger-4">
-              <Link href="/contact" className="btn-primary inline-block text-center group">
+              <button data-bs-toggle="modal" data-bs-target="#getintouchModel" className="btn-primary inline-block text-center group">
                 <span className="relative z-10">Get Started Today</span>
-              </Link>
+              </button>
               <Link href="/about" className="btn-secondary text-center group">
                 Learn More
               </Link>
